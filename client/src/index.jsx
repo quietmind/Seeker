@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import AnyComponent from './components/filename.jsx'
+import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
+// import AnyComponent from './components/filename.jsx'
+import ProgressBoard from './components/ProgressBoard.js'
+import Metrics from './components/Metrics.js'
+import ApplicationList from './components/ApplicationList.js'
 
 
 class App extends React.Component {
@@ -23,6 +27,7 @@ class App extends React.Component {
 
   render () {
   	return(
+  		<Router>
   		<div className="app-container">
   		<Menu secondary attached="top">
   			<Menu.Item onClick={this.toggleMenu}>
@@ -31,26 +36,27 @@ class App extends React.Component {
   		</Menu>
   		 <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
-            <Menu.Item name='home'>
+            <Menu.Item name='home' as={Link} to='/'>
               <Icon name='home' />
               Home
             </Menu.Item>
-            <Menu.Item name='metrics'>
+            <Menu.Item name='metrics' as={Link} to='/metrics'>
               <Icon name='bar chart' />
               Metrics
             </Menu.Item>
-            <Menu.Item name='camera'>
+            <Menu.Item name='apps' as={Link} to='/myapps'>
               <Icon name='book' />
               My Apps
             </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>
-            <Segment basic>
-              <Header as='h3'>Application Content</Header>
-            </Segment>
+          	<Route  exact path='/' component={ProgressBoard}/>
+          	<Route  path='/metrics' component={Metrics}/>
+          	<Route  path='/myapps' component={ApplicationList}/>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
   		</div>
+  		</Router>
   	)
   }
 }
