@@ -15,6 +15,16 @@ connection.connect((err) => {
   }
 })
 
+module.exports.createUser = function(username, password, callback) {
+  connection.query(
+    `INSERT INTO users (id, username, password) VALUES (?, ?, ?)`,
+    [null, username, password],
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.createPhase = function(data, callback) {
   connection.query(
     `INSERT INTO phases (id, user_id, phase_label, phase_order) VALUES (?, ?, ?, ?)`,
@@ -35,9 +45,32 @@ module.exports.createApp = function(data, callback) {
   )
 }
 
+module.exports.addDefaultPhases = function(userId, callback) {
+  connection.query(
+    `INSERT INTO phases (id, user_id, phase_label, phase_order)
+    VALUES (null, ${userId}, 'Not Yet Applied', 0),
+    (null, ${userId}, 'Applied', 1),
+    (null, ${userId}, 'Received Response', 2),
+    (null, ${userId}, 'Interviewed', 3),
+    (null, ${userId}, 'Received Job Offer', 4)`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.getUserCredentials = function(data, callback) {
+  connection.query(
+    `SELECT * FROM users WHERE username = ${data.username}`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
 module.exports.getUserPhases = function(userId, callback) {
   connection.query(
-    `SELECT * FROM phases WHERE user_id = ${userId}`,
+    `SELECT * FROM phases WHERE user_id = ${userId} ORDER BY phase_order ASC`,
     function(err, results) {
       callback(err, results)
     }
@@ -58,19 +91,16 @@ module.exports.updatePhase = function(phases, callback) {
     connection.query(
       `UPDATE phases SET phase_order = ${i} WHERE phase_id = ${phases[i]}`,
       function(err) {
-        if (err) {
-          console.error(err)
-        }
+        callback(err)
       }
     )
   }
-  callback()
 }
 
 module.exports.updateApp = function(data, callback) {
   connection.query(
-    `UPDATE applications SET 
-    phase_id = ${data.phaseId}, 
+    `UPDATE applications 
+    SET phase_id = ${data.phaseId}, 
     reminder_id = ${data.reminderId}, 
     resume_id = ${data.resumeId}, 
     cover_letter_id = ${data.coverLetterId}, 

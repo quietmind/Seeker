@@ -19,15 +19,19 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.15.0",
+    "express-session": "^1.15.6",
     "history": "^4.7.2",
     "jquery": "^3.1.1",
     "mysql": "^2.15.0",
+    "passport": "^0.4.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "request": "^2.83.0",
     "semantic-ui-react": "^0.78.3"
   }
