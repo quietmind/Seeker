@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Menu, Button } from 'semantic-ui-react';
+import { Input, Menu, Button} from 'semantic-ui-react';
 
 export default class Login extends React.Component{
 	constructor(props){
