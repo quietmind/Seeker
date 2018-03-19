@@ -12,15 +12,10 @@ CREATE TABLE users (
 
 CREATE TABLE phases (
   id INT NOT NULL AUTO_INCREMENT,
-  phase_label VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE phase_order (
   user_id INT NOT NULL,
-  phase_id INT NOT NULL,
-  order_number INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (phase_id) REFERENCES phases(id)
+  phase_order INT NOT NULL,
+  phase_label VARCHAR(100) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE reminders (
@@ -38,13 +33,13 @@ CREATE TABLE applications (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   phase_id INT NOT NULL,
-  job_title VARCHAR(100) NOT NULL,
-  company VARCHAR(100) NOT NULL,
-  date_applied DATE NOT NULL,
-  last_update DATE NOT NULL,
   reminder_id INT,
   resume_id INT,
   cover_letter_id INT,
+  job_title VARCHAR(100) NOT NULL,
+  company VARCHAR(100) NOT NULL,
+  date_created DATE NOT NULL,
+  last_update DATE NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (phase_id) REFERENCES phases(id),
   FOREIGN KEY (reminder) REFERENCES reminders(id),

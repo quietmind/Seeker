@@ -15,11 +15,29 @@ connection.connect((err) => {
   }
 })
 
+module.exports.createPhase = function(data, callback) {
+  connection.query(
+    `INSERT INTO phases (id, user_id, phase_label, phase_order) VALUES (?, ?, ?, ?)`,
+    [null, data.userId, data.phaseLabel, data.phaseOrder],
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.createApp = function(data, callback) {
+  connection.query(
+    `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, data.userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.date, data.date],
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.getUserPhases = function(userId, callback) {
   connection.query(
-    `SELECT * FROM phases INNER JOIN phase_order ON phases.id = phase_order.phase_id WHERE user_id = ${userId}`,
-    // `SELECT * FROM phases INNER JOIN phase_order ON phases.id = phase_order.phase_id WHERE phase.user_id = ${userId} AND phase_order.user_id = ${userId}`,
-    // `SELECT * FROM phases, phase_order WHERE phases.id = phase_order.phase_id AND user_id = ${userId}`,
+    `SELECT * FROM phases WHERE user_id = ${userId}`,
     function(err, results) {
       callback(err, results)
     }
@@ -31,6 +49,55 @@ module.exports.getUserApps = function(userId, callback) {
     `SELECT * FROM applications WHERE user_id = ${userId}`,
     function(err, results) {
       callback(err, results)
+    }
+  )
+}
+
+module.exports.updatePhase = function(phases, callback) {
+  for (var i = 0; i < phases.length; i++) {
+    connection.query(
+      `UPDATE phases SET phase_order = ${i} WHERE phase_id = ${phases[i]}`,
+      function(err) {
+        if (err) {
+          console.error(err)
+        }
+      }
+    )
+  }
+  callback()
+}
+
+module.exports.updateApp = function(data, callback) {
+  connection.query(
+    `UPDATE applications SET 
+    phase_id = ${data.phaseId}, 
+    reminder_id = ${data.reminderId}, 
+    resume_id = ${data.resumeId}, 
+    cover_letter_id = ${data.coverLetterId}, 
+    job_title = ${data.jobTitle},
+    company = ${data.company},
+    last_update = ${data.date}
+    WHERE id = ${data.appId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.deletePhase = function(phaseId, callback) {
+  connection.query(
+    `DELETE FROM phases WHERE id = ${phaseId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.deleteApp = function(appId, callback) {
+  connection.query(
+    `DELETE FROM applications WHERE id = ${req.body.appId}`,
+    function(err) {
+      callback(err)
     }
   )
 }
