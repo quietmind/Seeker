@@ -2,11 +2,19 @@
 	height: 100vh;
 }
 
-.container {
-	float:left;
+.progressboard-container{
+	max-width: 100%;
+	overflow-x: scroll; 
+	white-space: nowrap;
+
+}
+
+
+.phase {
+	display:inline-block;
 	position:relative;
 	width:300px;
-	height:auto;
+	height:90vh;
 	margin:8px;
 	background-color:lightgray;
 	border-radius:3px;
@@ -51,4 +59,8 @@
   opacity: 0.4;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
+}
+
+.app-container::-webkit-scrollbar {
+	display: none;
 }

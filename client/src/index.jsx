@@ -36,7 +36,7 @@ class App extends React.Component {
   			</Menu.Item>
   		</Menu>
   		 <Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
+          <Sidebar as={Menu} animation='slide along' width='thin' visible={this.state.menuVisible} icon='labeled' vertical inverted>
             <Menu.Item name='home' as={Link} to='/'>
               <Icon name='home' />
               Home

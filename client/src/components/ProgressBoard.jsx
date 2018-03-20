@@ -16,7 +16,9 @@ export default class ProgressBoard extends React.Component{
 
 	render(){
 		return(
-			<div><Phase/><Phase/><Phase/></div>
+			<div className="progressboard-container">
+        <Phase/><Phase/><Phase/><Phase/><Phase/>
+      </div>
 		)
 	}
 }

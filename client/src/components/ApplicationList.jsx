@@ -52,18 +52,16 @@ export default class ApplicationList extends React.Component{
 	render(){
 		return(
 			<div>
-        <div> This is the Application List</div>
-        <Table className="applicationListTable">
-          <Table.Header className="applicationListHeaders">
-            <Table.Row>
-              <Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
-              <Table.HeaderCell onClick={this.arrangeByCompany}>Company</Table.HeaderCell>
-              <Table.HeaderCell onClick={this.arrangeByDate}>Date Submitted</Table.HeaderCell>
-              <Table.HeaderCell onClick={this.arrangeByStatus}>Status</Table.HeaderCell>
-              <Table.HeaderCell onClick={this.arrangeByResume}>Resume Used</Table.HeaderCell>
-              <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+			   <Table className="applicationListTable">
+            <Table.Header className="applicationListHeaders">
+	             <Table.Row><Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
+	              <Table.HeaderCell onClick={this.arrangeByCompany}>Company</Table.HeaderCell>
+	              <Table.HeaderCell onClick={this.arrangeByDate}>Date Submitted</Table.HeaderCell>
+	              <Table.HeaderCell onClick={this.arrangeByStatus}>Status</Table.HeaderCell>
+	              <Table.HeaderCell onClick={this.arrangeByResume}>Resume Used</Table.HeaderCell>
+	              <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
+	            </Table.Row>
+						</Table.Header>
 
           <Table.Body className="applicationListBody">
             {this.state.applications.map((ele, i) => (

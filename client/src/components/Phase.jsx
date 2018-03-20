@@ -13,7 +13,9 @@ export default class Phase extends Component {
 	render(){
 		return(
 			<div className='phase'>
-			<div className='Phase'
+			<div className='PhaseTitle'>
+	
+			</div>
 		      <div className="AppItem">Swap me around</div>
 		      <div className="AppItem">Swap him around</div>
 		      <div className="AppItem">Swap her around</div>
