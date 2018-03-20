@@ -1,15 +1,14 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import Welcome from './Welcome.jsx';
+import axios from 'axios';
 
 export default class ApplicationList extends React.Component{
 	constructor(props){
 		super(props)
-		this.state ={ applications : [
-			{job_title: "clerk", company: "Days Inn", date_applied: 'Feb 12 2014 10:00:00 AM', resume_id: 1, cover_letter_id: 2, phase_id: 3},
-			{job_title: "data analyst", company: "Hack Reactor", date_applied: 'Mar 12 2011 10:00:00 AM', resume_id: 4, cover_letter_id: 1, phase_id: 2},
-      {job_title: "accountant", company: "Zumix", date_applied: 'Mar 8 2012 08:00:00 AM', resume_id: 2, cover_letter_id: 5, phase_id: 1}
-      ]
+		this.state ={ 
+      applications : [],
+      user: null
 		}
 
     this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
@@ -18,7 +17,18 @@ export default class ApplicationList extends React.Component{
 		this.arrangeByResume = this.arrangeByResume.bind(this);
 		this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
     this.arrangeByDate = this.arrangeByDate.bind(this);
-	}
+  }
+  
+  componentDidMount() {
+    axios.get('/applications')
+    .then((response) => {
+      console.log('it worked', response.data)
+      this.setState({user: response.data})
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+  }
 
 	arrangeByStatus() {
 		this.setState({applications: this.state.applications.sort(dynamicSort("phase_id"))});
