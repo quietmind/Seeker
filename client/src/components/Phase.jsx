@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Appitem from './AppItem.js'
+import Appitem from './AppItem.jsx'
 
 
 
@@ -14,7 +14,7 @@ export default class Phase extends Component {
 		return(
 			<div className='phase'>
 			<div className='PhaseTitle'>
-	
+
 			</div>
 		      <div className="AppItem">Swap me around</div>
 		      <div className="AppItem">Swap him around</div>
