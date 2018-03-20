@@ -46,7 +46,7 @@ app.post('/users', function(req, res) {
             db.addDefaultPhases(results[0].id, function(err) {
               if (err) console.error(err)
               console.log('added default phases')
-              res.status(201).send()
+              res.status(201).send(`${results[0].id}`)
             })
           })
         })
@@ -82,7 +82,7 @@ app.get('/users', function(req, res) {
         if (match) {
           console.log('results array contained a match')
           req.session.userId = results[0].id
-          res.status(200).send(results[0].id)
+          res.status(200).send(`${results[0].id}`)
         } else {
           res.status(403).send()
         }

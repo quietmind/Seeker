@@ -4,11 +4,9 @@
 
 .progressboard-container{
 	max-width: 100%;
-	overflow-x: scroll; 
+	overflow-x: scroll;
 	white-space: nowrap;
-
 }
-
 
 .phase {
 	display:inline-block;
@@ -30,9 +28,9 @@
 	margin:4px 0;
 	border-radius:3px;
 	box-shadow:1px 1px 1px rgba(0,0,0,.2);
-    cursor:move; 
-    cursor:-webkit-grab; 
-    cursor:-moz-grab; 
+    cursor:move;
+    cursor:-webkit-grab;
+    cursor:-moz-grab;
     cursor:grab;
 }
 
@@ -63,4 +61,24 @@
 
 .app-container::-webkit-scrollbar {
 	display: none;
+}
+
+.welcome {
+	margin: 0px auto;
+	border: teal solid;
+	border-radius: 10px;
+	max-width: 600px;
+  text-align:center;
+}
+
+.login {
+	margin: auto;
+	background-color: teal;
+	padding: 20px 0;
+}
+
+.signup {
+	margin:auto;
+	background-color: teal;
+	padding: 20px 0;
 }
