@@ -41,8 +41,8 @@ class App extends React.Component {
   login(username, password) {
     axios.get('/users', {params: {username: username, password: password}})
       //double check what returning value will be
-      .then((response)=> this.setState({user: response.data}))
-      .catch((err)=> alert("Please enter a valid username"))
+      .then((response) => this.setState({user: response.data}))
+      .catch((err) => alert("Please enter a valid username"))
   }
 
   render () {
