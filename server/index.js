@@ -94,6 +94,7 @@ app.get('/users', function(req, res) {
 })
 
 app.get('/phases', checkSession, function(req, res) {
+  console.log(req.query)
   db.getUserPhases(req.query.userId, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
