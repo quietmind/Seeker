@@ -2,7 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var request = require('request');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var passport = require('passport');
 var db = require('../database/index.js');
 var app = express();
@@ -29,17 +29,23 @@ var checkSession = function(req, res, next) {
 }
 
 app.post('/users', function(req, res) {
-  db.getUserCredentials(req.body, function(err, results) {
+  console.log('received post request', req.body)
+  db.getUserCredentials(req.body.username, function(err, results) {
     if (err) console.error(err)
+    console.log('queried the db', results)
     if (results.length === 0) {
       bcrypt.hash(req.body.password, null, null, function(err, hash) {
         if (err) console.error(err)
+        console.log('hashed password')
         db.createUser(req.body.username, hash, function(err) {
           if (err) console.error(err)
-          db.getUserCredentials(req.body, function(err, results) {
+          console.log('created new user')
+          db.getUserCredentials(req.body.username, function(err, results) {
             if (err) console.error(err)
-            db.addDefaultPhases(results.id, function(err) {
+            console.log('got user id from db', results)
+            db.addDefaultPhases(results[0].id, function(err) {
               if (err) console.error(err)
+              console.log('added default phases')
               res.status(201).send()
             })
           })
@@ -66,11 +72,15 @@ app.post('/applications', checkSession, function(req, res) {
 })
 
 app.get('/users', function(req, res) {
-  db.getUserCredentials(req.body, function(err, results) {
+  console.log('request query', req.query)
+  db.getUserCredentials(req.query.username, function(err, results) {
+    console.log('got a response from the db', results)
     if (err) console.error(err)
     if (results.length > 0) {
-      bcrypt.compare(pass, results[0].password, function(err, match) {
+      console.log('results array contained at least one entry', results[0])
+      bcrypt.compare(req.query.password, results[0].password, function(err, match) {
         if (match) {
+          console.log('results array contained a match')
           req.session.userId = results[0].id
           res.send()
         } else {
@@ -84,21 +94,21 @@ app.get('/users', function(req, res) {
 })
 
 app.get('/phases', checkSession, function(req, res) {
-  db.getUserPhases(req.body, function(err, results) {
+  db.getUserPhases(req.query.userId, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
 })
 
 app.get('/applications', checkSession, function(req, res) {
-  db.getUserApps(req.body, function(err, results) {
+  db.getUserApps(req.query.userId, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
 })
 
 app.post('/order', checkSession, function(req, res) {
-  db.updatePhase(req.body, function(err) {
+  db.updatePhaseOrder(req.body.phases, function(err) {
     if (err) console.error(err)
     res.status(201).send()
   })
@@ -112,14 +122,14 @@ app.post('/details', checkSession, function(req, res) {
 })
 
 app.delete('/phases', checkSession, function(req, res) {
-  db.deletePhase(req.body, function(err) {
+  db.deletePhase(req.query.phaseId, function(err) {
     if (err) console.error(err)
     res.status(202).send()
   })
 })
 
 app.delete('/applications', checkSession, function(req, res) {
-  db.deleteApp(req.body, function(err) {
+  db.deleteApp(req.query.appId, function(err) {
     if (err) console.error(err)
     res.status(202).send()
   })
