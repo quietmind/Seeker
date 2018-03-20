@@ -54,7 +54,6 @@ export default class ApplicationList extends React.Component{
 	render(){
 		return(
 			<div>
-			   <div> This is the Application List</div>
 			   <Table className="applicationListTable">
             <Table.Header className="applicationListHeaders">
 	             <Table.Row><Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
