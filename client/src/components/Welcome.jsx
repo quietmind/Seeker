@@ -8,7 +8,6 @@ export default class Welcome extends React.Component{
 	constructor(props){
 		super(props)
 
-
 	}
 
   render() {
@@ -18,15 +17,14 @@ export default class Welcome extends React.Component{
         <Header as='h2' textAlign='center'>
           Welcome to Seeker
         </Header>
-        <Button.Group attached='top' textAlign='center'>
+        <Button.Group color = 'teal' attached='top' textAlign='center'>
           <Button color='teal' style={{ maxWidth: 350, margin:10 }} as={Link} to='/signup'>Signup</Button>
           <Button color='teal' style={{ maxWidth: 350, margin:10 }} as={Link} to='/login'>Login</Button>
         </Button.Group>
-
-        <Segment attached color='teal' className= "welcomeWrapper">
-          <Route  path='/login' component={Login}/>
-          <Route  path='/signup' component={Signup}/>
-        </Segment>
+          <Route  path='/login'
+						render = {(props) => <Login {...props} handleClick={this.props.login }/> } />
+					<Route  path='/signup'
+						render = {(props) => <Signup {...props} handleClick={this.props.signup }/> }  />
       </div>
       </Router>
     )
