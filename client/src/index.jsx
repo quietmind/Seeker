@@ -32,7 +32,8 @@ class App extends React.Component {
   signup(username, password) {
     axios.post('/users', {username: username, password: password})
       //find something to redirect to login
-      .then((results)=> this.props.history.push('/login'))
+      .then((results)=> this.setState({user: results.data[0].userId}))
+      .catch((err)=> alert("Please enter a valid username"))
   }
 
   login(username, password) {
