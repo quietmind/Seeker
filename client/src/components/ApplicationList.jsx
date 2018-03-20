@@ -7,8 +7,7 @@ export default class ApplicationList extends React.Component{
 	constructor(props){
 		super(props)
 		this.state ={ 
-      applications : [],
-      user: null
+      applications : []
 		}
 
     this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
@@ -16,14 +15,15 @@ export default class ApplicationList extends React.Component{
 		this.arrangeByStatus = this.arrangeByStatus.bind(this);
 		this.arrangeByResume = this.arrangeByResume.bind(this);
 		this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
-    this.arrangeByDate = this.arrangeByDate.bind(this);
+    this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
+    this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
   }
   
   componentDidMount() {
     axios.get('/applications')
     .then((response) => {
       console.log('it worked', response.data)
-      this.setState({user: response.data})
+      this.setState({applications: response.data})
     })
     .catch((err) => {
       console.error(err)
@@ -50,7 +50,16 @@ export default class ApplicationList extends React.Component{
     this.setState({applications: this.state.applications.sort(dynamicSort("company"))});
   }
 
-  arrangeByDate() {
+  arrangeByDateCreated() {
+    var arrangedArray = this.state.applications.sort(function(a, b) {
+      let date1 = new Date(a.date_created);
+      let date2 = new Date(b.date_created);
+      return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
+    });
+    this.setState({applications: arrangedArray});
+  }
+
+  arrangeByLastUpdate() {
     var arrangedArray = this.state.applications.sort(function(a, b) {
       let date1 = new Date(a.last_update);
       let date2 = new Date(b.last_update);
@@ -62,23 +71,26 @@ export default class ApplicationList extends React.Component{
 	render(){
 		return(
 			<div>
-			   <Table className="applicationListTable">
-            <Table.Header className="applicationListHeaders">
-	             <Table.Row><Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByCompany}>Company</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByDate}>Date Submitted</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByStatus}>Status</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByResume}>Resume Used</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
-	            </Table.Row>
-						</Table.Header>
+        <Table className="applicationListTable">
+          <Table.Header className="applicationListHeaders">
+            <Table.Row>
+              <Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
+              <Table.HeaderCell onClick={this.arrangeByCompany}>Company</Table.HeaderCell>
+              <Table.HeaderCell onClick={this.arrangeByDateCreated}>Date Created</Table.HeaderCell>
+              <Table.HeaderCell onClick={this.arrangeByLastUpdate}>Last Activity</Table.HeaderCell>
+              <Table.HeaderCell onClick={this.arrangeByStatus}>Status</Table.HeaderCell>
+              <Table.HeaderCell onClick={this.arrangeByResume}>Resume Used</Table.HeaderCell>
+              <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
           <Table.Body className="applicationListBody">
             {this.state.applications.map((ele, i) => (
               <Table.Row key={i}>
                 <Table.Cell>{ele.job_title}</Table.Cell>
                 <Table.Cell>{ele.company}</Table.Cell>
-                <Table.Cell>{ele.date_applied}</Table.Cell>
+                <Table.Cell>{ele.date_created}</Table.Cell>
+                <Table.Cell>{ele.last_update}</Table.Cell>
                 <Table.Cell>{ele.phase_id}</Table.Cell>
                 <Table.Cell>{ele.resume_id}</Table.Cell>
                 <Table.Cell>{ele.cover_letter_id}</Table.Cell>
@@ -93,13 +105,8 @@ export default class ApplicationList extends React.Component{
 }
 
 function dynamicSort(property) {
-  var sortOrder = 1;
-  if(property[0] === "-") {
-    sortOrder = -1;
-    property = property.substr(1);
-  }
   return function (a,b) {
     var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-    return result * sortOrder;
+    return result;
   }
 }
