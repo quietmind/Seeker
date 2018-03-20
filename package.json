@@ -28,6 +28,7 @@
     "mysql": "^2.15.0",
     "passport": "^0.4.0",
     "react": "^15.6.2",
+    "react-addons-shallow-compare": "^0.14.8",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
