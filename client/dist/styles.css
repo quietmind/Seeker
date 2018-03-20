@@ -1,3 +1,54 @@
 .app-container{
 	height: 100vh;
 }
+
+.container {
+	float:left;
+	position:relative;
+	width:300px;
+	height:auto;
+	margin:8px;
+	background-color:lightgray;
+	border-radius:3px;
+	box-shadow:1px 1px 1px rgba(0,0,0,.2);
+}
+
+.AppItem {
+	float:left;
+	width:100%;
+	height:auto;
+	background-color:white;
+	padding:10px;
+	margin:4px 0;
+	border-radius:3px;
+	box-shadow:1px 1px 1px rgba(0,0,0,.2);
+    cursor:move; 
+    cursor:-webkit-grab; 
+    cursor:-moz-grab; 
+    cursor:grab;
+}
+
+.gu-mirror {
+  cursor:move; cursor:-webkit-grabbing; cursor:-moz-grabbing; cursor:grabbing;
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 1;
+  -webkit-transform: rotate(5deg);
+  transform: rotate(5deg);
+}
+
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.4;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}

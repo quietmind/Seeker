@@ -4,9 +4,10 @@ import $ from 'jquery';
 import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
 // import AnyComponent from './components/filename.jsx'
-import ProgressBoard from './components/ProgressBoard.js'
-import Metrics from './components/Metrics.js'
-import ApplicationList from './components/ApplicationList.js'
+import ProgressBoard from './components/ProgressBoard.jsx'
+import Metrics from './components/Metrics.jsx'
+import ApplicationList from './components/ApplicationList.jsx'
+
 
 
 class App extends React.Component {
