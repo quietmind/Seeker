@@ -59,9 +59,9 @@ module.exports.addDefaultPhases = function(userId, callback) {
   )
 }
 
-module.exports.getUserCredentials = function(data, callback) {
+module.exports.getUserCredentials = function(username, callback) {
   connection.query(
-    `SELECT * FROM users WHERE username = ${data.username}`,
+    `SELECT * FROM users WHERE username = '${username}'`,
     function(err, results) {
       callback(err, results)
     }
@@ -86,7 +86,7 @@ module.exports.getUserApps = function(userId, callback) {
   )
 }
 
-module.exports.updatePhase = function(phases, callback) {
+module.exports.updatePhaseOrder = function(phases, callback) {
   for (var i = 0; i < phases.length; i++) {
     connection.query(
       `UPDATE phases SET phase_order = ${i} WHERE phase_id = ${phases[i]}`,
@@ -104,8 +104,8 @@ module.exports.updateApp = function(data, callback) {
     reminder_id = ${data.reminderId}, 
     resume_id = ${data.resumeId}, 
     cover_letter_id = ${data.coverLetterId}, 
-    job_title = ${data.jobTitle},
-    company = ${data.company},
+    job_title = '${data.jobTitle}',
+    company = '${data.company}',
     last_update = ${data.date}
     WHERE id = ${data.appId}`,
     function(err) {
