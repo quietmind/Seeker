@@ -17,7 +17,7 @@ export default class ApplicationList extends React.Component{
 		this.arrangeByStatus = this.arrangeByStatus.bind(this);
 		this.arrangeByResume = this.arrangeByResume.bind(this);
 		this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
-//    this.arrangeByDate = this.arrangeByDate.bind(this);
+    this.arrangeByDate = this.arrangeByDate.bind(this);
 	}
 
 	arrangeByStatus() {
@@ -40,16 +40,14 @@ export default class ApplicationList extends React.Component{
     this.setState({applications: this.state.applications.sort(dynamicSort("company"))});
   }
 
-  // arrangeByDate() {
-  //   var arrangedArray = this.state.applications.sort(function(a, b) {
-  //     a = new Date(a.dateModified);
-  //     b = new Date(b.dateModified);
-  //     return a>b ? -1 : a<b ? 1 : 0;
-  //   });
-	//
-  //   this.setState({applications: arrangedArray});
-  // }
-
+  arrangeByDate() {
+    var arrangedArray = this.state.applications.sort(function(a, b) {
+      let date1 = new Date(a.last_update);
+      let date2 = new Date(b.last_update);
+      return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
+    });
+    this.setState({applications: arrangedArray});
+  }
 
 	render(){
 		return(
@@ -65,19 +63,19 @@ export default class ApplicationList extends React.Component{
 	            </Table.Row>
 						</Table.Header>
 
-            <Table.Body className="applicationListBody">
-              {this.state.applications.map((ele, i) => (
-                <Table.Row key={i}>
-                  <Table.Cell>{ele.job_title}</Table.Cell>
-                  <Table.Cell>{ele.company}</Table.Cell>
-                  <Table.Cell>{ele.date_applied}</Table.Cell>
-                  <Table.Cell>{ele.phase_id}</Table.Cell>
-                  <Table.Cell>{ele.resume_id}</Table.Cell>
-                  <Table.Cell>{ele.cover_letter_id}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-         </Table>
+          <Table.Body className="applicationListBody">
+            {this.state.applications.map((ele, i) => (
+              <Table.Row key={i}>
+                <Table.Cell>{ele.job_title}</Table.Cell>
+                <Table.Cell>{ele.company}</Table.Cell>
+                <Table.Cell>{ele.date_applied}</Table.Cell>
+                <Table.Cell>{ele.phase_id}</Table.Cell>
+                <Table.Cell>{ele.resume_id}</Table.Cell>
+                <Table.Cell>{ele.cover_letter_id}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
 
 			</div>
 		)
@@ -85,13 +83,13 @@ export default class ApplicationList extends React.Component{
 }
 
 function dynamicSort(property) {
-    var sortOrder = 1;
-    if(property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
-    }
-    return function (a,b) {
-        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-        return result * sortOrder;
-    }
+  var sortOrder = 1;
+  if(property[0] === "-") {
+    sortOrder = -1;
+    property = property.substr(1);
+  }
+  return function (a,b) {
+    var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+    return result * sortOrder;
+  }
 }
