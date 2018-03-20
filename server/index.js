@@ -102,7 +102,7 @@ app.get('/phases', checkSession, function(req, res) {
 })
 
 app.get('/applications', checkSession, function(req, res) {
-  db.getUserApps(req.query.userId, function(err, results) {
+  db.getUserApps(req.session.userId, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
