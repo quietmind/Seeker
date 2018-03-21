@@ -10,7 +10,6 @@ import Welcome from './components/Welcome.jsx'
 import FormModal from './components/formModal.jsx'
 import axios from 'axios';
 
-// const history = createHistory();
 
 class App extends React.Component {
   constructor(props) {
