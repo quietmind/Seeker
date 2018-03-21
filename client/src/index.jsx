@@ -52,10 +52,9 @@ class App extends React.Component {
     //   .then((results) => this.setState({applications: results.data}))});
   }
 
-  //======AUTHENTICATION ACTIONS=========
   signup(username, password) {
+    event.preventDefault()
     axios.post('/users', {username: username, password: password})
-    //find something to redirect to login
     .then((response) => {
       this.setState({user: response.data})
       this.getUserData()
@@ -64,8 +63,8 @@ class App extends React.Component {
   }
 
   login(username, password) {
+    event.preventDefault()
     axios.get('/users', {params: {username: username, password: password}})
-    //double check what returning value will be
     .then((response) => {
       this.setState({user: response.data})
       this.getUserData()
@@ -74,7 +73,6 @@ class App extends React.Component {
   }
 
   logout() {
-    console.log('loggin out')
     this.setState({user: null})
   }
 
