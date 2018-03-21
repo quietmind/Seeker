@@ -106,7 +106,7 @@ class App extends React.Component {
   }
 
   decorateProgressBoard() {
-    return <ProgressBoard 
+    return <ProgressBoard
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
@@ -116,8 +116,8 @@ class App extends React.Component {
   }
 
   decorateDataVis() {
-    return <Metrics 
-      phases={this.state.phases} 
+    return <Metrics
+      phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
       resumes={this.state.resumes}
@@ -126,7 +126,7 @@ class App extends React.Component {
   }
 
   decorateAppList() {
-    return <ApplicationList 
+    return <ApplicationList
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}

@@ -8,7 +8,8 @@ export default class ApplicationList extends React.Component{
 		super(props)
 		this.state ={
 			showModal: false,
-			featuredItem: null
+			featuredItem: null,
+			applications: []
 		}
 
     this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
@@ -21,27 +22,27 @@ export default class ApplicationList extends React.Component{
   }
 
 	arrangeByStatus() {
-		this.setState({applications: this.props.applications.sort(dynamicSort("phase_id"))});
+		this.setState({applications: this.props.apps.sort(dynamicSort("phase_id"))});
 	}
 
   arrangeByResume() {
-    this.setState({applications: this.props.applications.sort(dynamicSort("resume_id"))});
+    this.setState({applications: this.props.apps.sort(dynamicSort("resume_id"))});
   }
 
 	arrangeByCoverLetter() {
-		this.setState({applications: this.props.applications.sort(dynamicSort("cover_letter_id"))});
+		this.setState({applications: this.props.apps.sort(dynamicSort("cover_letter_id"))});
 	}
 
 	arrangeByJobTitle() {
-		this.setState({applications: this.props.applications.sort(dynamicSort("job_title"))});
+		this.setState({applications: this.props.apps.sort(dynamicSort("job_title"))});
 	}
 
   arrangeByCompany() {
-    this.setState({applications: this.props.applications.sort(dynamicSort("company"))});
+    this.setState({applications: this.props.apps.sort(dynamicSort("company"))});
   }
 
   arrangeByDateCreated() {
-    var arrangedArray = this.props.applications.sort(function(a, b) {
+    var arrangedArray = this.props.apps.sort(function(a, b) {
       let date1 = new Date(a.date_created);
       let date2 = new Date(b.date_created);
       return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
@@ -75,7 +76,7 @@ export default class ApplicationList extends React.Component{
           </Table.Header>
 
           <Table.Body className="applicationListBody">
-            {this.props.applications.map((ele, i) => (
+            {this.props.apps.map((ele, i) => (
 								<DescriptionCard info={ele} i={i} />
 						))}
           </Table.Body>
