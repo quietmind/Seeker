@@ -7,6 +7,7 @@ import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
+import FormModal from './components/formModal.jsx'
 import axios from 'axios';
 
 // const history = createHistory();
@@ -28,6 +29,7 @@ class App extends React.Component {
     this.getUserData = this.getUserData.bind(this)
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this)
     this.logout = this.logout.bind(this);
+    this.submitNewApplication = this.submitNewApplication.bind(this);
   }
 
   toggleMenu(){
@@ -35,6 +37,21 @@ class App extends React.Component {
   		menuVisible: !this.state.menuVisible
   	})
   }
+
+//id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update
+  submitNewApplication(phase, resume, cover_letter, job_title, company){
+    axios.post('/applications', {userId: this.state.user,
+                                phaseId: phase,
+                                reminderId: null,
+                                resumeId: null,
+                                coverLetterId: null,
+                                jobTitle: job_title,
+                                company: company,
+                                date: new Date()})
+    // .then((response) => { axios.get('/applications')
+    //   .then((results) => this.setState({applications: results.data}))});
+  }
+
   //======AUTHENTICATION ACTIONS=========
   signup(username, password) {
     axios.post('/users', {username: username, password: password})
@@ -74,8 +91,8 @@ class App extends React.Component {
   }
 
   decorateProgressBoard(){
-    return <ProgressBoard 
-            phases={this.state.phases} 
+    return <ProgressBoard
+            phases={this.state.phases}
             apps={this.state.applications}/>
   }
 
@@ -88,8 +105,8 @@ class App extends React.Component {
               <Menu.Item onClick={this.toggleMenu}>
               <Icon name="sidebar" /> Menu
               </Menu.Item>
-              <Menu.Item onClick={this.logout}> 
-              Log Out 
+              <Menu.Item onClick={this.logout}>
+              Log Out
               </Menu.Item>
             </Menu>
             <Sidebar.Pushable as={Segment}>
@@ -106,6 +123,7 @@ class App extends React.Component {
                   <Icon name='book' />
                   My Apps
                 </Menu.Item>
+                <FormModal handleClick={this.submitNewApplication}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Route  path='/' render={this.decorateProgressBoard}/>
@@ -120,7 +138,7 @@ class App extends React.Component {
     } else {
       return(<Welcome login={this.login} signup={this.signup}/>)
     }
-  } 
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));

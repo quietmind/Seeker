@@ -6,7 +6,7 @@ import axios from 'axios';
 export default class ApplicationList extends React.Component{
 	constructor(props){
 		super(props)
-		this.state ={ 
+		this.state ={
       applications : []
 		}
 
@@ -18,7 +18,7 @@ export default class ApplicationList extends React.Component{
     this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
     this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
   }
-  
+
   componentDidMount() {
     axios.get('/applications')
     .then((response) => {
@@ -61,8 +61,8 @@ export default class ApplicationList extends React.Component{
 
   arrangeByLastUpdate() {
     var arrangedArray = this.state.applications.sort(function(a, b) {
-      let date1 = new Date(a.last_update);
-      let date2 = new Date(b.last_update);
+      let date1 = new Date(a.date_applied);
+      let date2 = new Date(b.date_applied);
       return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
     });
     this.setState({applications: arrangedArray});
@@ -98,7 +98,6 @@ export default class ApplicationList extends React.Component{
             ))}
           </Table.Body>
         </Table>
-
 			</div>
 		)
 	}
