@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
 
 
-<<<<<<< HEAD
 class FormModal extends React.Component {
   constructor(props) {
     super(props)
@@ -49,35 +48,6 @@ class FormModal extends React.Component {
       </Modal>
     )
   }
-=======
-const FormModal = () => {
-  return (<Modal trigger={<Menu.Item>
-                          <Icon name='wordpress forms' />
-                          Enter New Application</Menu.Item>} basic size='small'>
-      <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
-      <Modal.Content >
-        <Form onSubmit={console.log("submit")}>
-          <Form.Group widths='equal'>
-
-            <Form.Input fluid label='Job Title' placeholder='Job Title' />
-            <Form.Input fluid label='Company Name' placeholder='Company Name' />
-            <Form.Select fluid label='Phase' options={options} placeholder='Status' />
-
-          </Form.Group>
-          <Form.Group widths='equal'>
-
-            <Form.Input fluid label='Resume Used' placeholder='Resume Used' />
-            <Form.Input fluid label='Cover Letter Used' placeholder='Cover Letter Used' />
-            <Form.Input fluid label='Date' placeholder='Date' />
-
-          </Form.Group>
-        <Button type='submit'>Submit</Button>
-        </Form>
-      </Modal.Content>
-    </Modal>
-
-  )
->>>>>>> trying to understand form
 }
 
 const options = [
