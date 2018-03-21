@@ -9,24 +9,13 @@ export default class ProgressBoard extends React.Component{
 		this.state ={
       phases: []
 		}
-    this.getPhases = this.getPhases.bind(this)
 	}
 
   componentDidMount(){
     dragula(Array.from(document.getElementsByClassName('phase')))
-    this.getPhases()
   }
 
-  getPhases(){
-    console.log('triggered')
-    axios.get('/phases')
-         .then((data) =>{
-          console.log(data)
-          this.setState({
-            phases: data.data
-          },() => console.log(this.state.phases))
-         })
-  }
+
 
 	render(){
 		return(
