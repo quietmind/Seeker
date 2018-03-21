@@ -19,15 +19,19 @@ class App extends React.Component {
   		menuVisible: false,
       user: null,
       phases: [],
-      applications: []
+      applications: [],
+      reminders: [],
+      resumes: [],
+      coverletters: []
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
-
     this.getUserData = this.getUserData.bind(this)
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this)
+    this.decorateDataVis = this.decorateDataVis.bind(this)
+    this.decorateAppList = this.decorateAppList.bind(this)
     this.logout = this.logout.bind(this);
     this.submitNewApplication = this.submitNewApplication.bind(this);
   }
@@ -81,7 +85,18 @@ class App extends React.Component {
     .then((response) =>  {
       this.setState({phases: response.data}, () =>{
         axios.get('/applications')
-        .then((response) =>  this.setState({applications: response.data}, () => console.log('got data', this.state.applications, this.state.phases)))
+        .then((response) => {
+          this.setState({applications: response.data})
+          axios.get('/reminders', {params: {applications: response.data}})
+          .then((response) => this.setState({reminders: response.data}))
+          .catch((err) => console.error(err))
+          axios.get('/resumes', {params: {applications: response.data}})
+          .then((response) => this.setState({resumes: response.data}))
+          .catch((err) => console.error(err))
+          axios.get('/coverletters', {params: {applications: response.data}})
+          .then((response) => this.setState({coverletters: response.data}))
+          .catch((err) => console.error(err))
+        })
         .catch((err) => console.error(err))
       })
     })

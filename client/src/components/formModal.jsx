@@ -37,11 +37,11 @@ class FormModal extends React.Component {
               <Form.Select fluid label='Phase' options={this.props.phases.map(function(ele) { return {text: ele.phase_label, value: ele.id}})} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
 
             </Form.Group>
-            <Form.Group widths='equal'>
+            {/* <Form.Group widths='equal'>
 
               <Form.Input fluid label='Resume Used' placeholder='Resume Used' value= {this.state.resume} onChange={(e)=>this.setState({resume: e.target.value})}/>
               <Form.Input fluid label='Cover Letter Used' placeholder='Cover Letter Used' value= {this.state.coverLetter} onChange={(e)=>this.setState({coverLetter: e.target.value})}/>
-            </Form.Group>
+            </Form.Group> */}
           <Button type='submit'>Submit</Button>
           </Form>
         </Modal.Content>
