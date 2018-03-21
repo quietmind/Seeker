@@ -53,7 +53,7 @@ class App extends React.Component {
                                 company: company,
                                 date: new Date()})
     // .then((response) => { axios.get('/applications')
-    //   .then((results) => this.setState({applications: results.data}))});
+    // .then((results) => this.setState({applications: results.data}))});
   }
 
   signup(username, password) {
@@ -106,15 +106,33 @@ class App extends React.Component {
   }
 
   decorateProgressBoard() {
-    return <ProgressBoard phases={this.state.phases} apps={this.state.applications}/>
+    return <ProgressBoard 
+      phases={this.state.phases}
+      apps={this.state.applications}
+      reminders={this.state.reminders}
+      resumes={this.state.resumes}
+      coverletters={this.state.coverletters}
+    />
   }
 
   decorateDataVis() {
-    return <Metrics phases={this.state.phases} apps={this.state.applications}/>
+    return <Metrics 
+      phases={this.state.phases} 
+      apps={this.state.applications}
+      reminders={this.state.reminders}
+      resumes={this.state.resumes}
+      coverletters={this.state.coverletters}
+    />
   }
 
   decorateAppList() {
-    return <ApplicationList applications={this.state.applications}/>
+    return <ApplicationList 
+      phases={this.state.phases}
+      apps={this.state.applications}
+      reminders={this.state.reminders}
+      resumes={this.state.resumes}
+      coverletters={this.state.coverletters}
+    />
   }
 
   render () {
