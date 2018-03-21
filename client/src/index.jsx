@@ -26,6 +26,7 @@ class App extends React.Component {
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.getUserData = this.getUserData.bind(this)
+    this.decorateProgressBoard = this.decorateProgressBoard.bind(this)
   }
 
   toggleMenu(){
@@ -45,7 +46,6 @@ class App extends React.Component {
   }
 
   login(username, password) {
-    console.log('loggin in')
     axios.get('/users', {params: {username: username, password: password}})
       //double check what returning value will be
       .then((response) => {
@@ -65,6 +65,12 @@ class App extends React.Component {
       })
     })
     .catch((err) => console.error(err))
+  }
+
+  decorateProgressBoard(){
+    return <ProgressBoard 
+            phases={this.state.phases} 
+            apps={this.state.applications}/>
   }
 
   render () {
@@ -93,9 +99,9 @@ class App extends React.Component {
                 </Menu.Item>
               </Sidebar>
               <Sidebar.Pusher>
-                <Route  exact path='/' component={ProgressBoard} onEnter={this.requireAuth}/>
-                <Route  path='/metrics' component={Metrics} onEnter={this.requireAuth}/>
-                <Route  path='/list' component={ApplicationList} onEnter={this.requireAuth}/>
+                <Route  path='/' render={this.decorateProgressBoard}/>
+                <Route  path='/metrics' component={Metrics}/>
+                <Route  path='/list' component={ApplicationList}/>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </div>
