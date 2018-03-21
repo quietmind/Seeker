@@ -21,8 +21,7 @@ class App extends React.Component {
       phases: [],
       applications: [],
       reminders: [],
-      resumes: [],
-      coverletters: []
+      files: [],
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
@@ -83,18 +82,15 @@ class App extends React.Component {
   getUserData(){
     axios.get('/phases')
     .then((response) =>  {
-      this.setState({phases: response.data}, () =>{
+      this.setState({phases: response.data}, () => {
         axios.get('/applications')
         .then((response) => {
           this.setState({applications: response.data})
           axios.get('/reminders', {params: {applications: response.data}})
-          .then((response) => this.setState({reminders: response.data}))
+          .then((response) => this.setState({reminders: response.data}), console.log('got and set reminders'))
           .catch((err) => console.error(err))
-          axios.get('/resumes', {params: {applications: response.data}})
-          .then((response) => this.setState({resumes: response.data}))
-          .catch((err) => console.error(err))
-          axios.get('/coverletters', {params: {applications: response.data}})
-          .then((response) => this.setState({coverletters: response.data}))
+          axios.get('/files', {params: {applications: response.data}})
+          .then((response) => this.setState({files: response.data}), console.log('got and set files'))
           .catch((err) => console.error(err))
         })
         .catch((err) => console.error(err))

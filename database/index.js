@@ -87,6 +87,24 @@ module.exports.getUserApps = function(userId, callback) {
   )
 }
 
+module.exports.getReminders = function(appIds, callback) {
+  connection.query(
+    `SELECT * FROM reminders WHERE app_id IN (${appIds.join(', ')})`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
+module.exports.getFiles = function(appIds, callback) {
+  connection.query(
+    `SELECT * FROM files WHERE app_id IN (${appIds.join(', ')})`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
 module.exports.updatePhaseOrder = function(phases, callback) {
   for (var i = 0; i < phases.length; i++) {
     connection.query(

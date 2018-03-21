@@ -108,6 +108,20 @@ app.get('/applications', checkSession, function(req, res) {
   })
 })
 
+app.get('/reminders', checkSession, function(req, res) {
+  db.getReminders(req.query.applications.map((app) => app.id), function(err, results) {
+    if (err) console.error(err)
+    res.status(200).send(results)
+  })
+})
+
+app.get('/files', checkSession, function(req, res) {
+  db.getResumes(req.query.applications.map((app) => app.id), function(err, results) {
+    if (err) console.error(err)
+    res.status(200).send(results)
+  })
+})
+
 app.post('/order', checkSession, function(req, res) {
   db.updatePhaseOrder(req.body.phases, function(err) {
     if (err) console.error(err)
