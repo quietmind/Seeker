@@ -13,7 +13,7 @@ export default class Welcome extends React.Component{
     this.renderSignup = this.renderSignup.bind(this)
     this.renderLogin = this.renderLogin.bind(this)
   }
-  
+
   renderSignup() {
     this.setState({newUser: true})
   }
