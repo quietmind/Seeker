@@ -8,13 +8,13 @@ var db = require('../database/index.js');
 var app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'someSuperSecretString',
   cookie: {maxAge: 600000}
-}))
+}));
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
