@@ -86,7 +86,7 @@ export default class ApplicationList extends React.Component{
 
           <Table.Body className="applicationListBody">
             {this.state.applications.map((ele, i) => (
-              <Table.Row key={i}>
+              <Table.Row key={i} props={ele}>
                 <Table.Cell>{ele.job_title}</Table.Cell>
                 <Table.Cell>{ele.company}</Table.Cell>
                 <Table.Cell>{ele.date_created}</Table.Cell>
