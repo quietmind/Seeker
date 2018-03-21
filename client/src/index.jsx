@@ -114,7 +114,7 @@ class App extends React.Component {
   }
 
   decorateAppList() {
-    return <ApplicationList apps={this.state.applications}/>
+    return <ApplicationList applications={this.state.applications}/>
   }
 
   render () {

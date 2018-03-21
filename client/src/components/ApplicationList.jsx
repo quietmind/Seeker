@@ -7,7 +7,6 @@ export default class ApplicationList extends React.Component{
 	constructor(props){
 		super(props)
 		this.state ={
-      applications : [],
 			showModal: false,
 			featuredItem: null
 		}
@@ -21,39 +20,28 @@ export default class ApplicationList extends React.Component{
     this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
   }
 
-  componentDidMount() {
-    axios.get('/applications')
-    .then((response) => {
-      console.log('it worked', response.data)
-      this.setState({applications: response.data})
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-  }
-
 	arrangeByStatus() {
-		this.setState({applications: this.state.applications.sort(dynamicSort("phase_id"))});
+		this.setState({applications: this.props.applications.sort(dynamicSort("phase_id"))});
 	}
 
   arrangeByResume() {
-    this.setState({applications: this.state.applications.sort(dynamicSort("resume_id"))});
+    this.setState({applications: this.props.applications.sort(dynamicSort("resume_id"))});
   }
 
 	arrangeByCoverLetter() {
-		this.setState({applications: this.state.applications.sort(dynamicSort("cover_letter_id"))});
+		this.setState({applications: this.props.applications.sort(dynamicSort("cover_letter_id"))});
 	}
 
 	arrangeByJobTitle() {
-		this.setState({applications: this.state.applications.sort(dynamicSort("job_title"))});
+		this.setState({applications: this.props.applications.sort(dynamicSort("job_title"))});
 	}
 
   arrangeByCompany() {
-    this.setState({applications: this.state.applications.sort(dynamicSort("company"))});
+    this.setState({applications: this.props.applications.sort(dynamicSort("company"))});
   }
 
   arrangeByDateCreated() {
-    var arrangedArray = this.state.applications.sort(function(a, b) {
+    var arrangedArray = this.props.applications.sort(function(a, b) {
       let date1 = new Date(a.date_created);
       let date2 = new Date(b.date_created);
       return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
@@ -62,7 +50,7 @@ export default class ApplicationList extends React.Component{
   }
 
   arrangeByLastUpdate() {
-    var arrangedArray = this.state.applications.sort(function(a, b) {
+    var arrangedArray = this.props.applications.sort(function(a, b) {
       let date1 = new Date(a.date_applied);
       let date2 = new Date(b.date_applied);
       return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
@@ -87,7 +75,7 @@ export default class ApplicationList extends React.Component{
           </Table.Header>
 
           <Table.Body className="applicationListBody">
-            {this.state.applications.map((ele, i) => (
+            {this.props.applications.map((ele, i) => (
 								<DescriptionCard info={ele} i={i} />
 						))}
           </Table.Body>
