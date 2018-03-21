@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, BrowserHistory, Switch } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
 import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
@@ -124,10 +124,11 @@ class App extends React.Component {
                 <FormModal handleClick={this.submitNewApplication}/>
               </Sidebar>
               <Sidebar.Pusher>
-                <Route  path='/' render={this.decorateProgressBoard}/>
-                <Route  path='/metrics' component={Metrics}/>
-                <Route  path='/list' component={ApplicationList}/>
-
+                <Switch>
+                  <Route  exact path='/' render={this.decorateProgressBoard}/>
+                  <Route  path='/metrics' component={Metrics}/>
+                  <Route  path='/list' component={ApplicationList}/>
+                </Switch>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </div>
