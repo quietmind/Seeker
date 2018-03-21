@@ -11,14 +11,14 @@ class FormModal extends React.Component {
       companyName: '',
       phase: '',
       resume: '',
-      coverLetter: ''
+      coverLetter: '',
+      phases: props.phases
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(){
-    console.log(this.state.jobTitle, this.state.companyName, this.state.phase, this.state.resume, this.state.coverLetter, this.state.date)
     this.props.handleClick(this.state.phase, this.state.resume, this.state.coverLetter, this.state.jobTitle, this.state.companyName);
   }
 
@@ -34,7 +34,7 @@ class FormModal extends React.Component {
 
               <Form.Input fluid label='Job Title' placeholder='Job Title' value= {this.state.jobTitle} onChange={(e)=>this.setState({jobTitle: e.target.value})}/>
               <Form.Input fluid label='Company Name' placeholder='Company Name' value= {this.state.companyName} onChange={(e)=>this.setState({companyName: e.target.value})}/>
-              <Form.Select fluid label='Phase' options={options} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
+              <Form.Select fluid label='Phase' options={this.props.phases.map(function(ele) { return {text: ele.phase_label, value: ele.id}})} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
 
             </Form.Group>
             <Form.Group widths='equal'>
@@ -57,6 +57,36 @@ const options = [
   { text: 'Interviewed', value: 29 },
   { text: 'Received Job Offer', value: 30 },
 ];
+
+
+// {id: 26, user_id: 8, phase_label: "Not Yet Applied", phase_order: 0}
+// 1
+// :
+// {id: 46, user_id: 8, phase_label: "Not Yet Applied", phase_order: 0}
+// 2
+// :
+// {id: 27, user_id: 8, phase_label: "Applied", phase_order: 1}
+// 3
+// :
+// {id: 47, user_id: 8, phase_label: "Applied", phase_order: 1}
+// 4
+// :
+// {id: 28, user_id: 8, phase_label: "Received Response", phase_order: 2}
+// 5
+// :
+// {id: 48, user_id: 8, phase_label: "Received Response", phase_order: 2}
+// 6
+// :
+// {id: 29, user_id: 8, phase_label: "Interviewed", phase_order: 3}
+// 7
+// :
+// {id: 49, user_id: 8, phase_label: "Interviewed", phase_order: 3}
+// 8
+// :
+// {id: 30, user_id: 8, phase_label: "Received Job Offer", phase_order: 4}
+// 9
+// :
+// {id: 50, user_id: 8, phase_label: "Received Job Offer", phase_order: 4}
 
 //let me know if you want to do a different style.
 //I want to alter font color. Didn't want to get stuck on that.

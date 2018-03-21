@@ -121,7 +121,7 @@ class App extends React.Component {
                   <Icon name='book' />
                   My Apps
                 </Menu.Item>
-                <FormModal handleClick={this.submitNewApplication}/>
+                <FormModal handleClick={this.submitNewApplication} phases={this.state.phases}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Route  path='/' render={this.decorateProgressBoard}/>
