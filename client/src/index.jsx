@@ -37,7 +37,10 @@ class App extends React.Component {
   signup(username, password) {
     axios.post('/users', {username: username, password: password})
       //find something to redirect to login
-      .then((response)=> this.setState({user: response.data}))
+      .then((response) => {
+        this.setState({user: response.data})
+        this.getUserData()
+      })
       .catch((err)=> alert("Please enter a valid username"))
   }
 
@@ -54,13 +57,12 @@ class App extends React.Component {
 
   getUserData(){
     axios.get('/phases')
-    .then((data) =>  {
-      this.setState({phases: data.data}, () =>{
+    .then((response) =>  {
+      this.setState({phases: response.data}, () =>{
         axios.get('/applications')
-        .then((data) =>  this.setState({applications: data.data}, () => console.log('got data', this.state.applications, this.state.phases)))
+        .then((response) =>  this.setState({applications: response.data}, () => console.log('got data', this.state.applications, this.state.phases)))
         .catch((err) => console.error(err))
-      }
-        )
+      })
     })
     .catch((err) => console.error(err))
   }
@@ -70,11 +72,11 @@ class App extends React.Component {
       return(
         <Router history={history}>
           <div className="app-container">
-          <Menu secondary attached="top">
-            <Menu.Item onClick={this.toggleMenu}>
-            <Icon name="sidebar" /> Menu
-            </Menu.Item>
-          </Menu>
+            <Menu secondary attached="top">
+              <Menu.Item onClick={this.toggleMenu}>
+              <Icon name="sidebar" /> Menu
+              </Menu.Item>
+            </Menu>
             <Sidebar.Pushable as={Segment}>
               <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
                 <Menu.Item name='home' as={Link} to='/'>

@@ -10,11 +10,16 @@ export default class Welcome extends React.Component{
     this.state = {
       newUser: false
     }
-    this.toggleState = this.toggleState.bind(this)
+    this.renderSignup = this.renderSignup.bind(this)
+    this.renderLogin = this.renderLogin.bind(this)
   }
   
-  toggleState() {
-    this.setState({newUser: !this.state.newUser})
+  renderSignup() {
+    this.setState({newUser: true})
+  }
+
+  renderLogin() {
+    this.setState({newUser: false})
   }
 
   render() {
@@ -24,8 +29,8 @@ export default class Welcome extends React.Component{
           Welcome to Seeker
         </Header>
         <Button.Group color = 'teal' attached='top' textAlign='center'>
-          <Button style={{ maxWidth: 350, margin:10 }} onClick={this.toggleState}>Signup</Button>
-          <Button style={{ maxWidth: 350, margin:10 }} onClick={this.toggleState}>Login</Button>
+          <Button style={{ maxWidth: 350, margin:10 }} onClick={this.renderSignup}>Signup</Button>
+          <Button style={{ maxWidth: 350, margin:10 }} onClick={this.renderLogin}>Login</Button>
         </Button.Group>
         {this.state.newUser ? <Signup handleClick={this.props.signup}/> : <Login handleClick={this.props.login}/>}
       </div>
