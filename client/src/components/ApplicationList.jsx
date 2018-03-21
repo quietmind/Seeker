@@ -1,13 +1,15 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
-import Welcome from './Welcome.jsx';
+import DescriptionCard from './DescriptionCardModal.jsx';
 import axios from 'axios';
 
 export default class ApplicationList extends React.Component{
 	constructor(props){
 		super(props)
 		this.state ={
-      applications : []
+      applications : [],
+			showModal: false,
+			featuredItem: null
 		}
 
     this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
@@ -86,16 +88,8 @@ export default class ApplicationList extends React.Component{
 
           <Table.Body className="applicationListBody">
             {this.state.applications.map((ele, i) => (
-              <Table.Row key={i} props={ele}>
-                <Table.Cell>{ele.job_title}</Table.Cell>
-                <Table.Cell>{ele.company}</Table.Cell>
-                <Table.Cell>{ele.date_created}</Table.Cell>
-                <Table.Cell>{ele.last_update}</Table.Cell>
-                <Table.Cell>{ele.phase_id}</Table.Cell>
-                <Table.Cell>{ele.resume_id}</Table.Cell>
-                <Table.Cell>{ele.cover_letter_id}</Table.Cell>
-              </Table.Row>
-            ))}
+								<DescriptionCard info={ele} i={i} />
+						))}
           </Table.Body>
         </Table>
 			</div>
