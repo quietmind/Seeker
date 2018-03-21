@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) {
-    console.log('error connecting to the db'); 
+    console.log('error connecting to the db');
   } else {
     console.log('connected to the db');
   }
@@ -36,6 +36,7 @@ module.exports.createPhase = function(data, callback) {
 }
 
 module.exports.createApp = function(data, callback) {
+  console.log('db helper ran', data)
   connection.query(
     `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, data.userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.date, data.date],
@@ -99,11 +100,11 @@ module.exports.updatePhaseOrder = function(phases, callback) {
 
 module.exports.updateApp = function(data, callback) {
   connection.query(
-    `UPDATE applications 
-    SET phase_id = ${data.phaseId}, 
-    reminder_id = ${data.reminderId}, 
-    resume_id = ${data.resumeId}, 
-    cover_letter_id = ${data.coverLetterId}, 
+    `UPDATE applications
+    SET phase_id = ${data.phaseId},
+    reminder_id = ${data.reminderId},
+    resume_id = ${data.resumeId},
+    cover_letter_id = ${data.coverLetterId},
     job_title = '${data.jobTitle}',
     company = '${data.company}',
     last_update = ${data.date}

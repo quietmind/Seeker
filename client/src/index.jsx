@@ -18,7 +18,7 @@ class App extends React.Component {
   	super(props)
   	this.state = {
   		menuVisible: false,
-      user: true,
+      user: null,
       applications:[]
   	}
 
@@ -33,18 +33,19 @@ class App extends React.Component {
   		menuVisible: !this.state.menuVisible
   	})
   }
+
 //id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update
   submitNewApplication(phase, resume, cover_letter, job_title, company){
     axios.post('/applications', {userId: this.state.user,
                                 phaseId: phase,
-                                reminderId: 1,
-                                resumeId: resume,
-                                coverLetterId: cover_letter,
+                                reminderId: null,
+                                resumeId: null,
+                                coverLetterId: null,
                                 jobTitle: job_title,
                                 company: company,
-                                dateCreated: Date.now(), lastUpdate: Date.now()})
-    .then((response) => { axios.get('/applications')
-      .then((results) => this.setState({applications: results.data}))});
+                                date: new Date()})
+    // .then((response) => { axios.get('/applications')
+    //   .then((results) => this.setState({applications: results.data}))});
   }
 
   //======AUTHENTICATION ACTIONS=========
@@ -87,12 +88,12 @@ class App extends React.Component {
                 <Icon name='book' />
                 My Apps
               </Menu.Item>
-					    <FormModal />
+					    <FormModal handleClick={this.submitNewApplication}/>
             </Sidebar>
             <Sidebar.Pusher>
             	<Route  exact path='/' component={ProgressBoard}/>
             	<Route  path='/metrics' component={Metrics}/>
-            	<Route  path='/myapps' component={ApplicationList}/>
+              <Route  path='/myapps' component={ApplicationList}/>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
     		</div>

@@ -65,6 +65,7 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.post('/applications', checkSession, function(req, res) {
+  console.log('received post request from client', req.body)
   db.createApp(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()

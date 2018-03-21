@@ -2,33 +2,52 @@ import React from 'react';
 import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
 
 
-const FormModal = () => {
-  return (<Modal trigger={<Menu.Item>
-                          <Icon name='wordpress forms' />
-                          Enter New Application</Menu.Item>} basic size='small'>
-      <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
-      <Modal.Content >
-        <Form onSubmit={console.log("submit")}>
-          <Form.Group widths='equal'>
+class FormModal extends React.Component {
+  constructor(props) {
+    super(props)
 
-            <Form.Input fluid label='Job Title' placeholder='Job Title' />
-            <Form.Input fluid label='Company Name' placeholder='Company Name' />
-            <Form.Select fluid label='Phase' options={options} placeholder='Status' />
+    this.state = {
+      jobTitle: '',
+      companyName: '',
+      phase: '',
+      resume: '',
+      coverLetter: ''
+    }
 
-          </Form.Group>
-          <Form.Group widths='equal'>
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-            <Form.Input fluid label='Resume Used' placeholder='Resume Used' />
-            <Form.Input fluid label='Cover Letter Used' placeholder='Cover Letter Used' />
-            <Form.Input fluid label='Date' placeholder='Date' />
+  handleSubmit(){
+    console.log(this.state.jobTitle, this.state.companyName, this.state.phase, this.state.resume, this.state.coverLetter, this.state.date)
+    this.props.handleClick(this.state.phase, this.state.resume, this.state.coverLetter, this.state.jobTitle, this.state.companyName);
+  }
 
-          </Form.Group>
-        <Button type='submit'>Submit</Button>
-        </Form>
-      </Modal.Content>
-    </Modal>
 
-  )
+  render() {
+    return (<Modal trigger={<Menu.Item>
+                            <Icon name='wordpress forms' />
+                            Enter New Application</Menu.Item>} basic size='small'>
+        <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
+        <Modal.Content >
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group widths='equal'>
+
+              <Form.Input fluid label='Job Title' placeholder='Job Title' value= {this.state.jobTitle} onChange={(e)=>this.setState({jobTitle: e.target.value})}/>
+              <Form.Input fluid label='Company Name' placeholder='Company Name' value= {this.state.companyName} onChange={(e)=>this.setState({companyName: e.target.value})}/>
+              <Form.Select fluid label='Phase' options={options} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
+
+            </Form.Group>
+            <Form.Group widths='equal'>
+
+              <Form.Input fluid label='Resume Used' placeholder='Resume Used' value= {this.state.resume} onChange={(e)=>this.setState({resume: e.target.value})}/>
+              <Form.Input fluid label='Cover Letter Used' placeholder='Cover Letter Used' value= {this.state.coverLetter} onChange={(e)=>this.setState({coverLetter: e.target.value})}/>
+            </Form.Group>
+          <Button type='submit'>Submit</Button>
+          </Form>
+        </Modal.Content>
+      </Modal>
+    )
+  }
 }
 
 const options = [
