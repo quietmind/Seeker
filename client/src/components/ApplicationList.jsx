@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import Welcome from './Welcome.jsx';
+import FormModal from './formModal.jsx';
 
 export default class ApplicationList extends React.Component{
 	constructor(props){
@@ -42,8 +43,8 @@ export default class ApplicationList extends React.Component{
 
   arrangeByDate() {
     var arrangedArray = this.state.applications.sort(function(a, b) {
-      let date1 = new Date(a.last_update);
-      let date2 = new Date(b.last_update);
+      let date1 = new Date(a.date_applied);
+      let date2 = new Date(b.date_applied);
       return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
     });
     this.setState({applications: arrangedArray});
@@ -52,7 +53,10 @@ export default class ApplicationList extends React.Component{
 	render(){
 		return(
 			<div>
-			   <Table className="applicationListTable">
+				<div>
+
+				</div>
+				 <Table className="applicationListTable">
             <Table.Header className="applicationListHeaders">
 	             <Table.Row><Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
 	              <Table.HeaderCell onClick={this.arrangeByCompany}>Company</Table.HeaderCell>
@@ -76,7 +80,6 @@ export default class ApplicationList extends React.Component{
             ))}
           </Table.Body>
         </Table>
-
 			</div>
 		)
 	}

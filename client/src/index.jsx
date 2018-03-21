@@ -9,6 +9,7 @@ import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
+import FormModal from './components/formModal.jsx'
 import axios from 'axios';
 
 
@@ -17,12 +18,14 @@ class App extends React.Component {
   	super(props)
   	this.state = {
   		menuVisible: false,
-      user: null
+      user: true,
+      applications:[]
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+    this.submitNewApplication = this.submitNewApplication.bind(this);
   }
 
   toggleMenu(){
@@ -30,6 +33,20 @@ class App extends React.Component {
   		menuVisible: !this.state.menuVisible
   	})
   }
+//id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update
+  submitNewApplication(phase, resume, cover_letter, job_title, company){
+    axios.post('/applications', {userId: this.state.user,
+                                phaseId: phase,
+                                reminderId: 1,
+                                resumeId: resume,
+                                coverLetterId: cover_letter,
+                                jobTitle: job_title,
+                                company: company,
+                                dateCreated: Date.now(), lastUpdate: Date.now()})
+    .then((response) => { axios.get('/applications')
+      .then((results) => this.setState({applications: results.data}))});
+  }
+
   //======AUTHENTICATION ACTIONS=========
   signup(username, password) {
     axios.post('/users', {username: username, password: password})
@@ -70,6 +87,7 @@ class App extends React.Component {
                 <Icon name='book' />
                 My Apps
               </Menu.Item>
+					    <FormModal />
             </Sidebar>
             <Sidebar.Pusher>
             	<Route  exact path='/' component={ProgressBoard}/>
