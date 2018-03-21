@@ -18,17 +18,24 @@ class App extends React.Component {
   	this.state = {
   		menuVisible: false,
       user: null,
+<<<<<<< HEAD
       phases: [],
       applications: []
+=======
+      applications:[]
+>>>>>>> formModal
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+<<<<<<< HEAD
 
     this.getUserData = this.getUserData.bind(this)
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this)
     this.logout = this.logout.bind(this);
+=======
+>>>>>>> formModal
     this.submitNewApplication = this.submitNewApplication.bind(this);
   }
 
@@ -37,10 +44,15 @@ class App extends React.Component {
   		menuVisible: !this.state.menuVisible
   	})
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> formModal
 //id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update
   submitNewApplication(phase, resume, cover_letter, job_title, company){
     axios.post('/applications', {userId: this.state.user,
                                 phaseId: phase,
+<<<<<<< HEAD
                                 reminderId: 1,
                                 resumeId: resume,
                                 coverLetterId: cover_letter,
@@ -49,6 +61,16 @@ class App extends React.Component {
                                 dateCreated: Date.now(), lastUpdate: Date.now()})
     .then((response) => { axios.get('/applications')
       .then((results) => this.setState({applications: results.data}))});
+=======
+                                reminderId: null,
+                                resumeId: null,
+                                coverLetterId: null,
+                                jobTitle: job_title,
+                                company: company,
+                                date: new Date()})
+    // .then((response) => { axios.get('/applications')
+    //   .then((results) => this.setState({applications: results.data}))});
+>>>>>>> formModal
   }
 
   //======AUTHENTICATION ACTIONS=========
