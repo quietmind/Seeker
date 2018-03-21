@@ -23,7 +23,7 @@ export default class Signup extends React.Component{
 					  this.props.handleClick(this.state.username, this.state.password);
 						this.setState({username: '', password: ''})
 					}
-				}>Login</Button>
+				}>Sign Up</Button>
 			</div>
 		)
 	}

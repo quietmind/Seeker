@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
-// import AnyComponent from './components/filename.jsx'
-
+import createHistory from 'history/createBrowserHistory';
 import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
 import axios from 'axios';
 
+// const history = createHistory();
 
 class App extends React.Component {
   constructor(props) {
@@ -45,43 +45,51 @@ class App extends React.Component {
       .catch((err) => alert("Please enter a valid username"))
   }
 
-  render () {
+  // requireAuth() {
+  //   if (!this.state.user) {
+  //     history.push('/signin')
+  //   }
+  // }
+  
 
-  	if (this.state.user) {
+  render () {
+    if (this.state.user) {
       return(
-    		<Router>
-    		<div className="app-container">
-    		<Menu secondary attached="top">
-    			<Menu.Item onClick={this.toggleMenu}>
-    			<Icon name="sidebar" /> Menu
-    			</Menu.Item>
-    		</Menu>
-    		 <Sidebar.Pushable as={Segment}>
-            <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
-              <Menu.Item name='home' as={Link} to='/'>
-                <Icon name='home' />
-                Home
-              </Menu.Item>
-              <Menu.Item name='metrics' as={Link} to='/metrics'>
-                <Icon name='bar chart' />
-                Metrics
-              </Menu.Item>
-              <Menu.Item name='apps' as={Link} to='/myapps'>
-                <Icon name='book' />
-                My Apps
-              </Menu.Item>
-            </Sidebar>
-            <Sidebar.Pusher>
-            	<Route  exact path='/' component={ProgressBoard}/>
-            	<Route  path='/metrics' component={Metrics}/>
-            	<Route  path='/myapps' component={ApplicationList}/>
-            </Sidebar.Pusher>
-          </Sidebar.Pushable>
-    		</div>
-    		</Router>
-    	)
-    } else return <Welcome login={this.login} signup={this.signup} />
-  }
+        <Router history={history}>
+          <div className="app-container">
+          <Menu secondary attached="top">
+            <Menu.Item onClick={this.toggleMenu}>
+            <Icon name="sidebar" /> Menu
+            </Menu.Item>
+          </Menu>
+            <Sidebar.Pushable as={Segment}>
+              <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
+                <Menu.Item name='home' as={Link} to='/'>
+                  <Icon name='home' />
+                  Home
+                </Menu.Item>
+                <Menu.Item name='metrics' as={Link} to='/metrics'>
+                  <Icon name='bar chart' />
+                  Metrics
+                </Menu.Item>
+                <Menu.Item name='apps' as={Link} to='/list'>
+                  <Icon name='book' />
+                  My Apps
+                </Menu.Item>
+              </Sidebar>
+              <Sidebar.Pusher>
+                <Route  exact path='/' component={ProgressBoard} onEnter={this.requireAuth}/>
+                <Route  path='/metrics' component={Metrics} onEnter={this.requireAuth}/>
+                <Route  path='/list' component={ApplicationList} onEnter={this.requireAuth}/>
+              </Sidebar.Pusher>
+            </Sidebar.Pushable>
+          </div>
+        </Router>
+      )
+    } else {
+      return(<Welcome login={this.login} signup={this.signup}/>)
+    }
+  } 
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));

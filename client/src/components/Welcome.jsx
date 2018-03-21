@@ -7,27 +7,28 @@ import Signup from './Signup.jsx';
 export default class Welcome extends React.Component{
 	constructor(props){
 		super(props)
-
-	}
+    this.state = {
+      newUser: false
+    }
+    this.toggleState = this.toggleState.bind(this)
+  }
+  
+  toggleState() {
+    this.setState({newUser: !this.state.newUser})
+  }
 
   render() {
     return (
-      <Router>
       <div className = "welcome">
         <Header as='h2' textAlign='center'>
           Welcome to Seeker
         </Header>
         <Button.Group color = 'teal' attached='top' textAlign='center'>
-          <Button color='teal' style={{ maxWidth: 350, margin:10 }} as={Link} to='/signup'>Signup</Button>
-          <Button color='teal' style={{ maxWidth: 350, margin:10 }} as={Link} to='/login'>Login</Button>
+          <Button style={{ maxWidth: 350, margin:10 }} onClick={this.toggleState}>Signup</Button>
+          <Button style={{ maxWidth: 350, margin:10 }} onClick={this.toggleState}>Login</Button>
         </Button.Group>
-          <Route  path='/login'
-						render = {(props) => <Login {...props} handleClick={this.props.login }/> } />
-					<Route  path='/signup'
-						render = {(props) => <Signup {...props} handleClick={this.props.signup }/> }  />
+        {this.state.newUser ? <Signup handleClick={this.props.signup}/> : <Login handleClick={this.props.login}/>}
       </div>
-      </Router>
     )
   }
-
 }
