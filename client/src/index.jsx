@@ -10,7 +10,6 @@ import Welcome from './components/Welcome.jsx'
 import FormModal from './components/formModal.jsx'
 import axios from 'axios';
 
-// const history = createHistory();
 
 class App extends React.Component {
   constructor(props) {
@@ -28,10 +27,11 @@ class App extends React.Component {
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
-    this.getUserData = this.getUserData.bind(this)
-    this.decorateProgressBoard = this.decorateProgressBoard.bind(this)
-    this.decorateDataVis = this.decorateDataVis.bind(this)
-    this.decorateAppList = this.decorateAppList.bind(this)
+
+    this.getUserData = this.getUserData.bind(this);
+    this.decorateAppList = this.decorateAppList.bind(this);
+    this.decorateDataVis = this.decorateDataVis.bind(this);
+    this.decorateProgressBoard = this.decorateProgressBoard.bind(this);
     this.logout = this.logout.bind(this);
     this.submitNewApplication = this.submitNewApplication.bind(this);
   }
@@ -114,7 +114,7 @@ class App extends React.Component {
   }
 
   decorateAppList() {
-    return <ApplicationList apps={this.state.applications}/>
+    return <ApplicationList applications={this.state.applications}/>
   }
 
   render () {

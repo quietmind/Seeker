@@ -58,36 +58,6 @@ const options = [
   { text: 'Received Job Offer', value: 30 },
 ];
 
-
-// {id: 26, user_id: 8, phase_label: "Not Yet Applied", phase_order: 0}
-// 1
-// :
-// {id: 46, user_id: 8, phase_label: "Not Yet Applied", phase_order: 0}
-// 2
-// :
-// {id: 27, user_id: 8, phase_label: "Applied", phase_order: 1}
-// 3
-// :
-// {id: 47, user_id: 8, phase_label: "Applied", phase_order: 1}
-// 4
-// :
-// {id: 28, user_id: 8, phase_label: "Received Response", phase_order: 2}
-// 5
-// :
-// {id: 48, user_id: 8, phase_label: "Received Response", phase_order: 2}
-// 6
-// :
-// {id: 29, user_id: 8, phase_label: "Interviewed", phase_order: 3}
-// 7
-// :
-// {id: 49, user_id: 8, phase_label: "Interviewed", phase_order: 3}
-// 8
-// :
-// {id: 30, user_id: 8, phase_label: "Received Job Offer", phase_order: 4}
-// 9
-// :
-// {id: 50, user_id: 8, phase_label: "Received Job Offer", phase_order: 4}
-
 //let me know if you want to do a different style.
 //I want to alter font color. Didn't want to get stuck on that.
 
