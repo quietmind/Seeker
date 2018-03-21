@@ -2,9 +2,6 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 import Welcome from './Welcome.jsx';
 import axios from 'axios';
-=======
-import FormModal from './formModal.jsx';
->>>>>>> formModal
 
 export default class ApplicationList extends React.Component{
 	constructor(props){
@@ -74,7 +71,6 @@ export default class ApplicationList extends React.Component{
 	render(){
 		return(
 			<div>
-<<<<<<< HEAD
         <Table className="applicationListTable">
           <Table.Header className="applicationListHeaders">
             <Table.Row>
@@ -87,21 +83,6 @@ export default class ApplicationList extends React.Component{
               <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-=======
-				<div>
-
-				</div>
-				 <Table className="applicationListTable">
-            <Table.Header className="applicationListHeaders">
-	             <Table.Row><Table.HeaderCell onClick={this.arrangeByJobTitle}>Job Title</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByCompany}>Company</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByDate}>Date Submitted</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByStatus}>Status</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByResume}>Resume Used</Table.HeaderCell>
-	              <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
-	            </Table.Row>
-						</Table.Header>
->>>>>>> formModal
 
           <Table.Body className="applicationListBody">
             {this.state.applications.map((ele, i) => (

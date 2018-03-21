@@ -19,7 +19,7 @@ class App extends React.Component {
   		menuVisible: false,
       user: null,
       phases: [],
-      applications: [],
+      applications: []
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
@@ -123,7 +123,7 @@ class App extends React.Component {
                   <Icon name='book' />
                   My Apps
                 </Menu.Item>
-					    <FormModal />
+                <FormModal handleClick={this.submitNewApplication}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Route  path='/' render={this.decorateProgressBoard}/>
