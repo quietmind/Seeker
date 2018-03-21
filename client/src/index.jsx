@@ -17,12 +17,15 @@ class App extends React.Component {
   	super(props)
   	this.state = {
   		menuVisible: false,
-      user: null
+      user: null,
+      phases: [],
+      applications: []
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+    this.getUserData = this.getUserData.bind(this)
   }
 
   toggleMenu(){
@@ -39,18 +42,28 @@ class App extends React.Component {
   }
 
   login(username, password) {
+    console.log('loggin in')
     axios.get('/users', {params: {username: username, password: password}})
       //double check what returning value will be
-      .then((response) => this.setState({user: response.data}))
+      .then((response) => {
+        this.setState({user: response.data})
+        this.getUserData()
+      })
       .catch((err) => alert("Please enter a valid username"))
   }
 
-  // requireAuth() {
-  //   if (!this.state.user) {
-  //     history.push('/signin')
-  //   }
-  // }
-  
+  getUserData(){
+    axios.get('/phases')
+    .then((data) =>  {
+      this.setState({phases: data.data}, () =>{
+        axios.get('/applications')
+        .then((data) =>  this.setState({applications: data.data}, () => console.log('got data', this.state.applications, this.state.phases)))
+        .catch((err) => console.error(err))
+      }
+        )
+    })
+    .catch((err) => console.error(err))
+  }
 
   render () {
     if (this.state.user) {
