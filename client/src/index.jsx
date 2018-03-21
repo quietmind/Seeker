@@ -88,10 +88,16 @@ class App extends React.Component {
     .catch((err) => console.error(err))
   }
 
-  decorateProgressBoard(){
-    return <ProgressBoard
-            phases={this.state.phases}
-            apps={this.state.applications}/>
+  decorateProgressBoard() {
+    return <ProgressBoard phases={this.state.phases} apps={this.state.applications}/>
+  }
+
+  decorateDataVis() {
+    return <Metrics phases={this.state.phases} apps={this.state.applications}/>
+  }
+
+  decorateAppList() {
+    return <ApplicationList apps={this.state.applications}/>
   }
 
   render () {
@@ -126,8 +132,8 @@ class App extends React.Component {
               <Sidebar.Pusher>
                 <Switch>
                   <Route  exact path='/' render={this.decorateProgressBoard}/>
-                  <Route  path='/metrics' component={Metrics}/>
-                  <Route  path='/list' component={ApplicationList}/>
+                  <Route  path='/metrics' render={this.decorateDataVis}/>
+                  <Route  path='/list' render={this.decorateAppList}/>
                 </Switch>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
