@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
-import createHistory from 'history/createBrowserHistory';
 import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
@@ -25,8 +24,10 @@ class App extends React.Component {
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+
     this.getUserData = this.getUserData.bind(this)
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this)
+    this.logout = this.logout.bind(this);
   }
 
   toggleMenu(){
@@ -37,22 +38,27 @@ class App extends React.Component {
   //======AUTHENTICATION ACTIONS=========
   signup(username, password) {
     axios.post('/users', {username: username, password: password})
-      //find something to redirect to login
-      .then((response) => {
-        this.setState({user: response.data})
-        this.getUserData()
-      })
-      .catch((err)=> alert("Please enter a valid username"))
+    //find something to redirect to login
+    .then((response) => {
+      this.setState({user: response.data})
+      this.getUserData()
+    })
+    .catch((err)=> alert("Please enter a valid username"))
   }
 
   login(username, password) {
     axios.get('/users', {params: {username: username, password: password}})
-      //double check what returning value will be
-      .then((response) => {
-        this.setState({user: response.data})
-        this.getUserData()
-      })
-      .catch((err) => alert("Please enter a valid username"))
+    //double check what returning value will be
+    .then((response) => {
+      this.setState({user: response.data})
+      this.getUserData()
+    })
+    .catch((err) => alert("Please enter a valid username"))
+  }
+
+  logout() {
+    console.log('loggin out')
+    this.setState({user: null})
   }
 
   getUserData(){
@@ -82,6 +88,9 @@ class App extends React.Component {
               <Menu.Item onClick={this.toggleMenu}>
               <Icon name="sidebar" /> Menu
               </Menu.Item>
+              <Menu.Item onClick={this.logout}> 
+              Log Out 
+              </Menu.Item>
             </Menu>
             <Sidebar.Pushable as={Segment}>
               <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
@@ -102,6 +111,7 @@ class App extends React.Component {
                 <Route  path='/' render={this.decorateProgressBoard}/>
                 <Route  path='/metrics' component={Metrics}/>
                 <Route  path='/list' component={ApplicationList}/>
+
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </div>
