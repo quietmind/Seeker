@@ -8,13 +8,13 @@ var db = require('../database/index.js');
 var app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'someSuperSecretString',
   cookie: {maxAge: 600000}
-}))
+}));
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
@@ -65,6 +65,7 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.post('/applications', checkSession, function(req, res) {
+  console.log('received post request from client', req.body)
   db.createApp(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()

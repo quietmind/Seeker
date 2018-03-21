@@ -17,12 +17,12 @@ export default class Phase extends Component {
 			<div className='PhaseTitle'>
 			<Header size="large">{this.props.title}</Header>
 			</div>
-		      <div className="AppItem">Swap me around</div>
-		      <div className="AppItem">Swap him around</div>
-		      <div className="AppItem">Swap her around</div>
-		      <div className="AppItem">Swap us around</div>
-		      <div className="AppItem">Swap things around</div>
-		    </div>
-        )
+		    <div className="AppItem">Swap me around</div>
+		    <div className="AppItem">Swap him around</div>
+		    <div className="AppItem">Swap her around</div>
+		    <div className="AppItem">Swap us around</div>
+		    <div className="AppItem">Swap things around</div>
+		  </div>
+    )
 	}
 }
