@@ -87,19 +87,34 @@ module.exports.getUserApps = function(userId, callback) {
   )
 }
 
-module.exports.getReminders = function(appIds, callback) {
+module.exports.getReminders = function(reminderIds, callback) {
+  console.log('database helper for reminders ran', reminderIds)
   connection.query(
-    `SELECT * FROM reminders WHERE app_id IN (${appIds.join(', ')})`,
+    `SELECT * FROM reminders WHERE id IN (${reminderIds.join(', ')})`,
     function(err, results) {
+      console.log('results', results)
       callback(err, results)
     }
   )
 }
 
-module.exports.getFiles = function(appIds, callback) {
+module.exports.getResumes = function(resumeIds, callback) {
+  console.log('database helper for resumes ran', resumeIds)
   connection.query(
-    `SELECT * FROM files WHERE app_id IN (${appIds.join(', ')})`,
+    `SELECT * FROM files WHERE id IN (${resumeIds.join(', ')})`,
     function(err, results) {
+      console.log('results', results)
+      callback(err, results)
+    }
+  )
+}
+
+module.exports.getCoverletters = function(coverletterIds, callback) {
+  console.log('database helper for cover letters ran', coverletterIds)
+  connection.query(
+    `SELECT * FROM files WHERE id IN (${coverletterIds.join(', ')})`,
+    function(err, results) {
+      console.log('results', results)
       callback(err, results)
     }
   )

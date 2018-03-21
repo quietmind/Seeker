@@ -109,14 +109,24 @@ app.get('/applications', checkSession, function(req, res) {
 })
 
 app.get('/reminders', checkSession, function(req, res) {
-  db.getReminders(req.query.applications.map((app) => app.id), function(err, results) {
+  console.log('received get request for reminders from client', req.query)
+  db.getReminders(req.query.reminderIds, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
 })
 
-app.get('/files', checkSession, function(req, res) {
-  db.getResumes(req.query.applications.map((app) => app.id), function(err, results) {
+app.get('/resumes', checkSession, function(req, res) {
+  console.log('received get request for resumes from client', req.query)
+  db.getResumes(req.query.resumeIds, function(err, results) {
+    if (err) console.error(err)
+    res.status(200).send(results)
+  })
+})
+
+app.get('/coverletters', checkSession, function(req, res) {
+  console.log('received get request for cover letters from client', req.query)
+  db.getCoverletters(req.query.coverletterIds, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
