@@ -6,24 +6,26 @@ import axios from 'axios'
 export default class ProgressBoard extends React.Component{
 	constructor(props){
 		super(props)
-		this.state ={
-      phases: []
-		}
 	}
 
   componentDidMount(){
+    dragula(Array.from(document.getElementsByClassName('phase')))
+  }
+  componentDidUpdate(){
     dragula(Array.from(document.getElementsByClassName('phase')))
   }
 
 
 
 	render(){
+
 		return(
 			<div className="progressboard-container">
-        <Phase title={'Wishlist'}/><Phase title={'Applied'}/>
-        <Phase title={'Interview'}/><Phase title={'Offer'}/>
-        <Phase title={'Reject'}/>
+      {
+        this.props.phases.map((phase,i) => <Phase key={i} phase={phase} applications={this.props.apps}/>)
+      }
       </div>
+
 		)
 	}
 }
