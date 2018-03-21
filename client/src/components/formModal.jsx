@@ -8,12 +8,12 @@ const FormModal = () => {
                           Enter New Application</Menu.Item>} basic size='small'>
       <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
       <Modal.Content >
-        <Form>
+        <Form onSubmit={console.log("submit")}>
           <Form.Group widths='equal'>
 
             <Form.Input fluid label='Job Title' placeholder='Job Title' />
             <Form.Input fluid label='Company Name' placeholder='Company Name' />
-            <Form.Select fluid label='Phase' options={"Waiting", "Interviewd", "Applied"} placeholder='Status' />
+            <Form.Select fluid label='Phase' options={options} placeholder='Status' />
 
           </Form.Group>
           <Form.Group widths='equal'>
@@ -23,7 +23,7 @@ const FormModal = () => {
             <Form.Input fluid label='Date' placeholder='Date' />
 
           </Form.Group>
-        <Button>Submit</Button>
+        <Button type='submit'>Submit</Button>
         </Form>
       </Modal.Content>
     </Modal>
@@ -32,10 +32,11 @@ const FormModal = () => {
 }
 
 const options = [
-  { text: 'Applied', value: 'applied' },
-  { text: 'Response', value: 'response' },
-  { text: 'Interviewd', value: 'interviewd' },
-  { text: 'Received Offer', value: 'received offer' },    
+  { text: 'Not Yet Applied', value: 26 },
+  { text: 'Applied', value: 27 },
+  { text: 'Received Response', value: 28 },
+  { text: 'Interviewed', value: 29 },
+  { text: 'Received Job Offer', value: 30 },
 ];
 
 //let me know if you want to do a different style.
