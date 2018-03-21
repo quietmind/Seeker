@@ -26,7 +26,9 @@ class FormModal extends React.Component {
   render() {
     return (<Modal trigger={<Menu.Item>
                             <Icon name='wordpress forms' />
-                            Enter New Application</Menu.Item>} basic size='small'>
+                            Enter New Application</Menu.Item>}
+                            basic size='small'
+            >
         <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
         <Modal.Content >
           <Form onSubmit={this.handleSubmit}>
