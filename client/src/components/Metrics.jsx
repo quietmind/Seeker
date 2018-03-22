@@ -28,6 +28,20 @@ export default class Metrics extends React.Component{
 				<Grid.Row columns={2}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Stats at a Glance</Header>
+						<Grid>
+							<Grid.Row columns={2} textAlign="center">
+								<Grid.Column>
+									<div>You have created {this.props.apps.length} applications.</div>
+									{this.props.phases.map((phase, i) => (
+										<div key={i}>Of these, {this.props.apps.filter(app => app.phase_id === phase.id).length} have progressed to the {phase.phase_label} phase.</div>
+									))}
+								</Grid.Column>
+								<Grid.Column>
+									<div>You have uploaded {this.props.resumes.length} versions of your resume.</div>
+									<div>You have uploaded {this.props.coverletters.length} different cover letters.</div>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
 					</Grid.Column>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Application Status</Header>
