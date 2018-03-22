@@ -27,13 +27,13 @@ class App extends React.Component {
   	this.toggleMenu = this.toggleMenu.bind(this);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
-
     this.getUserData = this.getUserData.bind(this);
     this.decorateAppList = this.decorateAppList.bind(this);
     this.decorateDataVis = this.decorateDataVis.bind(this);
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this);
     this.logout = this.logout.bind(this);
     this.submitNewApplication = this.submitNewApplication.bind(this);
+    this.updateStatus = this.updateStatus.bind(this)
   }
 
   toggleMenu(){
@@ -105,6 +105,15 @@ class App extends React.Component {
     .catch((err) => console.error(err))
   }
 
+  updateStatus(status){
+    console.log(status)
+    axios.post('/updateStatus', status)
+         .then((response) => {
+          this.getUserData()
+         })
+        .catch((err) => console.error(err))
+  }
+
   decorateProgressBoard() {
     return <ProgressBoard
       phases={this.state.phases}
@@ -112,6 +121,7 @@ class App extends React.Component {
       reminders={this.state.reminders}
       resumes={this.state.resumes}
       coverletters={this.state.coverletters}
+      updateStatus={this.updateStatus}
     />
   }
 

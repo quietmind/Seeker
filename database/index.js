@@ -148,6 +148,15 @@ module.exports.updateApp = function(data, callback) {
   )
 }
 
+module.exports.updateStatus = function(data, callback){
+  console.log(data)
+  connection.query(
+  `UPDATE applications 
+  SET phase_id=${data.newStatusId}
+  WHERE id=${data.appId}`
+  )
+}
+
 module.exports.deletePhase = function(phaseId, callback) {
   connection.query(
     `DELETE FROM phases WHERE id = ${phaseId}`,
