@@ -5,20 +5,59 @@ import C3Chart from 'react-c3js';
 export default class Metrics extends React.Component{
 	constructor(props){
 		super(props)
-		this.state ={
-			dataset1: {
+		this.state = {
+			data1: {
 				columns: [
-					['data1', 30, 200, 100, 400, 150, 250],
-					['data2', 50, 20, 10, 40, 15, 25]
+					['Applications', ...this.props.phases.map((phase) => {
+						return this.props.apps.reduce((sum, app) => {
+							if (app.phase_id === phase.id) {
+								return sum + 1
+							} else {
+								return sum
+							}
+						}, 0)
+					})]
+				],
+				types: {
+					Applications: 'bar'
+				}
+			},
+			axis1: {
+				x: {
+					label: {
+						text: 'Phases',
+						position: 'outer-middle'
+					},
+					type: 'category',
+					categories: [...this.props.phases.map(phase => phase.phase_label)]
+				},
+				y: {
+					label: {
+						text: 'Applications',
+						position: 'outer-middle'
+					}
+				}
+			},
+			data2: {
+				columns: [
+					['New Applications', 30, 200, 100, 400, 150, 250],
+					['Status Updates', 50, 20, 10, 40, 15, 25]
 				]
 			},
-			dataset2: {
-				columns: [
-					['data1', 30, 200, 100, 400, 150, 250],
-					['data2', 50, 20, 10, 40, 15, 25]
-				]
+			axis2: {
+				x: {
+					label: {
+						text: 'Date',
+						position: 'outer-middle'
+					}, 
+				},
+				y: {
+					label: {
+						text: 'Applications',
+						position: 'outer-middle'
+					}
+				}
 			}
-
 		}
 	}
 
@@ -45,13 +84,13 @@ export default class Metrics extends React.Component{
 					</Grid.Column>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Application Status</Header>
-						<C3Chart data={this.state.dataset1}/>
+						<C3Chart data={this.state.data1} axis={this.state.axis1}/>
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row columns={1}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Activity Over Time</Header>
-						<C3Chart data={this.state.dataset2}/>
+						<C3Chart data={this.state.data2} axis={this.state.axis2}/>
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row columns={1}>
