@@ -36,7 +36,6 @@ module.exports.createPhase = function(data, callback) {
 }
 
 module.exports.createApp = function(data, callback) {
-  console.log('db helper ran', data)
   connection.query(
     `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, data.userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.date, data.date],
@@ -88,33 +87,27 @@ module.exports.getUserApps = function(userId, callback) {
 }
 
 module.exports.getReminders = function(reminderIds, callback) {
-  console.log('database helper for reminders ran', reminderIds)
   connection.query(
     `SELECT * FROM reminders WHERE id IN (${reminderIds.join(', ')})`,
     function(err, results) {
-      console.log('results', results)
       callback(err, results)
     }
   )
 }
 
 module.exports.getResumes = function(resumeIds, callback) {
-  console.log('database helper for resumes ran', resumeIds)
   connection.query(
     `SELECT * FROM files WHERE id IN (${resumeIds.join(', ')})`,
     function(err, results) {
-      console.log('results', results)
       callback(err, results)
     }
   )
 }
 
 module.exports.getCoverletters = function(coverletterIds, callback) {
-  console.log('database helper for cover letters ran', coverletterIds)
   connection.query(
     `SELECT * FROM files WHERE id IN (${coverletterIds.join(', ')})`,
     function(err, results) {
-      console.log('results', results)
       callback(err, results)
     }
   )
@@ -149,7 +142,7 @@ module.exports.updateApp = function(data, callback) {
 }
 
 module.exports.updateStatus = function(data, callback){
-  console.log(data)
+  console.log('how many times is this being called?')
   connection.query(
   `UPDATE applications 
   SET phase_id=${data.newStatusId}
