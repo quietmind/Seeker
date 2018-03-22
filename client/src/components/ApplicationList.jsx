@@ -51,7 +51,7 @@ export default class ApplicationList extends React.Component{
   }
 
   arrangeByLastUpdate() {
-    var arrangedArray = this.props.applications.sort(function(a, b) {
+    var arrangedArray = this.props.apps.sort(function(a, b) {
       let date1 = new Date(a.date_applied);
       let date2 = new Date(b.date_applied);
       return date1.getTime() > date2.getTime() ? -1 : date1.getTime() < date2.getTime() ? 1 : 0;
