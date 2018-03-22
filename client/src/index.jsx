@@ -8,7 +8,9 @@ import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
 import FormModal from './components/formModal.jsx'
+import DocModal from './components/DocModal.jsx'
 import axios from 'axios';
+
 
 
 class App extends React.Component {
@@ -173,6 +175,7 @@ class App extends React.Component {
                   My Apps
                 </Menu.Item>
                 <FormModal handleClick={this.submitNewApplication} phases={this.state.phases}/>
+                <DocModal />
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>
