@@ -10,7 +10,7 @@ var multer = require('multer');
 var multerS3 = require('multer-s3');
 var aws = require('aws-sdk');
 var RateLimit = require('express-rate-limit');
-var config = require('../configurations');
+var config = require('../configurations.js');
 var fs = require('fs');
 
 

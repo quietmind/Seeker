@@ -17,7 +17,7 @@ export default class Metrics extends React.Component{
 			axis1: {
 				x: {
 					type: 'category',
-					categories: [...this.props.phases.map(phase => phase.phase_label)]
+					categories: [...this.sortPhases().map(phase => phase.phase_label)]
 				},
 				y: {
 					label: {
@@ -51,11 +51,15 @@ export default class Metrics extends React.Component{
 		}
 	}
 
-	getCumulativeQuantities() {
-		let runningTotal = 0
+	sortPhases() {
 		return this.props.phases.sort((a, b) => {
 			return a.phase_order - b.phase_order
-		}).map((phase) => {
+		})
+	}
+
+	getCumulativeQuantities() {
+		let runningTotal = 0
+		return this.sortPhases().map((phase) => {
 			return this.props.apps.reduce((sum, app) => {
 				if (app.phase_id === phase.id) {
 					return sum + 1
@@ -92,7 +96,22 @@ export default class Metrics extends React.Component{
 	}
 
 	getLargestDropoff() {
-		
+		var quantities = this.getCumulativeQuantities()
+		var ratios = quantities.map((quantity, i) => {
+			if (i === 0) {
+				return { ratio: 1, index: 0 }
+			} else {
+				return {
+					ratio: quantity / quantities[i-1],
+					index: i
+				}
+			}
+		})
+		console.log('ratios', ratios)
+		var worstRatio = ratios.reduce((acc, el) => {
+			return el.ratio < acc.ratio ? el : acc
+		}, ratios[0])
+		return this.sortPhases()[worstRatio.index].phase_label
 	}
 
 	render(){
@@ -106,10 +125,11 @@ export default class Metrics extends React.Component{
 						<Grid>
 							<Grid.Row columns={2} textAlign="center">
 								<Grid.Column>
-									<div>You have created {this.props.apps.length} applications.</div>
-									{this.props.phases.map((phase, i) => {
+									{this.sortPhases().map((phase, i) => {
 										if (phase.phase_order !== 0) {
 											return <div key={i}>Of these, {this.getCumulativeQuantities()[i]} have progressed to the {phase.phase_label} phase.</div>
+										} else {
+											return <div key={i}>You have created {this.props.apps.length} applications.</div>
 										}
 									})}
 								</Grid.Column>
@@ -134,6 +154,7 @@ export default class Metrics extends React.Component{
 				<Grid.Row columns={1}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
+						<div>It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. We suggest practicing the skills involved in successfully completing this step in the application process.</div>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
