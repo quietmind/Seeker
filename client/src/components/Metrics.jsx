@@ -3,7 +3,7 @@ import {Grid, Header} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
 
 export default class Metrics extends React.Component{
-	constructor(props){
+	constructor(props) {
 		super(props)
 		this.state = {
 			data1: {
@@ -11,10 +11,10 @@ export default class Metrics extends React.Component{
 					['Applications', ...this.props.phases.map((phase) => {
 						return this.props.apps.reduce((sum, app) => {
 							if (app.phase_id === phase.id) {
-								return sum + 1
+								return sum + 1 
 							} else {
 								return sum
-							}
+							} 
 						}, 0)
 					})]
 				],
@@ -24,10 +24,6 @@ export default class Metrics extends React.Component{
 			},
 			axis1: {
 				x: {
-					label: {
-						text: 'Phases',
-						position: 'outer-middle'
-					},
 					type: 'category',
 					categories: [...this.props.phases.map(phase => phase.phase_label)]
 				},
@@ -39,17 +35,28 @@ export default class Metrics extends React.Component{
 				}
 			},
 			data2: {
+				x: 'dates',
+				xFormat: '%Y%m%d',
 				columns: [
-					['New Applications', 30, 200, 100, 400, 150, 250],
-					['Status Updates', 50, 20, 10, 40, 15, 25]
+					['dates', ...this.getDateRange().map((date) => new Date(date))],
+					['New Applications', ...this.getDateRange().map((date) => {
+						return this.props.apps.reduce((sum, app) => {
+							if (date === app.date_created) {
+								return sum + 1 
+							} else {
+								return sum
+							} 
+						}, 0)
+					})]
 				]
 			},
 			axis2: {
 				x: {
-					label: {
-						text: 'Date',
-						position: 'outer-middle'
-					}, 
+					type: 'timeseries',
+					tick: {
+						count: this.getDateRange().length,
+						format: '%Y-%m-%d'
+					}
 				},
 				y: {
 					label: {
@@ -61,7 +68,19 @@ export default class Metrics extends React.Component{
 		}
 	}
 
+	getDateRange() {
+		return Array.from(new Set(this.props.apps.map((app) => {
+			return app.date_created
+		}).sort((a, b) => {
+			let date1 = new Date(a)
+			let date2 = new Date(b)
+			return date2.getTime() - date1.getTime()
+		})))
+	}
+
 	render(){
+		console.log('date range', this.getDateRange())
+		console.log(typeof this.getDateRange()[0])
 		return(
 			<Grid>
 				<Grid.Row columns={2}>
