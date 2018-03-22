@@ -40,8 +40,7 @@
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 1;
-  -webkit-transform: rotate(5deg);
-  transform: rotate(5deg);
+	box-shadow: 5px 5px 5px grey;
 }
 
 .gu-hide {

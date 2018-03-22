@@ -8,15 +8,7 @@ export default class Metrics extends React.Component{
 		this.state = {
 			data1: {
 				columns: [
-					['Applications', ...this.props.phases.map((phase) => {
-						return this.props.apps.reduce((sum, app) => {
-							if (app.phase_id === phase.id) {
-								return sum + 1 
-							} else {
-								return sum
-							} 
-						}, 0)
-					})]
+					['Applications', ...this.getCumulativeQuantities()]
 				],
 				types: {
 					Applications: 'bar'
@@ -36,18 +28,9 @@ export default class Metrics extends React.Component{
 			},
 			data2: {
 				x: 'dates',
-				xFormat: '%Y%m%d',
 				columns: [
 					['dates', ...this.getDateRange().map((date) => new Date(date))],
-					['New Applications', ...this.getDateRange().map((date) => {
-						return this.props.apps.reduce((sum, app) => {
-							if (date === app.date_created) {
-								return sum + 1 
-							} else {
-								return sum
-							} 
-						}, 0)
-					})]
+					['New Applications', ...this.getQuantityPerDate()]
 				]
 			},
 			axis2: {
@@ -55,7 +38,7 @@ export default class Metrics extends React.Component{
 					type: 'timeseries',
 					tick: {
 						count: this.getDateRange().length,
-						format: '%Y-%m-%d'
+						format: '%m/%d'
 					}
 				},
 				y: {
@@ -68,6 +51,36 @@ export default class Metrics extends React.Component{
 		}
 	}
 
+	getCumulativeQuantities() {
+		let runningTotal = 0
+		return this.props.phases.sort((a, b) => {
+			return a.phase_order - b.phase_order
+		}).map((phase) => {
+			return this.props.apps.reduce((sum, app) => {
+				if (app.phase_id === phase.id) {
+					return sum + 1
+				} else {
+					return sum
+				} 
+			}, 0)
+		}).reverse().map((quantity) => {
+			runningTotal += quantity
+			return runningTotal
+		}).reverse()
+	}
+
+	getQuantityPerDate() {
+		return this.getDateRange().map((date) => {
+			return this.props.apps.reduce((sum, app) => {
+				if (date === app.date_created) {
+					return sum + 1 
+				} else {
+					return sum
+				} 
+			}, 0)
+		})
+	}
+
 	getDateRange() {
 		return Array.from(new Set(this.props.apps.map((app) => {
 			return app.date_created
@@ -76,6 +89,10 @@ export default class Metrics extends React.Component{
 			let date2 = new Date(b)
 			return date2.getTime() - date1.getTime()
 		})))
+	}
+
+	getLargestDropoff() {
+		
 	}
 
 	render(){
@@ -90,9 +107,11 @@ export default class Metrics extends React.Component{
 							<Grid.Row columns={2} textAlign="center">
 								<Grid.Column>
 									<div>You have created {this.props.apps.length} applications.</div>
-									{this.props.phases.map((phase, i) => (
-										<div key={i}>Of these, {this.props.apps.filter(app => app.phase_id === phase.id).length} have progressed to the {phase.phase_label} phase.</div>
-									))}
+									{this.props.phases.map((phase, i) => {
+										if (phase.phase_order !== 0) {
+											return <div key={i}>Of these, {this.getCumulativeQuantities()[i]} have progressed to the {phase.phase_label} phase.</div>
+										}
+									})}
 								</Grid.Column>
 								<Grid.Column>
 									<div>You have uploaded {this.props.resumes.length} versions of your resume.</div>
