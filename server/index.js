@@ -6,6 +6,13 @@ var bcrypt = require('bcrypt-nodejs');
 var passport = require('passport');
 var db = require('../database/index.js');
 var app = express();
+var multer = require('multer');
+var multerS3 = require('multer-s3');
+var aws = require('aws-sdk');
+var config = require('../configurations');
+var fs = require('fs');
+
+
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
@@ -27,6 +34,24 @@ var checkSession = function(req, res, next) {
     console.error('not logged in')
   }
 }
+
+aws.config.update({
+    secretAccessKey: config.secretAccessKey,
+    accessKeyId: config.accessKeyID,
+    region: 'us-east-2'
+});
+
+var s3 = new aws.S3();
+
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: config.bucket,
+    key: function(req, file, cb) {
+      cb(null, `${new Date()}-${file.originalname}`);
+    }
+  })
+});
 
 app.post('/users', function(req, res) {
   console.log('received post request', req.body)
@@ -122,6 +147,10 @@ app.get('/resumes', checkSession, function(req, res) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
+})
+
+app.post('/resumes', checkSession, upload.any(), function(req, res) {
+  console.log("Did it go through?");
 })
 
 app.get('/coverletters', checkSession, function(req, res) {
