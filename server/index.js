@@ -146,6 +146,13 @@ app.post('/details', checkSession, function(req, res) {
   })
 })
 
+app.post('/updateStatus', checkSession, function(req, res){
+  db.updateStatus(req.body, function(err){
+    if(err) console.error(err)
+    res.status(201).end()
+  })
+})
+
 app.delete('/phases', checkSession, function(req, res) {
   db.deletePhase(req.query.phaseId, function(err) {
     if (err) console.error(err)
