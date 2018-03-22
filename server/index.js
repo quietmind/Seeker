@@ -150,8 +150,11 @@ app.get('/resumes', checkSession, function(req, res) {
 })
 
 app.post('/resumes', checkSession, upload.any(), function(req, res) {
-  console.log("Did it go through?");
-})
+  db.addFile(req.files[0].location, function(err) {
+    if (err) console.error(err)
+    res.status(201).send();
+  });
+});
 
 app.get('/coverletters', checkSession, function(req, res) {
   console.log('received get request for cover letters from client', req.query)
