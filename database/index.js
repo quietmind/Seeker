@@ -143,10 +143,12 @@ module.exports.updateApp = function(data, callback) {
 
 module.exports.updateStatus = function(data, callback){
   console.log('how many times is this being called?')
-  connection.query(
-  `UPDATE applications 
-  SET phase_id=${data.newStatusId}
-  WHERE id=${data.appId}`
+  connection.query(`UPDATE applications 
+    SET phase_id=${data.newStatusId}
+    WHERE id=${data.appId}`,
+    function(err){
+      callback(err)
+    }
   )
 }
 

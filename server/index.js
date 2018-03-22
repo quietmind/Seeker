@@ -9,10 +9,17 @@ var app = express();
 var multer = require('multer');
 var multerS3 = require('multer-s3');
 var aws = require('aws-sdk');
+var RateLimit = require('express-rate-limit');
 var config = require('../configurations');
 var fs = require('fs');
 
 
+app.enable('trust proxy');
+var limiter = new RateLimit({
+  windowMs: 15*60*1000, 
+  max: 0, 
+  delayMs: 0 
+});
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
@@ -22,6 +29,8 @@ app.use(session({
   secret: 'someSuperSecretString',
   cookie: {maxAge: 600000}
 }));
+app.use('/updateStatus',limiter);
+
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
@@ -178,7 +187,7 @@ app.post('/details', checkSession, function(req, res) {
 app.post('/updateStatus', checkSession, function(req, res){
   db.updateStatus(req.body, function(err){
     if(err) console.error(err)
-    res.status(201).end()
+    res.status(201).send()
   })
 })
 
