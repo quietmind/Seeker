@@ -67,22 +67,20 @@ class App extends React.Component {
   }
 
   getUserData() {
-    axios.get('/phases')
-    .then((response) =>  {
-      this.setState({phases: response.data}, () => {
-        axios.get('/applications')
-        .then((response) => {
-          this.setState({applications: response.data})
-        })
-        .catch((err) => console.error(err))
+    Promise.all([
+      axios.get('/phases'), 
+      axios.get('/applications'),
+      axios.get('/reminders'),
+      axios.get('/files')
+    ])
+    .then((response) => {
+      this.setState({
+        phases: response[0].data,
+        applications: response[1].data,
+        reminders: response[2].data,
+        files: response[3].data
       })
     })
-    .catch((err) => console.error(err))
-    axios.get('/reminders')
-    .then((response) => this.setState({reminders: response.data}))
-    .catch((err) => console.error(err))
-    axios.get('/files')
-    .then((response) => this.setState({files: response.data}))
     .catch((err) => console.error(err))
   }
 
