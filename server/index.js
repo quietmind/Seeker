@@ -10,7 +10,7 @@ var multer = require('multer');
 var multerS3 = require('multer-s3');
 var aws = require('aws-sdk');
 var RateLimit = require('express-rate-limit');
-var config = require('../configurations.js');
+var config = require('../configurations');
 var fs = require('fs');
 
 
@@ -29,7 +29,7 @@ app.use(session({
   secret: 'someSuperSecretString',
   cookie: {maxAge: 600000}
 }));
-app.use('/updateStatus',limiter);
+//app.use('/updateStatus',limiter);
 
 
 app.listen(3000, function() {

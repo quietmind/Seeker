@@ -8,15 +8,22 @@
 	white-space: nowrap;
 }
 
+
+
 .phase {
 	display:inline-block;
 	position:relative;
 	width:300px;
 	height:90vh;
 	margin:8px;
+	padding: 5px;
 	background-color:lightgray;
 	border-radius:3px;
 	box-shadow:1px 1px 1px rgba(0,0,0,.2);
+}
+
+.PhaseTitle{
+	padding-bottom: 5px;
 }
 
 .AppItem {
@@ -40,7 +47,7 @@
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 1;
-	box-shadow: 5px 5px 5px grey;
+  box-shadow: 5px 5px 5px grey;
 }
 
 .gu-hide {
