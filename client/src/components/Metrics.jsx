@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header} from 'semantic-ui-react';
+import {Grid, Header, Container} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
 
 export default class Metrics extends React.Component{
@@ -61,11 +61,7 @@ export default class Metrics extends React.Component{
 		let runningTotal = 0
 		return this.sortPhases().map((phase) => {
 			return this.props.apps.reduce((sum, app) => {
-				if (app.phase_id === phase.id) {
-					return sum + 1
-				} else {
-					return sum
-				} 
+				return app.phase_id === phase.id ? sum + 1 : sum
 			}, 0)
 		}).reverse().map((quantity) => {
 			runningTotal += quantity
@@ -76,11 +72,7 @@ export default class Metrics extends React.Component{
 	getQuantityPerDate() {
 		return this.getDateRange().map((date) => {
 			return this.props.apps.reduce((sum, app) => {
-				if (date === app.date_created) {
-					return sum + 1 
-				} else {
-					return sum
-				} 
+				return date === app.date_created ? sum + 1 : sum
 			}, 0)
 		})
 	}
@@ -98,14 +90,7 @@ export default class Metrics extends React.Component{
 	getLargestDropoff() {
 		var quantities = this.getCumulativeQuantities()
 		var ratios = quantities.map((quantity, i) => {
-			if (i === 0) {
-				return { ratio: 1, index: 0 }
-			} else {
-				return {
-					ratio: quantity / quantities[i-1],
-					index: i
-				}
-			}
+			return i === 0 ? { ratio: 1, index: 0 } : { ratio: quantity / quantities[i-1], index: i }
 		})
 		console.log('ratios', ratios)
 		var worstRatio = ratios.reduce((acc, el) => {
@@ -154,7 +139,12 @@ export default class Metrics extends React.Component{
 				<Grid.Row columns={1}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
-						<div>It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. We suggest practicing the skills involved in successfully completing this step in the application process.</div>
+						<Container text textAlign="center">
+							<p>
+								It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. 
+								We suggest practicing the skills involved in successfully completing this step in the application process.
+							</p>
+						</Container>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
