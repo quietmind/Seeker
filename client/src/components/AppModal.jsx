@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
 import axios from 'axios';
 
-class FormModal extends React.Component {
+class AppModal extends React.Component {
   constructor(props) {
     super(props)
 
@@ -45,15 +45,20 @@ class FormModal extends React.Component {
   }
 
   render() {
-    return (<Modal trigger={<Menu.Item onClick={this.handleOpen}>
-                            <Icon name='wordpress forms' />
-                            New App</Menu.Item>}
-                    open={this.state.modalOpen}
-                    onClose={this.handleClose}
-                    closeIcon={true}
-                    closeOnDimmerClick={false}
-                    basic
-                    size='small'>
+    return (
+      <Modal 
+        trigger={
+          <Menu.Item onClick={this.handleOpen}>
+            <Icon name='wordpress forms' />New App
+          </Menu.Item>
+        }
+        open={this.state.modalOpen}
+        onClose={this.handleClose}
+        closeIcon={true}
+        closeOnDimmerClick={false}
+        basic
+        size='small'
+      >
         <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
         <Modal.Content >
           <Form>
@@ -82,6 +87,6 @@ class FormModal extends React.Component {
 // import moment from 'moment';
 
 
-export default FormModal;
+export default AppModal;
 
 //the phase drop down input box should receive options from the user's customized number of status options

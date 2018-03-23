@@ -42,7 +42,11 @@ class DocModal extends React.Component {
   render() {
     return (
       <Modal 
-        trigger={<Menu.Item onClick={this.handleOpen}><Icon name='wordpress forms' />My Files</Menu.Item>}
+        trigger={
+          <Menu.Item onClick={this.handleOpen}>
+            <Icon name='wordpress forms' />My Files
+          </Menu.Item>
+        }
         open={this.state.modalOpen}
         onClose={this.handleClose}
         closeIcon={true}

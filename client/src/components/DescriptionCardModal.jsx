@@ -3,15 +3,17 @@ import { Button, Header, Icon, Modal, Table } from 'semantic-ui-react';
 
 const DescriptionCard = (props) => (
   <Modal 
-    trigger={<Table.Row key={props.i} props={props.info}>
-      <Table.Cell>{props.info.job_title}</Table.Cell>
-      <Table.Cell>{props.info.company}</Table.Cell>
-      <Table.Cell>{props.info.date_created}</Table.Cell>
-      <Table.Cell>{props.info.last_update}</Table.Cell>
-      <Table.Cell>{props.info.phase_id}</Table.Cell>
-      <Table.Cell>{props.info.resume_id}</Table.Cell>
-      <Table.Cell>{props.info.cover_letter_id}</Table.Cell>
-    </Table.Row>} 
+    trigger={
+      <Table.Row key={props.i} props={props.info}>
+        <Table.Cell>{props.info.job_title}</Table.Cell>
+        <Table.Cell>{props.info.company}</Table.Cell>
+        <Table.Cell>{props.info.date_created}</Table.Cell>
+        <Table.Cell>{props.info.last_update}</Table.Cell>
+        <Table.Cell>{props.info.phase_id}</Table.Cell>
+        <Table.Cell>{props.info.resume_id}</Table.Cell>
+        <Table.Cell>{props.info.cover_letter_id}</Table.Cell>
+      </Table.Row>
+    } 
     closeIcon={true}
     closeOnDimmerClick={false}
   >

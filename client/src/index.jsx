@@ -7,7 +7,7 @@ import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
-import FormModal from './components/FormModal.jsx'
+import AppModal from './components/AppModal.jsx'
 import DocModal from './components/DocModal.jsx'
 import axios from 'axios';
 
@@ -149,7 +149,7 @@ class App extends React.Component {
                   My Apps
                 </Menu.Item>
                 <DocModal toggle={this.toggleMenu} getUserData={this.getUserData}/>
-                <FormModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
+                <AppModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>
