@@ -62,6 +62,16 @@ var upload = multer({
   })
 });
 
+var upload2 = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: config.bucket2,
+    key: function(req, file, cb) {
+      cb(null, `${new Date()}-${file.originalname}`);
+    }
+  })
+});
+
 app.post('/users', function(req, res) {
   console.log('received post request', req.body)
   db.getUserCredentials(req.body.username, function(err, results) {
@@ -159,8 +169,18 @@ app.get('/resumes', checkSession, function(req, res) {
 })
 
 app.post('/resumes', checkSession, upload.any(), function(req, res) {
-  console.log("Did it go through?");
-})
+  db.addFile(req.files[0].location, function(err) {
+    if (err) console.error(err)
+    res.status(201).send();
+  });
+});
+
+app.post('/coverletters', checkSession, upload2.any(), function(req, res) {
+  db.addFile(req.files[0].location, function(err) {
+    if (err) console.error(err)
+    res.status(201).send();
+  });
+});
 
 app.get('/coverletters', checkSession, function(req, res) {
   console.log('received get request for cover letters from client', req.query)

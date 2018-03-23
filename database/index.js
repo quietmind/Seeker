@@ -59,6 +59,17 @@ module.exports.addDefaultPhases = function(userId, callback) {
   )
 }
 
+module.exports.addFile = function(s3url, callback) {
+  console.log('Attempting to add:', s3url);
+  connection.query(
+    `INSERT INTO files (s3_url)
+     VALUES ( '${s3url}' )`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.getUserCredentials = function(username, callback) {
   connection.query(
     `SELECT * FROM users WHERE username = '${username}'`,
@@ -143,7 +154,7 @@ module.exports.updateApp = function(data, callback) {
 
 module.exports.updateStatus = function(data, callback){
   console.log('how many times is this being called?')
-  connection.query(`UPDATE applications 
+  connection.query(`UPDATE applications
     SET phase_id=${data.newStatusId}
     WHERE id=${data.appId}`,
     function(err){
