@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Appitem from './AppItem.jsx'
 import {Header, Card, Icon} from 'semantic-ui-react'
 import moment from 'moment'
 

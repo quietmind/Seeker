@@ -7,12 +7,13 @@ class DocModal extends React.Component {
     super(props)
 
     this.state = {
-      fileToSend : '',
-      docName: ''
+      fileToSend: '',
+      docName: '',
+      modalOpen: false
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.submitPost = this.submitPost.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleOpen() {
@@ -20,11 +21,11 @@ class DocModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ modalOpen: false });
+    this.setState({ fileToSend: '', docName: '', modalOpen: false });
     this.props.getUserData()
   }
 
-  submitPost(e) {
+  handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();
     formData.append('payload', this.state.fileToSend);
@@ -44,6 +45,8 @@ class DocModal extends React.Component {
         trigger={<Menu.Item onClick={this.handleOpen}><Icon name='wordpress forms' />My Files</Menu.Item>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
+        closeIcon={true}
+        closeOnDimmerClick={false}
         basic
         size='small'
       >
@@ -52,7 +55,7 @@ class DocModal extends React.Component {
           <label>Add a New Document</label>
           <input type="text" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></input>
           <input name="myFile" type="file" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></input>
-          <Button onClick={(e)=>this.submitPost(e)}>Submit</Button>
+          <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
         </Modal.Content>
       </Modal>
     )

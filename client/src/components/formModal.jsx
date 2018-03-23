@@ -16,11 +16,17 @@ class FormModal extends React.Component {
     }
 
     this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleOpen() {
     this.setState({ modalOpen: true }, this.props.toggle);
+  }
+
+  handleClose() {
+    this.setState({ jobTitle: '', companyName: '', resume: '', coverLetter: '', modalOpen: false })
+    this.props.getUserData()
   }
 
   handleSubmit() {
@@ -33,8 +39,7 @@ class FormModal extends React.Component {
       company: this.state.companyName,
       date: new Date()})
     .then((response) => {
-      this.setState({ modalOpen: false })
-      this.props.getUserData()
+      this.handleClose()
     })
     .catch((err) => console.error(err));
   }
@@ -45,6 +50,8 @@ class FormModal extends React.Component {
                             New App</Menu.Item>}
                     open={this.state.modalOpen}
                     onClose={this.handleClose}
+                    closeIcon={true}
+                    closeOnDimmerClick={false}
                     basic
                     size='small'>
         <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
