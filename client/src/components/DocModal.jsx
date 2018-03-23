@@ -41,7 +41,7 @@ class DocModal extends React.Component {
 
   render() {
     return (
-      <Modal 
+      <Modal
         trigger={
           <Menu.Item onClick={this.handleOpen}>
             <Icon name='wordpress forms' />My Files
