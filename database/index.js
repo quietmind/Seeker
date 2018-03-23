@@ -40,6 +40,7 @@ module.exports.createApp = function(userId, data, callback) {
     `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.date, data.date],
     function(err) {
+      if (err) console.error(err);
       callback(err)
     }
   )

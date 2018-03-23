@@ -16,9 +16,9 @@ var fs = require('fs');
 
 app.enable('trust proxy');
 var limiter = new RateLimit({
-  windowMs: 15*60*1000, 
-  max: 0, 
-  delayMs: 0 
+  windowMs: 15*60*1000,
+  max: 0,
+  delayMs: 0
 });
 
 app.use(express.static(__dirname + '/../client/dist'));
