@@ -12,26 +12,40 @@ class FormModal extends React.Component {
       phase: '',
       resume: '',
       coverLetter: '',
-      phases: props.phases
+      phases: props.phases,
+      modalOpen: false
     }
 
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(){
+  handleOpen() {
+    this.setState({ modalOpen: true });
+  }
+
+  handleClose() {
+    this.setState({ modalOpen: false });
+  }
+
+  handleSubmit(callback){
     this.props.handleClick(this.state.phase, this.state.resume, this.state.coverLetter, this.state.jobTitle, this.state.companyName);
+    callback;
   }
 
 
   render() {
-    return (<Modal trigger={<Menu.Item>
+    return (<Modal trigger={<Menu.Item onClick={this.handleOpen}>
                             <Icon name='wordpress forms' />
                             Enter New Application</Menu.Item>}
-                            basic size='small'
-            >
+                    open={this.state.modalOpen}
+                    onClose={this.handleClose}
+                    basic
+                    size='small'>
         <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
         <Modal.Content >
-          <Form onSubmit={this.handleSubmit}>
+          <Form>
             <Form.Group widths='equal'>
 
               <Form.Input fluid label='Job Title' placeholder='Job Title' value= {this.state.jobTitle} onChange={(e)=>this.setState({jobTitle: e.target.value})}/>
@@ -44,24 +58,13 @@ class FormModal extends React.Component {
               <Form.Input fluid label='Resume Used' placeholder='Resume Used' value= {this.state.resume} onChange={(e)=>this.setState({resume: e.target.value})}/>
               <Form.Input fluid label='Cover Letter Used' placeholder='Cover Letter Used' value= {this.state.coverLetter} onChange={(e)=>this.setState({coverLetter: e.target.value})}/>
             </Form.Group> */}
-          <Button type='submit'>Submit</Button>
+          <Button onClick={() => { this.handleSubmit(this.handleClose())}}>Submit</Button>
           </Form>
         </Modal.Content>
       </Modal>
     )
   }
 }
-
-const options = [
-  { text: 'Not Yet Applied', value: 26 },
-  { text: 'Applied', value: 27 },
-  { text: 'Received Response', value: 28 },
-  { text: 'Interviewed', value: 29 },
-  { text: 'Received Job Offer', value: 30 },
-];
-
-//let me know if you want to do a different style.
-//I want to alter font color. Didn't want to get stuck on that.
 
 // I was considering changing the date input field to show an actual calendar: One option
 // would involve incorporating these modules:

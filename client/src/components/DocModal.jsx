@@ -10,8 +10,17 @@ class DocModal extends React.Component {
       resumeToSend : '',
       coverLetterToSend : ''
     }
-
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.submitPost = this.submitPost.bind(this);
+  }
+
+  handleOpen() {
+    this.setState({ modalOpen: true });
+  }
+
+  handleClose() {
+    this.setState({ modalOpen: false });
   }
 
   submitPost(e) {
@@ -23,7 +32,8 @@ class DocModal extends React.Component {
       headers: { 'content-type': 'multipart/form-data' }
     }
 
-    axios.post('/resumes', formData, config);
+    axios.post('/resumes', formData, config)
+    .then(()=>this.handleClose())
   }
 
   submitPost2(e) {
@@ -35,14 +45,18 @@ class DocModal extends React.Component {
       headers: { 'content-type': 'multipart/form-data' }
     }
 
-    axios.post('/coverletters', formData, config);
+    axios.post('/coverletters', formData, config)
+    .then(()=>this.handleClose())
   }
 
   render() {
-    return (<Modal trigger={<Menu.Item>
+    return (<Modal trigger={<Menu.Item onClick={this.handleOpen}>
                             <Icon name='wordpress forms' />
                             Your Documents</Menu.Item>}
-                            basic size='small'
+                            open={this.state.modalOpen}
+                            onClose={this.handleClose}
+                            basic
+                            size='small'
             >
         <Header icon='wordpress forms' content='View and Update Your Documents' />
         <Modal.Content >
