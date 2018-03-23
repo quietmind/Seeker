@@ -130,9 +130,9 @@ class App extends React.Component {
           <div className="app-container">
             <Menu secondary attached="top">
               <Menu.Item onClick={this.toggleMenu}>
-              <Icon name="sidebar" /> Menu
+              <Icon name="sidebar" /> Seeker
               </Menu.Item>
-              <Menu.Item onClick={this.logout}>
+              <Menu.Item position="right" onClick={this.logout}>
               Log Out
               </Menu.Item>
             </Menu>
