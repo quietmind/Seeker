@@ -109,15 +109,14 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.post('/applications', checkSession, function(req, res) {
-  console.log('received post request from client', req.body)
-  db.createApp(req.body, function(err) {
+  db.createApp(req.session.userId, req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
   })
 })
 
 app.post('/files', checkSession, upload.any(), function(req, res) {
-  db.addFile(req.session.userId, req.files[0].location, req.query.filename, function(err) {
+  db.addFile(req.session.userId, req.files[0].location, req.body.name, function(err) {
     if (err) console.error(err)
     res.status(201).send();
   });

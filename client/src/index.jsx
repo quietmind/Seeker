@@ -33,7 +33,6 @@ class App extends React.Component {
     this.decorateDataVis = this.decorateDataVis.bind(this);
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this);
     this.logout = this.logout.bind(this);
-    this.submitNewApplication = this.submitNewApplication.bind(this);
     this.updateStatus = this.updateStatus.bind(this)
   }
 
@@ -41,20 +40,6 @@ class App extends React.Component {
   	this.setState({
   		menuVisible: !this.state.menuVisible
   	})
-  }
-
-//id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update
-  submitNewApplication(phase, resume, cover_letter, job_title, company) {
-    axios.post('/applications', {userId: this.state.user,
-                                phaseId: phase,
-                                reminderId: null,
-                                resumeId: null,
-                                coverLetterId: null,
-                                jobTitle: job_title,
-                                company: company,
-                                date: new Date()})
-    // .then((response) => { axios.get('/applications')
-    // .then((results) => this.setState({applications: results.data}))});
   }
 
   signup(username, password) {
@@ -165,8 +150,8 @@ class App extends React.Component {
                   <Icon name='book' />
                   My Apps
                 </Menu.Item>
-                <DocModal toggle={this.toggleMenu}/>
-                <FormModal handleClick={this.submitNewApplication} phases={this.state.phases} toggle={this.toggleMenu}/>
+                <DocModal toggle={this.toggleMenu} getUserData={this.getUserData}/>
+                <FormModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>

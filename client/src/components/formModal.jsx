@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
-
+import axios from 'axios';
 
 class FormModal extends React.Component {
   constructor(props) {
@@ -12,12 +12,10 @@ class FormModal extends React.Component {
       phase: '',
       resume: '',
       coverLetter: '',
-      phases: props.phases,
       modalOpen: false
     }
 
     this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -25,15 +23,21 @@ class FormModal extends React.Component {
     this.setState({ modalOpen: true }, this.props.toggle);
   }
 
-  handleClose() {
-    this.setState({ modalOpen: false });
+  handleSubmit() {
+    axios.post('/applications', {
+      phaseId: this.state.phase,
+      reminderId: null,
+      resumeId: this.state.resume,
+      coverLetterId: this.state.coverLetter,
+      jobTitle: this.state.jobTitle,
+      company: this.state.companyName,
+      date: new Date()})
+    .then((response) => {
+      this.setState({ modalOpen: false })
+      this.props.getUserData()
+    })
+    .catch((err) => console.error(err));
   }
-
-  handleSubmit(callback){
-    this.props.handleClick(this.state.phase, this.state.resume, this.state.coverLetter, this.state.jobTitle, this.state.companyName);
-    callback;
-  }
-
 
   render() {
     return (<Modal trigger={<Menu.Item onClick={this.handleOpen}>
@@ -53,12 +57,11 @@ class FormModal extends React.Component {
               <Form.Select fluid label='Phase' options={this.props.phases.map(function(ele) { return {text: ele.phase_label, value: ele.id}})} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
 
             </Form.Group>
-            {/* <Form.Group widths='equal'>
-
-              <Form.Input fluid label='Resume Used' placeholder='Resume Used' value= {this.state.resume} onChange={(e)=>this.setState({resume: e.target.value})}/>
-              <Form.Input fluid label='Cover Letter Used' placeholder='Cover Letter Used' value= {this.state.coverLetter} onChange={(e)=>this.setState({coverLetter: e.target.value})}/>
-            </Form.Group> */}
-          <Button onClick={() => { this.handleSubmit(this.handleClose())}}>Submit</Button>
+            <Form.Group widths='equal'>
+              <Form.Select fluid label='Resume Used' options={this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}})} placeholder='Resume' value= {this.state.resume} onChange={(e, { value })=>this.setState({resume: value})}/>
+              <Form.Select fluid label='Cover Letter Used' options={this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}})} placeholder='Cover Letter' value={this.state.coverletter} onChange={(e, { value })=>this.setState({coverLetter: value})}/>
+            </Form.Group>
+          <Button onClick={() => {this.handleSubmit()}}>Submit</Button>
           </Form>
         </Modal.Content>
       </Modal>

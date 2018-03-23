@@ -35,10 +35,10 @@ module.exports.createPhase = function(data, callback) {
   )
 }
 
-module.exports.createApp = function(data, callback) {
+module.exports.createApp = function(userId, data, callback) {
   connection.query(
     `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [null, data.userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.date, data.date],
+    [null, userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.date, data.date],
     function(err) {
       callback(err)
     }
