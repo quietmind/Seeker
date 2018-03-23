@@ -17,13 +17,13 @@
 	height:90vh;
 	margin:8px;
 	padding: 5px;
-	background-color:lightgray;
+	background-color:rgba(128, 128, 128, 0.15);;
 	border-radius:3px;
 	box-shadow:1px 1px 1px rgba(0,0,0,.2);
 }
 
 .PhaseTitle{
-	padding-bottom: 5px;
+	padding-bottom:5px;
 }
 
 .AppItem {
@@ -87,15 +87,4 @@
 	margin:auto;
 	background-color: teal;
 	padding: 20px 0;
-}
-
-.statshot {
-	font-size: 115%;
-	font-weight: bold;
-}
-
-.conclusions {
-	font-size: 115%;
-	font-weight: bold;
-	text-align: center;
 }

@@ -16,7 +16,7 @@ export default class Phase extends Component {
 			<Header className="phasetitle" textAlign="center" block inverted size="large">{this.props.phase.phase_label}</Header>
 			</div>
 			{
-		      this.props.applications.map((app,i) =>  <div id={app.id} key={i}><Card className="AppItem" header={app.company} description={app.job_title}/> <Icon name="file"/></div>)
+		      this.props.applications.map((app,i) =>  <div id={app.id} key={i}><Card className="AppItem" header={app.company} description={app.job_title}/></div>)
 			}
 		    </div>
         )
