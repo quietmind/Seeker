@@ -59,11 +59,10 @@ module.exports.addDefaultPhases = function(userId, callback) {
   )
 }
 
-module.exports.addFile = function(s3url, callback) {
-  console.log('Attempting to add:', s3url);
+module.exports.addFile = function(userId, s3url, filename, callback) {
   connection.query(
-    `INSERT INTO files (s3_url)
-     VALUES ( '${s3url}' )`,
+    `INSERT INTO files (id, user_id, s3_url, file_name)
+    VALUES (null, ${userId}, '${s3url}', '${filename}')`,
     function(err) {
       callback(err)
     }
@@ -97,27 +96,18 @@ module.exports.getUserApps = function(userId, callback) {
   )
 }
 
-module.exports.getReminders = function(reminderIds, callback) {
+module.exports.getReminders = function(userId, callback) {
   connection.query(
-    `SELECT * FROM reminders WHERE id IN (${reminderIds.join(', ')})`,
+    `SELECT * FROM reminders WHERE user_id = ${userId}`,
     function(err, results) {
       callback(err, results)
     }
   )
 }
 
-module.exports.getResumes = function(resumeIds, callback) {
+module.exports.getFiles = function(userId, callback) {
   connection.query(
-    `SELECT * FROM files WHERE id IN (${resumeIds.join(', ')})`,
-    function(err, results) {
-      callback(err, results)
-    }
-  )
-}
-
-module.exports.getCoverletters = function(coverletterIds, callback) {
-  connection.query(
-    `SELECT * FROM files WHERE id IN (${coverletterIds.join(', ')})`,
+    `SELECT * FROM files WHERE user_id = ${userId}`,
     function(err, results) {
       callback(err, results)
     }

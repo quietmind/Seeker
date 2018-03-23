@@ -87,42 +87,36 @@ export default class Metrics extends React.Component{
 		})))
 	}
 
-	getLargestDropoff() {
-		var quantities = this.getCumulativeQuantities()
-		var ratios = quantities.map((quantity, i) => {
+	getRatios() {
+		let quantities = this.getCumulativeQuantities()
+		return quantities.map((quantity, i) => {
 			return i === 0 ? { ratio: 1, index: 0 } : { ratio: quantity / quantities[i-1], index: i }
 		})
-		console.log('ratios', ratios)
-		var worstRatio = ratios.reduce((acc, el) => {
+	}
+
+	getLargestDropoff() {
+		let worstRatio = this.getRatios().reduce((acc, el) => {
 			return el.ratio < acc.ratio ? el : acc
-		}, ratios[0])
+		})
 		return this.sortPhases()[worstRatio.index].phase_label
 	}
 
 	render(){
-		console.log('date range', this.getDateRange())
-		console.log(typeof this.getDateRange()[0])
 		return(
 			<Grid>
 				<Grid.Row columns={2}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Stats at a Glance</Header>
-						<Grid>
-							<Grid.Row columns={2} textAlign="center">
-								<Grid.Column>
-									{this.sortPhases().map((phase, i) => {
-										if (phase.phase_order !== 0) {
-											return <div key={i}>Of these, {this.getCumulativeQuantities()[i]} have progressed to the {phase.phase_label} phase.</div>
-										} else {
-											return <div key={i}>You have created {this.props.apps.length} applications.</div>
-										}
-									})}
-								</Grid.Column>
-								<Grid.Column>
-									<div>You have uploaded {this.props.resumes.length} versions of your resume.</div>
-									<div>You have uploaded {this.props.coverletters.length} different cover letters.</div>
-								</Grid.Column>
-							</Grid.Row>
+						<Grid columns={2} className="statshot">
+							{this.sortPhases().map((phase, i) => {
+								if (phase.phase_order !== 0) {
+									return <Grid.Column><div key={i}>{this.getCumulativeQuantities()[i]} have reached the {phase.phase_label} phase.</div></Grid.Column>
+								} else {
+									return <Grid.Column><div key={i}>{this.props.apps.length} applications created.</div></Grid.Column>
+								}
+							})}
+							<Grid.Column><div>{this.props.files.length} documents uploaded.</div></Grid.Column>
+							<Grid.Column><div>{this.props.reminders.length} reminders pending.</div></Grid.Column>
 						</Grid>
 					</Grid.Column>
 					<Grid.Column>
@@ -139,12 +133,10 @@ export default class Metrics extends React.Component{
 				<Grid.Row columns={1}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
-						<Container text textAlign="center">
-							<p>
+							<div className="conclusions">
 								It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. 
 								We suggest practicing the skills involved in successfully completing this step in the application process.
-							</p>
-						</Container>
+							</div>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>

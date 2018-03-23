@@ -81,3 +81,14 @@
 	background-color: teal;
 	padding: 20px 0;
 }
+
+.statshot {
+	font-size: 115%;
+	font-weight: bold;
+}
+
+.conclusions {
+	font-size: 115%;
+	font-weight: bold;
+	text-align: center;
+}

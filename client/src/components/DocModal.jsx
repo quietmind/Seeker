@@ -16,7 +16,7 @@ class DocModal extends React.Component {
   }
 
   handleOpen() {
-    this.setState({ modalOpen: true });
+    this.setState({ modalOpen: true }, this.props.toggle)
   }
 
   handleClose() {
@@ -32,7 +32,7 @@ class DocModal extends React.Component {
       headers: { 'content-type': 'multipart/form-data' }
     }
 
-    axios.post('/resumes', formData, config)
+    axios.post('/files', formData, config)
     .then(()=>this.handleClose())
   }
 
@@ -45,14 +45,14 @@ class DocModal extends React.Component {
       headers: { 'content-type': 'multipart/form-data' }
     }
 
-    axios.post('/coverletters', formData, config)
+    axios.post('/files', formData, config)
     .then(()=>this.handleClose())
   }
 
   render() {
     return (<Modal trigger={<Menu.Item onClick={this.handleOpen}>
                             <Icon name='wordpress forms' />
-                            Your Documents</Menu.Item>}
+                            My Files</Menu.Item>}
                             open={this.state.modalOpen}
                             onClose={this.handleClose}
                             basic

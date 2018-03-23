@@ -7,7 +7,7 @@ import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
-import FormModal from './components/formModal.jsx'
+import FormModal from './components/FormModal.jsx'
 import DocModal from './components/DocModal.jsx'
 import axios from 'axios';
 
@@ -22,8 +22,7 @@ class App extends React.Component {
       phases: [],
       applications: [],
       reminders: [],
-      resumes: [],
-      coverletters: []
+      files: []
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
@@ -38,14 +37,14 @@ class App extends React.Component {
     this.updateStatus = this.updateStatus.bind(this)
   }
 
-  toggleMenu(){
+  toggleMenu() {
   	this.setState({
   		menuVisible: !this.state.menuVisible
   	})
   }
 
 //id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, date_created, last_update
-  submitNewApplication(phase, resume, cover_letter, job_title, company){
+  submitNewApplication(phase, resume, cover_letter, job_title, company) {
     axios.post('/applications', {userId: this.state.user,
                                 phaseId: phase,
                                 reminderId: null,
@@ -82,38 +81,33 @@ class App extends React.Component {
     this.setState({user: null})
   }
 
-  getUserData(){
+  getUserData() {
     axios.get('/phases')
     .then((response) =>  {
       this.setState({phases: response.data}, () => {
         axios.get('/applications')
         .then((response) => {
           this.setState({applications: response.data})
-          if (response.data.length > 0) {
-            axios.get('/reminders', {params: {reminderIds: response.data.map((app) => app.reminder_id)}})
-            .then((response) => this.setState({reminders: response.data}))
-            .catch((err) => console.error(err))
-            axios.get('/resumes', {params: {resumeIds: response.data.map((app) => app.resume_id)}})
-            .then((response) => this.setState({resumes: response.data}))
-            .catch((err) => console.error(err))
-            axios.get('/coverletters', {params: {coverletterIds: response.data.map((app) => app.cover_letter_id)}})
-            .then((response) => this.setState({coverletters: response.data}))
-            .catch((err) => console.error(err))
-          }
         })
         .catch((err) => console.error(err))
       })
     })
     .catch((err) => console.error(err))
+    axios.get('/reminders')
+    .then((response) => this.setState({reminders: response.data}))
+    .catch((err) => console.error(err))
+    axios.get('/files')
+    .then((response) => this.setState({files: response.data}))
+    .catch((err) => console.error(err))
   }
 
-  updateStatus(status){
+  updateStatus(status) {
     console.log(status)
     axios.post('/updateStatus', status)
-         .then((response) => {
-          this.getUserData()
-         })
-        .catch((err) => console.error(err))
+    .then((response) => {
+      this.getUserData()
+    })
+    .catch((err) => console.error(err))
   }
 
   decorateProgressBoard() {
@@ -121,8 +115,7 @@ class App extends React.Component {
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
-      resumes={this.state.resumes}
-      coverletters={this.state.coverletters}
+      files={this.state.files}
       updateStatus={this.updateStatus}
     />
   }
@@ -132,8 +125,7 @@ class App extends React.Component {
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
-      resumes={this.state.resumes}
-      coverletters={this.state.coverletters}
+      files={this.state.files}
     />
   }
 
@@ -142,8 +134,7 @@ class App extends React.Component {
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
-      resumes={this.state.resumes}
-      coverletters={this.state.coverletters}
+      files={this.state.files}
     />
   }
 
@@ -161,21 +152,21 @@ class App extends React.Component {
               </Menu.Item>
             </Menu>
             <Sidebar.Pushable as={Segment}>
-              <Sidebar as={Menu} animation='slide along' width='very wide' visible={this.state.menuVisible} icon='labeled' vertical inverted>
-                <Menu.Item name='home' as={Link} to='/'>
+              <Sidebar as={Menu} animation='slide along' width='thin' visible={this.state.menuVisible} icon='labeled' vertical inverted>
+                <Menu.Item name='home' as={Link} to='/' onClick={this.toggleMenu}>
                   <Icon name='home' />
                   Home
                 </Menu.Item>
-                <Menu.Item name='metrics' as={Link} to='/metrics'>
+                <Menu.Item name='metrics' as={Link} to='/metrics' onClick={this.toggleMenu}>
                   <Icon name='bar chart' />
                   Metrics
                 </Menu.Item>
-                <Menu.Item name='apps' as={Link} to='/list'>
+                <Menu.Item name='apps' as={Link} to='/list' onClick={this.toggleMenu}>
                   <Icon name='book' />
                   My Apps
                 </Menu.Item>
-                <FormModal handleClick={this.submitNewApplication} phases={this.state.phases}/>
-                <DocModal />
+                <DocModal toggle={this.toggleMenu}/>
+                <FormModal handleClick={this.submitNewApplication} phases={this.state.phases} toggle={this.toggleMenu}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>

@@ -116,6 +116,13 @@ app.post('/applications', checkSession, function(req, res) {
   })
 })
 
+app.post('/files', checkSession, upload.any(), function(req, res) {
+  db.addFile(req.session.userId, req.files[0].location, req.query.filename, function(err) {
+    if (err) console.error(err)
+    res.status(201).send();
+  });
+});
+
 app.get('/users', function(req, res) {
   console.log('request query', req.query)
   db.getUserCredentials(req.query.username, function(err, results) {
@@ -153,38 +160,14 @@ app.get('/applications', checkSession, function(req, res) {
 })
 
 app.get('/reminders', checkSession, function(req, res) {
-  console.log('received get request for reminders from client', req.query)
-  db.getReminders(req.query.reminderIds, function(err, results) {
+  db.getReminders(req.session.userId, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })
 })
 
-app.get('/resumes', checkSession, function(req, res) {
-  console.log('received get request for resumes from client', req.query)
-  db.getResumes(req.query.resumeIds, function(err, results) {
-    if (err) console.error(err)
-    res.status(200).send(results)
-  })
-})
-
-app.post('/resumes', checkSession, upload.any(), function(req, res) {
-  db.addFile(req.files[0].location, function(err) {
-    if (err) console.error(err)
-    res.status(201).send();
-  });
-});
-
-app.post('/coverletters', checkSession, upload2.any(), function(req, res) {
-  db.addFile(req.files[0].location, function(err) {
-    if (err) console.error(err)
-    res.status(201).send();
-  });
-});
-
-app.get('/coverletters', checkSession, function(req, res) {
-  console.log('received get request for cover letters from client', req.query)
-  db.getCoverletters(req.query.coverletterIds, function(err, results) {
+app.get('/files', checkSession, function(req, res) {
+  db.getFiles(req.session.userId, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })

@@ -22,7 +22,7 @@ class FormModal extends React.Component {
   }
 
   handleOpen() {
-    this.setState({ modalOpen: true });
+    this.setState({ modalOpen: true }, this.props.toggle);
   }
 
   handleClose() {
@@ -38,7 +38,7 @@ class FormModal extends React.Component {
   render() {
     return (<Modal trigger={<Menu.Item onClick={this.handleOpen}>
                             <Icon name='wordpress forms' />
-                            Enter New Application</Menu.Item>}
+                            New App</Menu.Item>}
                     open={this.state.modalOpen}
                     onClose={this.handleClose}
                     basic
