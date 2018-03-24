@@ -39,6 +39,7 @@ export default class ProgressBoard extends React.Component{
       {
         this.props.phases.map((phase,i) => <Phase key={i} phase={phase} applications={this.props.apps.filter(app => app.phase_id === phase.id)}/>)
       }
+      <NewPhase/>
       </div>
 
 		)
