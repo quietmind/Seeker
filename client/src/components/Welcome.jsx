@@ -25,7 +25,7 @@ export default class Welcome extends React.Component{
   render() {
     return (
       <div className = "welcome">
-        <Header as='h2' textAlign='center'>
+        <Header as='h2'>
           Welcome to Seeker
         </Header>
         <Button.Group color = 'gray' textAlign='center'>
