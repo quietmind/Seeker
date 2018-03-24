@@ -59,7 +59,7 @@ export default class ApplicationList extends React.Component{
     this.setState({applications: arrangedArray});
   }
 
-	render(){
+	render() {
 		return(
 			<div>
         <Table className="applicationListTable">

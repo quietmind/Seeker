@@ -52,10 +52,7 @@ export default class Metrics extends React.Component{
 				}
 			},
 			data3: {
-				columns: [
-					['data1', 30],
-          ['data2', 120]
-				],
+				columns: this.collateQuantities(),
 				type: 'pie'
 			}
 		},
@@ -63,7 +60,7 @@ export default class Metrics extends React.Component{
 	}
 
 	toggleView() {
-		this.setState({defaultView: !this.state.defaultView}, console.log(this.state.defaultView))
+		this.setState({defaultView: !this.state.defaultView})
 	}
 
 	sortPhases() {
@@ -72,13 +69,24 @@ export default class Metrics extends React.Component{
 		})
 	}
 
-	getCumulativeQuantities() {
-		let runningTotal = 0
+	getQuantities() {
 		return this.sortPhases().map((phase) => {
 			return this.props.apps.reduce((sum, app) => {
 				return app.phase_id === phase.id ? sum + 1 : sum
 			}, 0)
-		}).reverse().map((quantity) => {
+		})
+	}
+
+	collateQuantities() {
+		let quantities = this.getQuantities()
+		return this.sortPhases().map((phase, i) => {
+			return [phase.phase_label, quantities[i]]
+		})
+	}
+
+	getCumulativeQuantities() {
+		let runningTotal = 0
+		return this.getQuantities().reverse().map((quantity) => {
 			runningTotal += quantity
 			return runningTotal
 		}).reverse()
