@@ -28,7 +28,7 @@ export default class Welcome extends React.Component{
         <Header as='h2' textAlign='center'>
           Welcome to Seeker
         </Header>
-        <Button.Group color = 'teal' attached='top' textAlign='center'>
+        <Button.Group color = 'gray' textAlign='center'>
           <Button style={{ maxWidth: 350, margin:10 }} onClick={this.renderSignup}>Signup</Button>
           <Button style={{ maxWidth: 350, margin:10 }} onClick={this.renderLogin}>Login</Button>
         </Button.Group>
