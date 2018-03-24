@@ -1,8 +1,8 @@
 import React from 'react';
 import {Grid, Header} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
-import BarGraph from './BarGraph.jsx';
-import PieChart from './PieChart.jsx';
+import ProgressView from './ProgressView.jsx';
+import StatusView from './StatusView.jsx';
 
 export default class Metrics extends React.Component{
 	constructor(props) {
@@ -57,6 +57,9 @@ export default class Metrics extends React.Component{
 			}
 		},
 		this.toggleView = this.toggleView.bind(this)
+		this.sortPhases = this.sortPhases.bind(this)
+		this.getQuantities = this.getQuantities.bind(this)
+		this.getCumulativeQuantities = this.getCumulativeQuantities.bind(this)
 	}
 
 	toggleView() {
@@ -128,27 +131,28 @@ export default class Metrics extends React.Component{
 		const defaultView = this.state.defaultView;
 		return(
 			<Grid>
-				<Grid.Row columns={2}>
-					<Grid.Column>
-						<Header size="huge" textAlign="center">Stats at a Glance</Header>
-						<Grid columns={2} className="statshot">
-							{this.sortPhases().map((phase, i) => {
-								if (phase.phase_order !== 0) {
-									return <Grid.Column><div key={i}>{this.getCumulativeQuantities()[i]} have reached the {phase.phase_label} phase.</div></Grid.Column>
-								} else {
-									return <Grid.Column><div key={i}>{this.props.apps.length} applications created.</div></Grid.Column>
-								}
-							})}
-							<Grid.Column><div>{this.props.files.length} documents uploaded.</div></Grid.Column>
-							<Grid.Column><div>{this.props.reminders.length} reminders pending.</div></Grid.Column>
-						</Grid>
-					</Grid.Column>
-					{this.state.defaultView ? 
-						<BarGraph data={this.state.data1} axis={this.state.axis1} toggleView={this.toggleView}/>
-					: 
-						<PieChart data={this.state.data3} toggleView={this.toggleView}/>
-					}
-				</Grid.Row>
+				{this.state.defaultView ? 
+					<ProgressView
+						data={this.state.data1} 
+						axis={this.state.axis1}
+						apps={this.props.apps}
+						files={this.props.files}
+						reminders={this.props.reminders}
+						toggleView={this.toggleView}
+						sortPhases={this.sortPhases}
+						getCumulativeQuantities={this.getCumulativeQuantities}
+					/> 
+				: 
+					<StatusView
+						data={this.state.data3}
+						apps={this.props.apps}
+						files={this.props.files}
+						reminders={this.props.reminders}
+						toggleView={this.toggleView}
+						sortPhases={this.sortPhases}
+						getQuantities={this.getQuantities}
+					/>
+				}
 				<Grid.Row columns={2}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
