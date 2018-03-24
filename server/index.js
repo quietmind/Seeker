@@ -37,10 +37,12 @@ app.listen(3000, function() {
 });
 
 var checkSession = function(req, res, next) {
+  console.log(req.session.userId);
   if (req.session.userId) {
     next()
   } else {
-    console.error('not logged in')
+    console.log("user not logged in");
+    res.redirect('/')
   }
 }
 
@@ -62,14 +64,11 @@ var upload = multer({
   })
 });
 
-var upload2 = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: config.bucket2,
-    key: function(req, file, cb) {
-      cb(null, `${new Date()}-${file.originalname}`);
-    }
-  })
+app.get('/session', function(req, res) {
+  if (req.session.userId) {
+    res.status(200).send(`${req.session.userId}`);
+  } else
+    res.status(403).send();
 });
 
 app.post('/users', function(req, res) {
@@ -101,7 +100,7 @@ app.post('/users', function(req, res) {
   })
 })
 
-app.post('/phases', checkSession, function(req, res) {
+app.post('/', checkSession, function(req, res) {
   db.createPhase(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
@@ -205,4 +204,10 @@ app.delete('/applications', checkSession, function(req, res) {
     if (err) console.error(err)
     res.status(202).send()
   })
+})
+
+app.post('/logout', checkSession, function(req,res) {
+  console.log('axios received');
+  req.session.destroy();
+  res.status(200).redirect('/');
 })

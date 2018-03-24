@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import { BrowserRouter as Router, Route, Link, BrowserHistory, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, BrowserHistory, Switch, withRouter } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
 import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
@@ -17,7 +17,7 @@ class App extends React.Component {
   	super(props)
   	this.state = {
   		menuVisible: false,
-      user: null,
+      userId: null,
       phases: [],
       applications: [],
       reminders: [],
@@ -32,7 +32,13 @@ class App extends React.Component {
     this.decorateDataVis = this.decorateDataVis.bind(this);
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this);
     this.logout = this.logout.bind(this);
-    this.updateStatus = this.updateStatus.bind(this)
+    this.updateStatus = this.updateStatus.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/session')
+    .then((response) => this.setState({userId: response.data}, this.getUserData))
+    .catch((err) => console.error(err))
   }
 
   toggleMenu() {
@@ -55,19 +61,24 @@ class App extends React.Component {
     event.preventDefault()
     axios.get('/users', {params: {username: username, password: password}})
     .then((response) => {
-      this.setState({user: response.data})
+      this.setState({userId: response.data})
       this.getUserData()
     })
     .catch((err) => alert("Please enter a valid username"))
   }
 
   logout() {
-    this.setState({user: null})
+  console.log('client side called');
+    axios.post('/logout')
+    .then(() => {
+    console.log('response received');
+    this.setState({userId: null})
+    })
   }
 
   getUserData() {
     Promise.all([
-      axios.get('/phases'), 
+      axios.get('/phases'),
       axios.get('/applications'),
       axios.get('/reminders'),
       axios.get('/files')
@@ -121,7 +132,7 @@ class App extends React.Component {
   }
 
   render () {
-    if (this.state.user) {
+    if (this.state.userId) {
       return(
         <Router history={history}>
           <div className="app-container">
@@ -168,3 +179,5 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+//is valid token? function?
