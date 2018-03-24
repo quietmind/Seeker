@@ -124,19 +124,17 @@ export default class Metrics extends React.Component{
 						<C3Chart data={this.state.data1} axis={this.state.axis1}/>
 					</Grid.Column>
 				</Grid.Row>
-				<Grid.Row columns={1}>
-					<Grid.Column>
-						<Header size="huge" textAlign="center">Activity Over Time</Header>
-						<C3Chart data={this.state.data2} axis={this.state.axis2}/>
-					</Grid.Column>
-				</Grid.Row>
-				<Grid.Row columns={1}>
+				<Grid.Row columns={2}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
 							<div className="conclusions">
 								It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. 
 								We suggest practicing the skills involved in successfully completing this step in the application process.
 							</div>
+					</Grid.Column>
+					<Grid.Column>
+						<Header size="huge" textAlign="center">Activity Over Time</Header>
+						<C3Chart data={this.state.data2} axis={this.state.axis2}/>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
