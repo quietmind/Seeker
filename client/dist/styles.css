@@ -21,7 +21,7 @@
 }
 
 .newphase{
-	display:inline-block;
+	display:inline-table;
 	position:relative;
 	width:300px;
 	height:90vh;
