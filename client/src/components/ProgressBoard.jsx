@@ -14,10 +14,8 @@ export default class ProgressBoard extends React.Component{
         return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
-      if(target.id !== source.id){
-        let updateStatus= {appId: el.id, newStatusId: target.id}
-        this.props.updateStatus(updateStatus)
-      }
+      let updateStatus= {appId: el.id, newStatusId: target.id}
+      if(target.id !== source.id) this.props.updateStatus(updateStatus)
     })
   }
   componentDidUpdate(){
@@ -26,10 +24,8 @@ export default class ProgressBoard extends React.Component{
         return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
-      if(target.id !== source.id){
-        let updateStatus= {appId: el.id, newStatusId: target.id}
-        this.props.updateStatus(updateStatus)
-      }
+      let updateStatus= {appId: el.id, newStatusId: target.id}
+      if(target.id !== source.id) this.props.updateStatus(updateStatus)
     })
   }
 
