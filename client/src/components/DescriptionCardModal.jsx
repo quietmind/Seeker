@@ -4,7 +4,7 @@ import { Button, Header, Icon, Modal, Table } from 'semantic-ui-react';
 const DescriptionCard = (props) => (
   <Modal 
     trigger={
-      <Table.Row>
+      <Table.Row className="appListItem">
         <Table.Cell>{props.app.job_title}</Table.Cell>
         <Table.Cell>{props.app.company}</Table.Cell>
         <Table.Cell>{props.app.date_created}</Table.Cell>

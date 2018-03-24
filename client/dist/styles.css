@@ -103,6 +103,17 @@
 	text-align: center;
 }
 
+.appListItem {
+	cursor: help;
+}
+
+.appListItem:hover {
+	animation: pop 0.3s linear 1;
+}
+
+@keyframes pop{
+  50%  {transform: scale(1.01);}
+}
 
 
 @keyframes pop{
