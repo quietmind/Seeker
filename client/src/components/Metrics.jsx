@@ -1,11 +1,14 @@
 import React from 'react';
-import {Grid, Header, Container} from 'semantic-ui-react';
+import {Grid, Header} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
+import BarGraph from './BarGraph.jsx';
+import PieChart from './PieChart.jsx';
 
 export default class Metrics extends React.Component{
 	constructor(props) {
 		super(props)
 		this.state = {
+			defaultView: true,
 			data1: {
 				columns: [
 					['Applications', ...this.getCumulativeQuantities()]
@@ -47,8 +50,20 @@ export default class Metrics extends React.Component{
 						position: 'outer-middle'
 					}
 				}
+			},
+			data3: {
+				columns: [
+					['data1', 30],
+          ['data2', 120]
+				],
+				type: 'pie'
 			}
-		}
+		},
+		this.toggleView = this.toggleView.bind(this)
+	}
+
+	toggleView() {
+		this.setState({defaultView: !this.state.defaultView}, console.log(this.state.defaultView))
 	}
 
 	sortPhases() {
@@ -102,6 +117,7 @@ export default class Metrics extends React.Component{
 	}
 
 	render(){
+		const defaultView = this.state.defaultView;
 		return(
 			<Grid>
 				<Grid.Row columns={2}>
@@ -119,18 +135,19 @@ export default class Metrics extends React.Component{
 							<Grid.Column><div>{this.props.reminders.length} reminders pending.</div></Grid.Column>
 						</Grid>
 					</Grid.Column>
-					<Grid.Column>
-						<Header size="huge" textAlign="center">Application Status</Header>
-						<C3Chart data={this.state.data1} axis={this.state.axis1}/>
-					</Grid.Column>
+					{this.state.defaultView ? 
+						<BarGraph data={this.state.data1} axis={this.state.axis1} toggleView={this.toggleView}/>
+					: 
+						<PieChart data={this.state.data3} toggleView={this.toggleView}/>
+					}
 				</Grid.Row>
 				<Grid.Row columns={2}>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
-							<div className="conclusions">
-								It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. 
-								We suggest practicing the skills involved in successfully completing this step in the application process.
-							</div>
+						<div className="conclusions">
+							It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. 
+							We suggest practicing the skills involved in successfully completing this step in the application process.
+						</div>
 					</Grid.Column>
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Activity Over Time</Header>
