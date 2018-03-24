@@ -1,21 +1,21 @@
-var express = require('express');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var request = require('request');
-var bcrypt = require('bcrypt-nodejs');
-var passport = require('passport');
-var db = require('../database/index.js');
-var app = express();
-var multer = require('multer');
-var multerS3 = require('multer-s3');
-var aws = require('aws-sdk');
-var RateLimit = require('express-rate-limit');
-var config = require('../configurations');
-var fs = require('fs');
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const request = require('request');
+const bcrypt = require('bcrypt-nodejs');
+const passport = require('passport');
+const db = require('../database/index.js');
+const app = express();
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+const RateLimit = require('express-rate-limit');
+const config = require('../configurations');
+const fs = require('fs');
 
 
 app.enable('trust proxy');
-var limiter = new RateLimit({
+const limiter = new RateLimit({
   windowMs: 15*60*1000,
   max: 0,
   delayMs: 0
@@ -36,7 +36,7 @@ app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
 
-var checkSession = function(req, res, next) {
+const checkSession = function(req, res, next) {
   console.log(req.session.userId);
   if (req.session.userId) {
     next()
