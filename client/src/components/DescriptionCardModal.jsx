@@ -10,8 +10,8 @@ const DescriptionCard = (props) => (
         <Table.Cell>{props.app.date_created}</Table.Cell>
         <Table.Cell>{props.app.last_update}</Table.Cell>
         <Table.Cell>{props.phase.phase_label}</Table.Cell>
-        <Table.Cell>{props.resume.file_name}</Table.Cell>
-        <Table.Cell>{props.coverletter.file_name}</Table.Cell>
+        <Table.Cell>{props.resume ? props.resume.file_name :  ''}</Table.Cell>
+        <Table.Cell>{props.coverletter ? props.coverletter.file_name : ''}</Table.Cell>
       </Table.Row>
     } 
     closeIcon={true}
@@ -21,9 +21,9 @@ const DescriptionCard = (props) => (
     <Modal.Content>
       <h1>{props.app.job_title}</h1>
       <p>Resume Provided:<br></br>
-      {props.resume.file_name}</p>
+      {props.resume ? props.resume.file_name : ''}</p>
       <p>Cover Letter Provided:<br></br>
-      {props.coverletter.file_name}</p>
+      {props.coverletter ? props.coverletter.file_name : ''}</p>
       <p>Last Activity:<br></br>
       {props.app.last_update}</p>
     </Modal.Content>
