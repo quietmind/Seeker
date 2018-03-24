@@ -12,7 +12,7 @@ export default class Phase extends Component {
 	render(){
 		return(
 			<div className='phase' id={this.props.phase.id}>
-			<div className='PhaseTitle'>
+			<div className='PhaseTitle' id="title">
 			<Header className="phasetitle" textAlign="center" block inverted size="large">{this.props.phase.phase_label}</Header>
 			</div>
 			{

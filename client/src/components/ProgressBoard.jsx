@@ -9,7 +9,11 @@ export default class ProgressBoard extends React.Component{
 	}
 
   componentDidMount(){
-    dragula(Array.from(document.getElementsByClassName('phase'))).on('drop', (el, target, source, sibling) => {
+    dragula(Array.from(document.getElementsByClassName('phase')),{
+      moves: function(el, target, source, sibling){
+        return el.id === 'title' ? false : true
+      }
+    }).on('drop', (el, target, source, sibling) => {
       console.log(el, target, source, sibling)
       if(target.id !== source.id){
         let updateStatus= {appId: el.id, newStatusId: target.id}
@@ -18,7 +22,11 @@ export default class ProgressBoard extends React.Component{
     })
   }
   componentDidUpdate(){
-    dragula(Array.from(document.getElementsByClassName('phase'))).on('drop', (el, target, source, sibling) => {
+    dragula(Array.from(document.getElementsByClassName('phase')),{
+      moves: function(el, target, source, sibling){
+        return el.id === 'title' ? false : true
+      }
+    }).on('drop', (el, target, source, sibling) => {
       console.log(el, target, source, sibling)
       if(target.id !== source.id){
         let updateStatus= {appId: el.id, newStatusId: target.id}
