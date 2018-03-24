@@ -74,10 +74,15 @@ export default class ApplicationList extends React.Component{
               <Table.HeaderCell onClick={this.arrangeByCoverLetter}>Cover Letter Used</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-
           <Table.Body className="applicationListBody">
-            {this.props.apps.map((ele, i) => (
-								<DescriptionCard info={ele} i={i} />
+            {this.props.apps.map((app, i) => (
+              <DescriptionCard 
+                app={app}
+                phase={this.props.phases.filter((phase) => phase.id === app.phase_id)[0]}
+                resume={this.props.files.filter((file) => file.id === app.resume_id)[0]}
+                coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
+                key={i}
+              />
 						))}
           </Table.Body>
         </Table>
