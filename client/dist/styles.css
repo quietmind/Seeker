@@ -41,7 +41,7 @@
     cursor:move;
 }
 .AppItem:hover{
-	animation: bounce 0.4s infinite;
+	animation: pop 0.4s infinite;
 }
 
 .gu-mirror {
@@ -103,7 +103,9 @@
 	text-align: center;
 }
 
-@keyframes bounce{
+
+
+@keyframes pop{
    0% {
     transform: translateY(0px);
   }

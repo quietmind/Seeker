@@ -136,15 +136,15 @@ class App extends React.Component {
             </Menu>
             <Sidebar.Pushable as={Segment}>
               <Sidebar as={Menu} animation='slide along' width='thin' visible={this.state.menuVisible} icon='labeled' vertical inverted>
-                <Menu.Item name='home' as={Link} to='/' onClick={this.toggleMenu}>
+                <Menu.Item name='home' className="navbutton" as={Link} to='/' onClick={this.toggleMenu}>
                   <Icon name='home' />
                   Home
                 </Menu.Item>
-                <Menu.Item name='metrics' as={Link} to='/metrics' onClick={this.toggleMenu}>
+                <Menu.Item name='metrics' className="navbutton" as={Link} to='/metrics' onClick={this.toggleMenu}>
                   <Icon name='bar chart' />
                   Metrics
                 </Menu.Item>
-                <Menu.Item name='apps' as={Link} to='/list' onClick={this.toggleMenu}>
+                <Menu.Item name='apps' className="navbutton" as={Link} to='/list' onClick={this.toggleMenu}>
                   <Icon name='book' />
                   My Apps
                 </Menu.Item>
