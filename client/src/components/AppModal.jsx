@@ -55,7 +55,7 @@ class AppModal extends React.Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         closeIcon={true}
-        closeOnDimmerClick={false}
+
         basic
         size='small'
       >
