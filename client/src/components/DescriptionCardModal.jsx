@@ -13,7 +13,7 @@ const DescriptionCard = (props) => (
         <Table.Cell>{props.resume ? props.resume.file_name :  ''}</Table.Cell>
         <Table.Cell>{props.coverletter ? props.coverletter.file_name : ''}</Table.Cell>
       </Table.Row>
-    } 
+    }  
     closeIcon={true}
     closeOnDimmerClick={false}
   >
