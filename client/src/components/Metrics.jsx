@@ -131,9 +131,9 @@ export default class Metrics extends React.Component{
 		const defaultView = this.state.defaultView;
 		return(
 			<Grid>
-				{this.state.defaultView ? 
+				{this.state.defaultView ?
 					<ProgressView
-						data={this.state.data1} 
+						data={this.state.data1}
 						axis={this.state.axis1}
 						apps={this.props.apps}
 						files={this.props.files}
@@ -141,8 +141,8 @@ export default class Metrics extends React.Component{
 						toggleView={this.toggleView}
 						sortPhases={this.sortPhases}
 						getCumulativeQuantities={this.getCumulativeQuantities}
-					/> 
-				: 
+					/>
+				:
 					<StatusView
 						data={this.state.data3}
 						apps={this.props.apps}
@@ -157,7 +157,7 @@ export default class Metrics extends React.Component{
 					<Grid.Column>
 						<Header size="huge" textAlign="center">Conclusions</Header>
 						<div className="conclusions">
-							It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase. 
+							It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.
 							We suggest practicing the skills involved in successfully completing this step in the application process.
 						</div>
 					</Grid.Column>
