@@ -15,7 +15,7 @@ const DescriptionCard = (props) => (
       </Table.Row>
     }  
     closeIcon={true}
-    closeOnDimmerClick={false}
+    closeOnDimmerClick={true}
   >
     <Header icon='building' content={props.app.company} />
     <Modal.Content>
