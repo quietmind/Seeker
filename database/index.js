@@ -1,6 +1,6 @@
-var mysql = require('mysql')
+const mysql = require('mysql')
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host: process.env.DB_URL || 'seeker.c7l7qn51j1yo.us-east-2.rds.amazonaws.com',
   user: 'HouseLannister',
   password: 'hearmeroar',

@@ -211,3 +211,7 @@ app.post('/logout', checkSession, function(req,res) {
   req.session.destroy();
   res.status(200).redirect('/');
 })
+
+app.get('/*', checkSession, function(req,res){
+  res.redirect(`/*`)
+})
