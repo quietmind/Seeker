@@ -33,13 +33,13 @@ const StatusView = (props) => (
           <div className="statshot">reminders pending.</div>
         </Grid.Column>
         <Grid.Column>
-          <Button onClick={props.toggleView}>Toggle View</Button> 
+          <Button onClick={props.toggleView}>Toggle View</Button>
         </Grid.Column>
       </Grid>
     </Grid.Column>
     <Grid.Column>
       <Header size="huge" textAlign="center">Application Status</Header>
-      <C3Chart data={props.data}/>
+      <C3Chart data={props.data} />
     </Grid.Column>
   </Grid.Row>
 )
