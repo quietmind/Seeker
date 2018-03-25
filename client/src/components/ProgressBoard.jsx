@@ -15,7 +15,6 @@ export default class ProgressBoard extends React.Component{
 	}
 
   toggle(e){
-    //e.preventDefault()
     this.setState({show: !this.state.show}, () => console.log(this.state))
   }
 

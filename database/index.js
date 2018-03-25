@@ -157,7 +157,6 @@ module.exports.deletePhase = function(phaseId, callback) {
   connection.query(
     `DELETE FROM phases WHERE id=${phaseId}`,
     (err) => callback(err)
-    
   )
   connection.query(`UPDATE applications 
     SET phase_id=1
