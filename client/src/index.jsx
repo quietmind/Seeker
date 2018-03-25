@@ -118,7 +118,7 @@ class App extends React.Component {
   }
 
   deletePhase(phaseId){
-    if(confirm('do want to delete this phase ?')){
+    if(confirm('Are you sure you want to delete this Phase ?')){
       axios.post('/phases', {phaseId: phaseId}) .then((done) => this.getUserData())
     }
   }
@@ -132,6 +132,7 @@ class App extends React.Component {
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
       deletePhase={this.deletePhase}
+
     />
   }
 

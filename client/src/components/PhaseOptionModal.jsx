@@ -6,21 +6,31 @@ export default class PhaseSettingsModal extends Component {
     super(props)
 }
 
-  render() {
+  handleClick(){
+    console.log('click')
+    this.props.deletePhase(this.props.selectedPhase)
+    this.props.toggle()
+  }
 
+
+
+  render() {
     return (
       <div>
-        <Modal size={mini} open={false} onClose={false}>
+        <Modal size="mini" open={this.props.show} closeIcon={true} onClose={this.props.toggle} closeOnDimmerClick={true}>
           <Modal.Header>
-            <Icon name="settings" textAlign="center"/>
+            <Icon textAlign="center" name="settings"/>
           </Modal.Header>
-          <Modal.Content>
-            <p>Delete Phase?</p>
+          <Modal.Content textAlign="center">
+              <Button.Group fluid size='large'>
+                  <Button negative onClick={() => this.handleClick()}><Icon name="trash"/></Button>
+                   <Button.Or />
+                  <Button positive><Icon name="ordered list"/></Button>
+              </Button.Group>
+
           </Modal.Content>
         </Modal>
       </div>
     )
   }
 }
-
-
