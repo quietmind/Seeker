@@ -35,6 +35,9 @@
 .PhaseTitle{
 	padding-bottom:5px;
 }
+.headericon{
+	float:right;
+}
 
 .AppItem {
 	float:left;

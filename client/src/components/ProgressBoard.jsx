@@ -4,10 +4,15 @@ import Phase from './Phase.jsx'
 import axios from 'axios'
 import NewPhase from './NewPhase.jsx'
 
+
 export default class ProgressBoard extends React.Component{
 	constructor(props){
 		super(props)
+    this.state={show: false}
+  
 	}
+
+
 
   componentDidMount(){
     dragula(Array.from(document.getElementsByClassName('phase')),{
@@ -39,7 +44,7 @@ export default class ProgressBoard extends React.Component{
       {
         this.props.phases.map((phase,i) => <Phase key={i} phase={phase} applications={this.props.apps.filter(app => app.phase_id === phase.id)}/>)
       }
-      <NewPhase/>
+      <NewPhase createPhase={this.props.createPhase}/>
       </div>
 
 		)
