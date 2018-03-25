@@ -193,8 +193,8 @@ app.post('/updateStatus', checkSession, function(req, res){
   })
 })
 
-app.delete('/phases', checkSession, function(req, res) {
-  db.deletePhase(req.query.phaseId, function(err) {
+app.post('/phases', checkSession, function(req, res) {
+  db.deletePhase(req.body.phaseId, function(err) {
     if (err) console.error(err)
     res.status(202).send()
   })

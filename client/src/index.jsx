@@ -34,6 +34,7 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
     this.createPhase = this.createPhase.bind(this);
+    this.deletePhase = this.deletePhase.bind(this)
   }
 
   componentDidMount() {
@@ -116,6 +117,12 @@ class App extends React.Component {
       })
   }
 
+  deletePhase(phaseId){
+    if(confirm('do want to delete this phase ?')){
+      axios.post('/phases', {phaseId: phaseId}) .then((done) => this.getUserData())
+    }
+  }
+
   decorateProgressBoard() {
     return <ProgressBoard
       phases={this.state.phases}
@@ -124,6 +131,7 @@ class App extends React.Component {
       files={this.state.files}
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
+      deletePhase={this.deletePhase}
     />
   }
 

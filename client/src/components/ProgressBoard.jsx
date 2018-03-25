@@ -42,7 +42,7 @@ export default class ProgressBoard extends React.Component{
 		return(
 			<div className="progressboard-container">
       {
-        this.props.phases.map((phase,i) => <Phase key={i} phase={phase} applications={this.props.apps.filter(app => app.phase_id === phase.id)}/>)
+        this.props.phases.map((phase,i) => <Phase key={i} phase={phase} applications={this.props.apps.filter(app => app.phase_id === phase.id)} deletePhase={this.props.deletePhase}/>)
       }
       <NewPhase createPhase={this.props.createPhase}/>
       </div>
