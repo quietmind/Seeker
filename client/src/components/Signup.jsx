@@ -15,10 +15,20 @@ export default class Signup extends React.Component{
 			<div className="signup">
 				<Form>
 					<Form.Field>
-						<Input placeholder='Username' icon='user' iconPosition='left' value={this.state.username} onChange={(e)=>this.setState({username: e.target.value})}/>
+						<Input 
+						  placeholder='Username' 
+						  icon='user' 
+						  iconPosition='left' 
+						  value={this.state.username} 
+						  onChange={(e)=>this.setState({username: e.target.value})}/>
 					</Form.Field>
 					<Form.Field>
-						<Input icon='lock' iconPosition='left' placeholder='Password' value={this.state.password} onChange={(e)=>this.setState({password: e.target.value})}/>
+						<Input 
+						  icon='lock' i
+						  conPosition='left' 
+						  placeholder='Password' 
+						  value={this.state.password} 
+						  onChange={(e)=>this.setState({password: e.target.value})}/>
 					</Form.Field>
 					<Button type="submit" onClick={() => {
 							this.props.handleClick(this.state.username, this.state.password);

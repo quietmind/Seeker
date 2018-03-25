@@ -37,7 +37,6 @@ app.listen(3000, function() {
 });
 
 const checkSession = function(req, res, next) {
-  console.log(req.session.userId);
   if (req.session.userId) {
     next()
   } else {

@@ -46,15 +46,38 @@ export default class ProgressBoard extends React.Component{
     })
   }
 
+  componentWillReceiveProps(nextProps){
+    dragula(Array.from(document.getElementsByClassName('phase')),{
+      moves: (el, target, source, sibling) => {
+        return el.id === 'title' ? false : true
+      }
+    }).on('drop', (el, target, source, sibling) => {
+      let updateStatus = {appId: el.id, newStatusId: target.id}
+      if(target.id !== source.id) this.props.updateStatus(updateStatus)
+    })
+  } 
+
 
 
 	render(){
 
 		return(
 			<div className="progressboard-container">
-      <PhaseOptionModal selectedPhase={this.state.selectedPhase} deletePhase={this.props.deletePhase} show={this.state.show} toggle={this.toggle}/> {
-        this.props.phases.map((phase,i) => <Phase key={i} phase={phase} applications={this.props.apps.filter(app => app.phase_id === phase.id)} selectedPhase={this.selectedPhase} toggle={this.toggle}/>)
-      }
+      <PhaseOptionModal 
+         selectedPhase={this.state.selectedPhase} 
+         deletePhase={this.props.deletePhase} 
+         show={this.state.show} 
+         toggle={this.toggle}/> 
+         {
+           this.props.phases.map((phase,i) => {
+             return <Phase 
+                    key={i} 
+                    phase={phase} 
+                    applications={this.props.apps.filter(app => app.phase_id === phase.id)} 
+                    selectedPhase={this.selectedPhase} 
+                    toggle={this.toggle}/>
+            })
+          }
       <NewPhase createPhase={this.props.createPhase}/>
       </div>
 
