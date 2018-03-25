@@ -33,6 +33,7 @@ class App extends React.Component {
     this.decorateProgressBoard = this.decorateProgressBoard.bind(this);
     this.logout = this.logout.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
+    this.createPhase = this.createPhase.bind(this);
   }
 
   componentDidMount() {
@@ -103,6 +104,18 @@ class App extends React.Component {
     .catch((err) => console.error(err))
   }
 
+  createPhase(){
+    let phaseName = prompt('Enter a phase Name')
+    axios.post('/phase', 
+      {userId: this.state.userId,
+       phaseLabel: phaseName,
+       phaseOrder: this.state.phases.length + 1
+      })
+      .then((done) => {
+        this.getUserData()
+      })
+  }
+
   decorateProgressBoard() {
     return <ProgressBoard
       phases={this.state.phases}
@@ -110,6 +123,7 @@ class App extends React.Component {
       reminders={this.state.reminders}
       files={this.state.files}
       updateStatus={this.updateStatus}
+      createPhase={this.createPhase}
     />
   }
 

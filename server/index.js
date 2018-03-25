@@ -100,7 +100,8 @@ app.post('/users', function(req, res) {
   })
 })
 
-app.post('/', checkSession, function(req, res) {
+app.post('/phase', checkSession, function(req, res) {
+  console.log(req.body)
   db.createPhase(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
