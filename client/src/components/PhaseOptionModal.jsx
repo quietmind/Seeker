@@ -6,6 +6,11 @@ export default class PhaseSettingsModal extends Component {
     super(props)
 }
 
+  handleClick(){
+    console.log('click')
+    this.props.deletePhase(this.props.selectedPhase)
+    this.props.toggle()
+  }
 
 
 
@@ -18,7 +23,7 @@ export default class PhaseSettingsModal extends Component {
           </Modal.Header>
           <Modal.Content textAlign="center">
               <Button.Group fluid size='large'>
-                  <Button negative onClick={() => this.props.deletePhase(this.props.selectedPhase)}><Icon name="trash"/></Button>
+                  <Button negative onClick={() => this.handleClick()}><Icon name="trash"/></Button>
                    <Button.Or />
                   <Button positive><Icon name="ordered list"/></Button>
               </Button.Group>
