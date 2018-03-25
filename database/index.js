@@ -144,7 +144,6 @@ module.exports.updateApp = function(data, callback) {
 }
 
 module.exports.updateStatus = function(data, callback){
-  console.log('how many times is this being called?')
   connection.query(`UPDATE applications
     SET phase_id=${data.newStatusId}
     WHERE id=${data.appId}`,
@@ -156,11 +155,14 @@ module.exports.updateStatus = function(data, callback){
 
 module.exports.deletePhase = function(phaseId, callback) {
   connection.query(
-    `DELETE FROM phases WHERE id = ${phaseId}`,
+    `DELETE FROM phases WHERE id=${phaseId}`,
     function(err) {
       callback(err)
     }
   )
+  connection.query(`UPDATE applications 
+    SET phase_id=1
+    WHERE phase_id=${phaseId}`)
 }
 
 module.exports.deleteApp = function(appId, callback) {
