@@ -20,7 +20,8 @@ export default class Phase extends Component {
 		return(
 			<div className='phase' id={this.props.phase.id}>
 			<div className='PhaseTitle' id="title">
-			<Header className="phasetitle" 
+			<Header 
+			  className="phasetitle" 
 			  textAlign="center" 
 			  block 
 			  inverted 
@@ -32,7 +33,15 @@ export default class Phase extends Component {
 				  onClick={this.clickHandler} /></Header> 
 			</div>
 			{
-		      this.props.applications.map((app,i) =>  <div id={app.id} key={i}><Card className="AppItem" header={app.company} description={app.job_title} meta={`Last Update: ${moment(app.last_update).format('MM/DD')}`}/></div>)
+		      this.props.applications.map((app,i) =>  {
+		      	return <div id={app.id} key={i}>
+		      	<Card 
+		      	  className="AppItem" 
+		      	  header={app.company} 
+		      	  description={app.job_title} 
+		      	  meta={`Last Update: ${moment(app.last_update).format('MM/DD')}`}/>
+		      	  </div>
+		      })
 			}
 		    </div>
         )

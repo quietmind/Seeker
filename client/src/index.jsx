@@ -119,7 +119,7 @@ class App extends React.Component {
 
   deletePhase(phaseId){
     if(confirm('Are you sure you want to delete this Phase ?')){
-      axios.post('/phases', {phaseId: phaseId}) .then((done) => this.getUserData())
+      axios.post('/phases', {phaseId: phaseId}).then((done) => this.getUserData())
     }
   }
 
@@ -168,21 +168,40 @@ class App extends React.Component {
               </Menu.Item>
             </Menu>
             <Sidebar.Pushable as={Segment}>
-              <Sidebar as={Menu} animation='slide along' width='thin' visible={this.state.menuVisible} icon='labeled' vertical inverted>
-                <Menu.Item name='home' className="navbutton" as={Link} to='/' onClick={this.toggleMenu}>
-                  <Icon name='home' />
-                  Home
-                </Menu.Item>
-                <Menu.Item name='metrics' className="navbutton" as={Link} to='/metrics' onClick={this.toggleMenu}>
-                  <Icon name='bar chart' />
-                  Metrics
-                </Menu.Item>
-                <Menu.Item name='apps' className="navbutton" as={Link} to='/list' onClick={this.toggleMenu}>
-                  <Icon name='book' />
-                  My Apps
-                </Menu.Item>
-                <DocModal toggle={this.toggleMenu} getUserData={this.getUserData}/>
-                <AppModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
+              <Sidebar 
+                 as={Menu} 
+                 animation='slide along'
+                 width='thin'
+                 visible={this.state.menuVisible}
+                 icon='labeled' 
+                 vertical 
+                 inverted>
+                  <Menu.Item 
+                     name='home' 
+                     className="navbutton" 
+                     as={Link} to='/' 
+                     onClick={this.toggleMenu}>
+                      <Icon name='home' />
+                    Home
+                  </Menu.Item>
+                  <Menu.Item 
+                    name='metrics' 
+                    className="navbutton" 
+                    as={Link} to='/metrics' 
+                    onClick={this.toggleMenu}>
+                      <Icon name='bar chart' />
+                    Metrics
+                  </Menu.Item>
+                  <Menu.Item 
+                    name='apps' 
+                    className="navbutton" 
+                    as={Link} to='/list' 
+                    onClick={this.toggleMenu}>
+                      <Icon name='book' />
+                    My Apps
+                  </Menu.Item>
+                  <DocModal toggle={this.toggleMenu} getUserData={this.getUserData}/>
+                  <AppModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>
