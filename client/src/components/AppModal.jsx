@@ -10,6 +10,7 @@ class AppModal extends React.Component {
       jobTitle: '',
       companyName: '',
       phase: '',
+      contact: '',
       resume: '',
       coverLetter: '',
       modalOpen: false
@@ -37,6 +38,7 @@ class AppModal extends React.Component {
       coverLetterId: this.state.coverLetter,
       jobTitle: this.state.jobTitle,
       company: this.state.companyName,
+      contact: this.state.contact,
       date: new Date()})
     .then((response) => {
       this.handleClose()
@@ -63,13 +65,12 @@ class AppModal extends React.Component {
         <Modal.Content >
           <Form>
             <Form.Group widths='equal'>
-
-              <Form.Input fluid label='Job Title' placeholder='Job Title' value= {this.state.jobTitle} onChange={(e)=>this.setState({jobTitle: e.target.value})}/>
-              <Form.Input fluid label='Company Name' placeholder='Company Name' value= {this.state.companyName} onChange={(e)=>this.setState({companyName: e.target.value})}/>
+              <Form.Input fluid label='Job Title' placeholder='Job Title' value={this.state.jobTitle} onChange={(event) => this.setState({jobTitle: event.target.value})}/>
+              <Form.Input fluid label='Company Name' placeholder='Company Name' value={this.state.companyName} onChange={(event) => this.setState({companyName: event.target.value})}/>
               <Form.Select fluid label='Phase' options={this.props.phases.map(function(ele) { return {text: ele.phase_label, value: ele.id}})} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
-
             </Form.Group>
             <Form.Group widths='equal'>
+              <Form.Input fluid label='Point of Contact' placeholder='Contact Email' value={this.state.contact} onChange={(event) => this.setState({contact: event.target.value})}/>
               <Form.Select fluid label='Resume Used' options={this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}})} placeholder='Resume' value= {this.state.resume} onChange={(e, { value })=>this.setState({resume: value})}/>
               <Form.Select fluid label='Cover Letter Used' options={this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}})} placeholder='Cover Letter' value={this.state.coverletter} onChange={(e, { value })=>this.setState({coverLetter: value})}/>
             </Form.Group>

@@ -49,24 +49,24 @@ class App extends React.Component {
   	})
   }
 
-  signup(username, password) {
+  signup(userEmail, password) {
     event.preventDefault()
-    axios.post('/users', {username: username, password: password})
-    .then((response) => {
-      this.setState({user: response.data})
-      this.getUserData()
-    })
-    .catch((err)=> alert("Please enter a valid username"))
-  }
-
-  login(username, password) {
-    event.preventDefault()
-    axios.get('/users', {params: {username: username, password: password}})
+    axios.post('/users', {userEmail: userEmail, password: password})
     .then((response) => {
       this.setState({userId: response.data})
       this.getUserData()
     })
-    .catch((err) => alert("Please enter a valid username"))
+    .catch((err)=> alert("Invalid email or password"))
+  }
+
+  login(userEmail, password) {
+    event.preventDefault()
+    axios.get('/users', {params: {userEmail: userEmail, password: password}})
+    .then((response) => {
+      this.setState({userId: response.data})
+      this.getUserData()
+    })
+    .catch((err) => alert("Invalid email or password"))
   }
 
   logout() {

@@ -24,8 +24,8 @@ export default class Signup extends React.Component{
 					</Form.Field>
 					<Form.Field>
 						<Input 
-						  icon='lock' i
-						  conPosition='left' 
+							icon='lock' 
+							iconPosition='left' 
 						  placeholder='Password' 
 						  value={this.state.password} 
 						  onChange={(e)=>this.setState({password: e.target.value})}/>
