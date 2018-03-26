@@ -20,17 +20,19 @@ export default class Phase extends Component {
 		return(
 			<div className='phase' id={this.props.phase.id}>
 				<div className='PhaseTitle' id="title">
-				<Header 
-				  className="phasetitle" 
-				  textAlign="center" 
-				  block 
-				  inverted 
-				  size="large">{this.props.phase.phase_label}
-					<Icon 
-					  className="headericon" 
-					  name="ellipsis vertical"
-					  textAlign="right"
-					  onClick={this.clickHandler} /></Header> 
+					<Header 
+					  className="phasetitle" 
+					  textAlign="center" 
+					  block 
+					  inverted 
+					  size="large">{this.props.phase.phase_label}
+						<Icon 
+						  className="headericon" 
+						  name="ellipsis vertical"
+						  textAlign="right"
+						  onClick={this.clickHandler} 
+						/>
+					</Header> 
 				</div>
 			{
 		      this.props.applications.map((app,i) =>  {
@@ -40,8 +42,9 @@ export default class Phase extends Component {
 			      	  className="AppItem" 
 			      	  header={app.company} 
 			      	  description={app.job_title} 
-			      	  meta={`Last Update: ${moment(app.last_update).format('MM/DD')}`}/>
-			      	  </div>
+			      	  meta={`Last Update: ${moment(app.last_update).format('MM/DD')}`}
+			      	/>
+			    </div>
 			      })
 			}
 		    </div>
