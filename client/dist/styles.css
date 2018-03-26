@@ -54,7 +54,7 @@
     cursor:move;
 }
 .AppItem:hover{
-	animation: pop 0.4s infinite;
+	animation: pulse 0.3s linear 1;
 }
 
 .gu-mirror {
@@ -122,19 +122,15 @@
 
 .appListItem:hover {
 	animation: pop 0.3s linear 1;
+	box-shadow: 1px 1px 1px gray;
 }
-
-@keyframes pop{
-  50%  {transform: scale(1.01);}
-}
-
 
 @keyframes pop{
    0% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(3px);
+    transform: translateY(-3px);
   }
   100% {
     transform: translateY(0px);
