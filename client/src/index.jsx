@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import $ from 'jquery'
 import { BrowserRouter as Router, Route, Link, Switch, withRouter } from 'react-router-dom'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
 import ProgressBoard from './components/ProgressBoard.jsx'
@@ -9,7 +9,7 @@ import ApplicationList from './components/ApplicationList.jsx'
 import Welcome from './components/Welcome.jsx'
 import AppModal from './components/AppModal.jsx'
 import DocModal from './components/DocModal.jsx'
-import axios from 'axios';
+import axios from 'axios'
 
 class App extends React.Component {
   constructor(props) {
@@ -73,10 +73,10 @@ class App extends React.Component {
   }
 
   logout() {
-  console.log('client side called');
+  console.log('client side called')
     axios.post('/logout')
     .then(() => {
-    console.log('response received');
+    console.log('response received')
     this.setState({userId: null})
     })
   }
@@ -209,8 +209,14 @@ class App extends React.Component {
                       <Icon name='book' />
                     My Apps
                   </Menu.Item>
-                  <DocModal toggle={this.toggleMenu} getUserData={this.getUserData}/>
-                  <AppModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
+                  <DocModal 
+                    toggle={this.toggleMenu} 
+                    getUserData={this.getUserData}/>
+                  <AppModal 
+                    toggle={this.toggleMenu} 
+                    getUserData={this.getUserData} 
+                    phases={this.state.phases} 
+                    files={this.state.files}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>
@@ -229,6 +235,6 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'))
 
 //is valid token? function?

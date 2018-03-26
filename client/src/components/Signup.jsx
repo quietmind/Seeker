@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Input, Form } from 'semantic-ui-react';
+import React from 'react'
+import { Button, Input, Form } from 'semantic-ui-react'
 
 export default class Signup extends React.Component{
 	constructor(props){
@@ -33,6 +33,7 @@ export default class Signup extends React.Component{
 					<Button type="submit" onClick={() => {
 							this.props.handleClick(this.state.userEmail, this.state.password);
 							this.setState({userEmail: '', password: ''})
+
 						}}>Sign Up
 					</Button>
 				</Form>

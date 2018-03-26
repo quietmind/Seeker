@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom';
-import { Button, Menu, Header, Segment} from 'semantic-ui-react';
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
+import React from 'react'
+import { BrowserRouter as Router, Route, Link, BrowserHistory } from 'react-router-dom'
+import { Button, Menu, Header, Segment} from 'semantic-ui-react'
+import Login from './Login.jsx'
+import Signup from './Signup.jsx'
 
 export default class Welcome extends React.Component{
 	constructor(props){
