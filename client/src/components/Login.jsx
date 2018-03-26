@@ -5,7 +5,7 @@ export default class Login extends React.Component{
 	constructor(props){
 		super(props)
 		this.state ={
-			username: '',
+			userEmail: '',
 			password: ''
 		}
 	}
@@ -16,11 +16,11 @@ export default class Login extends React.Component{
 				<Form>
 					<Form.Field>
 						<Input 
-						  placeholder='Username' 
+						  placeholder='Email' 
 						  icon='user' 
 						  iconPosition='left' 
-						  value={this.state.username} 
-						  onChange={(e)=>this.setState({username: e.target.value})}/>
+						  value={this.state.userEmail} 
+						  onChange={(e)=>this.setState({userEmail: e.target.value})}/>
 					</Form.Field>
 					<Form.Field>
 						<Input 
@@ -31,8 +31,8 @@ export default class Login extends React.Component{
 						  onChange={(e)=>this.setState({password: e.target.value})}/>
 					</Form.Field>
 					<Button type="submit" onClick={() => {
-						this.props.handleClick(this.state.username, this.state.password);
-						this.setState({username: '', password: ''})
+						this.props.handleClick(this.state.userEmail, this.state.password);
+						this.setState({userEmail: '', password: ''})
 					}}>Login
 					</Button>
 				</Form>

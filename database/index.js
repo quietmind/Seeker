@@ -15,10 +15,10 @@ connection.connect((err) => {
   }
 })
 
-module.exports.createUser = function(username, password, callback) {
+module.exports.createUser = function(userEmail, password, callback) {
   connection.query(
-    `INSERT INTO users (id, username, password) VALUES (?, ?, ?)`,
-    [null, username, password],
+    `INSERT INTO users (id, user_email, password) VALUES (?, ?, ?)`,
+    [null, userEmail, password],
     function(err) {
       callback(err)
     }
@@ -70,9 +70,9 @@ module.exports.addFile = function(userId, s3url, filename, callback) {
   )
 }
 
-module.exports.getUserCredentials = function(username, callback) {
+module.exports.getUserCredentials = function(userEmail, callback) {
   connection.query(
-    `SELECT * FROM users WHERE username = '${username}'`,
+    `SELECT * FROM users WHERE user_email = '${userEmail}'`,
     function(err, results) {
       callback(err, results)
     }

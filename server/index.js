@@ -72,17 +72,17 @@ app.get('/session', function(req, res) {
 
 app.post('/users', function(req, res) {
   console.log('received post request', req.body)
-  db.getUserCredentials(req.body.username, function(err, results) {
+  db.getUserCredentials(req.body.userEmail, function(err, results) {
     if (err) console.error(err)
     console.log('queried the db', results)
     if (results.length === 0) {
       bcrypt.hash(req.body.password, null, null, function(err, hash) {
         if (err) console.error(err)
         console.log('hashed password')
-        db.createUser(req.body.username, hash, function(err) {
+        db.createUser(req.body.userEmail, hash, function(err) {
           if (err) console.error(err)
           console.log('created new user')
-          db.getUserCredentials(req.body.username, function(err, results) {
+          db.getUserCredentials(req.body.userEmail, function(err, results) {
             if (err) console.error(err)
             console.log('got user id from db', results)
             db.addDefaultPhases(results[0].id, function(err) {
@@ -123,7 +123,7 @@ app.post('/files', checkSession, upload.any(), function(req, res) {
 
 app.get('/users', function(req, res) {
   console.log('request query', req.query)
-  db.getUserCredentials(req.query.username, function(err, results) {
+  db.getUserCredentials(req.query.userEmail, function(err, results) {
     console.log('got a response from the db', results)
     if (err) console.error(err)
     if (results.length > 0) {

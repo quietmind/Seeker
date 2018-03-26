@@ -6,7 +6,7 @@ USE seeker;
 
 CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
-  username VARCHAR(100) NOT NULL,
+  user_email VARCHAR(100) NOT NULL,
   password VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -32,8 +32,8 @@ CREATE TABLE reminders (
 CREATE TABLE files (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
-  s3_url VARCHAR(500),
-  file_name VARCHAR(100),
+  s3_url VARCHAR(500) NOT NULL,
+  file_name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -47,6 +47,7 @@ CREATE TABLE applications (
   cover_letter_id INT,
   job_title VARCHAR(100) NOT NULL,
   company VARCHAR(100) NOT NULL,
+  point_of_contact VARCHAR(100),
   date_created DATE NOT NULL,
   last_update DATE NOT NULL,
   PRIMARY KEY (id),
@@ -55,4 +56,12 @@ CREATE TABLE applications (
   FOREIGN KEY (reminder_id) REFERENCES reminders(id),
   FOREIGN KEY (resume_id) REFERENCES files(id),
   FOREIGN KEY (cover_letter_id) REFERENCES files(id)
+);
+
+CREATE TABLE notes (
+  id INT NOT NULL AUTO_INCREMENT,
+  app_id INT NOT NULL,
+  note_text VARCHAR(500) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (app_id) REFERENCES applications(id)
 );
