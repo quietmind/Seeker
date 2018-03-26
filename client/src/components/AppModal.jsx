@@ -26,7 +26,7 @@ class AppModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ jobTitle: '', companyName: '', resume: '', coverLetter: '', modalOpen: false })
+    this.setState({ jobTitle: '', companyName: '', phase: '', contact: '', resume: '', coverLetter: '', modalOpen: false })
     this.props.getUserData()
   }
 
@@ -34,8 +34,8 @@ class AppModal extends React.Component {
     axios.post('/applications', {
       phaseId: this.state.phase,
       reminderId: null,
-      resumeId: this.state.resume,
-      coverLetterId: this.state.coverLetter,
+      resumeId: this.state.resume || null,
+      coverLetterId: this.state.coverLetter || null,
       jobTitle: this.state.jobTitle,
       company: this.state.companyName,
       contact: this.state.contact,
