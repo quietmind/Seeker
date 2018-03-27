@@ -32,6 +32,7 @@ class DescriptionCard extends React.Component{
     this.setState({ reminderText: '', notesText: '', modalOpen: false });
   }
 
+
   handleChange(date) {
     console.log(date);
     this.setState({
@@ -52,6 +53,7 @@ class DescriptionCard extends React.Component{
     .then(()=>this.setState({date: '', reminderText: ''})
   )}
 
+
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
     .then(()=> {this.props.handleClick()})
@@ -61,6 +63,7 @@ class DescriptionCard extends React.Component{
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.id})
     .then(()=> this.setState({notesText: ''}))
   }
+
 
   render() {
     return (

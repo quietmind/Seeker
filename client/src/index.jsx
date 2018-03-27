@@ -137,7 +137,6 @@ class App extends React.Component {
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
       deletePhase={this.deletePhase}
-
     />
   }
 
