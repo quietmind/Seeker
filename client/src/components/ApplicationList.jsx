@@ -78,6 +78,7 @@ export default class ApplicationList extends React.Component{
             {this.props.apps.map((app, i) => (
               <DescriptionCard
                 app={app}
+								userId={this.props.userId}
                 phase={this.props.phases.filter((phase) => phase.id === app.phase_id)[0]}
                 resume={this.props.files.filter((file) => file.id === app.resume_id)[0]}
                 coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}

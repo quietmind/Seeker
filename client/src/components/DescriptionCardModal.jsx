@@ -24,7 +24,14 @@ class DescriptionCard extends React.Component{
   }
 
   sendReminder() {
-    axios.post('/reminders', {date: this.state.date, description: this.state.reminderText, email: this.props.email, company: this.props.app.company})
+    axios.post('/reminders', {date: this.state.date,
+                              description: this.state.reminderText,
+                              email: this.props.email,
+                              company: this.props.app.company,
+                              job_title: this.props.app.job_title,
+                              userId: this.props.userId,
+                              point_of_contact: this.props.app.point_of_contact
+                              })
     .then(()=>this.setState({date: '', reminderText: ''})
   )}
 

@@ -154,6 +154,7 @@ class App extends React.Component {
       reminders={this.state.reminders}
       files={this.state.files}
       email={this.state.userEmail}
+      userId={this.state.userId}
     />
   }
 
