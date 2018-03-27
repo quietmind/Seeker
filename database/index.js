@@ -155,7 +155,7 @@ module.exports.updateStatus = function(data, callback){
 }
 
 module.exports.deletePhase = function(phaseId, callback) {
-  connection.query(`UPDATE applications 
+  connection.query(`UPDATE applications
     SET phase_id=1
     WHERE phase_id=${phaseId}`, (err) => callback(err)
   )
@@ -168,6 +168,17 @@ module.exports.deletePhase = function(phaseId, callback) {
 module.exports.deleteApp = function(appId, callback) {
   connection.query(
     `DELETE FROM applications WHERE id = ${req.body.appId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.addReminder = function(body, callback) {
+  connection.query(
+    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description],
     function(err) {
       callback(err)
     }
