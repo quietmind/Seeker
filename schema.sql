@@ -23,6 +23,10 @@ CREATE TABLE phases (
 CREATE TABLE reminders (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
+  user_email VARCHAR(100) NOT NULL
+  job_title VARCHAR(100) NOT NULL
+  company VARCHAR(100) NOT NULL
+  point_of_contact VARCHAR(100),
   due_date DATE NOT NULL,
   text_desc VARCHAR(1000) NOT NULL,
   PRIMARY KEY (id),
@@ -61,7 +65,7 @@ CREATE TABLE applications (
 CREATE TABLE notes (
   id INT NOT NULL AUTO_INCREMENT,
   app_id INT NOT NULL,
-  note_text VARCHAR(500) NOT NULL,
+  note_text VARCHAR(1000) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (app_id) REFERENCES applications(id)
 );
