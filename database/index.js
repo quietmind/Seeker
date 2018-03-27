@@ -175,5 +175,12 @@ module.exports.deleteApp = function(appId, callback) {
 }
 
 module.exports.addReminder = function(body, callback) {
-
+  connection.query(
+    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description],
+    function(err) {
+      callback(err)
+    }
+  )
 }
