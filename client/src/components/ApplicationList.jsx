@@ -76,11 +76,12 @@ export default class ApplicationList extends React.Component{
           </Table.Header>
           <Table.Body className="applicationListBody">
             {this.props.apps.map((app, i) => (
-              <DescriptionCard 
+              <DescriptionCard
                 app={app}
                 phase={this.props.phases.filter((phase) => phase.id === app.phase_id)[0]}
                 resume={this.props.files.filter((file) => file.id === app.resume_id)[0]}
                 coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
+								email={this.props.email}
                 key={i}
               />
 						))}
