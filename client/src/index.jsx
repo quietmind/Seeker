@@ -11,7 +11,6 @@ import AppModal from './components/AppModal.jsx'
 import DocModal from './components/DocModal.jsx'
 import axios from 'axios';
 
-
 class App extends React.Component {
   constructor(props) {
   	super(props)
@@ -21,7 +20,8 @@ class App extends React.Component {
       phases: [],
       applications: [],
       reminders: [],
-      files: []
+      files: [],
+      userEmail: null
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
@@ -53,7 +53,8 @@ class App extends React.Component {
     event.preventDefault()
     axios.post('/users', {userEmail: userEmail, password: password})
     .then((response) => {
-      this.setState({userId: response.data})
+      console.log(response)
+      this.setState({userId: response.data[0], userEmail: response.data[1]})
       this.getUserData()
     })
     .catch((err)=> alert("Invalid email or password"))
@@ -63,7 +64,8 @@ class App extends React.Component {
     event.preventDefault()
     axios.get('/users', {params: {userEmail: userEmail, password: password}})
     .then((response) => {
-      this.setState({userId: response.data})
+      console.log(response)
+      this.setState({userId: response.data[0], userEmail: response.data[1]})
       this.getUserData()
     })
     .catch((err) => alert("Invalid email or password"))
@@ -107,7 +109,7 @@ class App extends React.Component {
 
   createPhase(){
     let phaseName = prompt('Enter a phase Name')
-    axios.post('/phase', 
+    axios.post('/phase',
       {userId: this.state.userId,
        phaseLabel: phaseName,
        phaseOrder: this.state.phases.length + 1
@@ -151,6 +153,7 @@ class App extends React.Component {
       apps={this.state.applications}
       reminders={this.state.reminders}
       files={this.state.files}
+      email={this.state.userEmail}
     />
   }
 
@@ -168,34 +171,34 @@ class App extends React.Component {
               </Menu.Item>
             </Menu>
             <Sidebar.Pushable as={Segment}>
-              <Sidebar 
-                 as={Menu} 
+              <Sidebar
+                 as={Menu}
                  animation='slide along'
                  width='thin'
                  visible={this.state.menuVisible}
-                 icon='labeled' 
-                 vertical 
+                 icon='labeled'
+                 vertical
                  inverted>
-                  <Menu.Item 
-                     name='home' 
-                     className="navbutton" 
-                     as={Link} to='/' 
+                  <Menu.Item
+                     name='home'
+                     className="navbutton"
+                     as={Link} to='/'
                      onClick={this.toggleMenu}>
                       <Icon name='home' />
                     Home
                   </Menu.Item>
-                  <Menu.Item 
-                    name='metrics' 
-                    className="navbutton" 
-                    as={Link} to='/metrics' 
+                  <Menu.Item
+                    name='metrics'
+                    className="navbutton"
+                    as={Link} to='/metrics'
                     onClick={this.toggleMenu}>
                       <Icon name='bar chart' />
                     Metrics
                   </Menu.Item>
-                  <Menu.Item 
-                    name='apps' 
-                    className="navbutton" 
-                    as={Link} to='/list' 
+                  <Menu.Item
+                    name='apps'
+                    className="navbutton"
+                    as={Link} to='/list'
                     onClick={this.toggleMenu}>
                       <Icon name='book' />
                     My Apps
