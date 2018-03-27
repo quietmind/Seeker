@@ -21,6 +21,7 @@ class App extends React.Component {
       applications: [],
       reminders: [],
       files: [],
+      notes: [],
       userEmail: null
   	}
 
@@ -85,14 +86,16 @@ class App extends React.Component {
       axios.get('/phases'),
       axios.get('/applications'),
       axios.get('/reminders'),
-      axios.get('/files')
+      axios.get('/files'),
+      axios.get('/notes')
     ])
     .then((response) => {
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
         reminders: response[2].data,
-        files: response[3].data
+        files: response[3].data,
+        notes: response[4].data
       })
     })
     .catch((err) => console.error(err))
