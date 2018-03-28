@@ -1,46 +1,57 @@
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const request = require('request');
-const bcrypt = require('bcrypt-nodejs');
-const passport = require('passport');
-const db = require('../database/index.js');
-const app = express();
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const aws = require('aws-sdk');
-const RateLimit = require('express-rate-limit');
-const config = require('../configurations');
-const fs = require('fs');
+const express = require('express')
+const session = require('express-session')
+const bodyParser = require('body-parser')
+const request = require('request')
+const bcrypt = require('bcrypt-nodejs')
+const passport = require('passport')
+const db = require('../database/index.js')
+const app = express()
+const multer = require('multer')
+const multerS3 = require('multer-s3')
+const aws = require('aws-sdk')
+const RateLimit = require('express-rate-limit')
+const config = require('../configurations')
+const fs = require('fs')
+const webpush = require('web-push')
 
+const vapidKeys = {
+  publicKey:  'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY',
+  privateKey: 'TDqrGVKsB2ioHKEvpCqje8AIjQiahRRFOpXoUbAFyOU'
+}
 
-app.enable('trust proxy');
+webpush.setVapidDetails(
+  'mailto:adammateo@gmail.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+)
+
+app.enable('trust proxy')
 const limiter = new RateLimit({
   windowMs: 15*60*1000,
   max: 0,
   delayMs: 0
-});
+})
 
-app.use(express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json());
+app.use(express.static(__dirname + '/../client/dist'))
+app.use(bodyParser.json())
 app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'someSuperSecretString',
   cookie: {maxAge: 6000000}
 }));
-//app.use('/updateStatus',limiter);
+
 
 
 app.listen(3000, function() {
-  console.log('listening on port 3000!');
-});
+  console.log('listening on port 3000!')
+})
 
-const checkSession = function(req, res, next) {
+const checkSession =function(req, res, next) {
   if (req.session.userId) {
     next()
   } else {
-    console.log("user not logged in");
+    console.log("user not logged in")
     res.redirect('/')
   }
 }
@@ -49,26 +60,26 @@ aws.config.update({
     secretAccessKey: config.secretAccessKey,
     accessKeyId: config.accessKeyID,
     region: 'us-east-2'
-});
+})
 
-var s3 = new aws.S3();
+var s3 = new aws.S3()
 
 var upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: config.bucket,
     key: function(req, file, cb) {
-      cb(null, `${new Date()}-${file.originalname}`);
+      cb(null, `${new Date()}-${file.originalname}`)
     }
   })
-});
+})
 
 app.get('/session', function(req, res) {
   if (req.session.userId) {
-    res.status(200).send(`${req.session.userId}`);
+    res.status(200).send(`${req.session.userId}`)
   } else
-    res.status(403).send();
-});
+    res.status(403).send()
+})
 
 app.post('/users', function(req, res) {
   console.log('received post request', req.body)
@@ -120,9 +131,9 @@ app.post('/applications', checkSession, function(req, res) {
 app.post('/files', checkSession, upload.any(), function(req, res) {
   db.addFile(req.session.userId, req.files[0].location, req.body.name, function(err) {
     if (err) console.error(err)
-    res.status(201).send();
-  });
-});
+    res.status(201).send()
+  })
+})
 
 app.get('/users', function(req, res) {
   console.log('request query', req.query)
@@ -146,6 +157,33 @@ app.get('/users', function(req, res) {
       res.status(403).send()
     }
   })
+})
+
+app.post('/saveSubscription', checkSession, function(req,res) {
+  let newSub = JSON.parse(req.body.data)
+  newSub.id = req.session.userId
+  newSub = JSON.stringify(newSub)
+  db.saveNotificationData(newSub, function(err, results){
+    if(err) throw err
+    res.status(200).end()
+  })
+
+
+})
+
+app.post('/triggerPushNotifications', function(req, res) {
+  console.log(red.body)
+  const note = {
+    notification: {
+      "title": "DEMO",
+      "body": "This will be the body",
+      "icon": ""
+    }
+  }
+  webpush.sendNotification(newSub, JSON.stringify(note))
+         .then((done) => console.log('finished'))
+         .catch((err) => console.log(err))
+  res.end()
 })
 
 app.get('/phases', checkSession, function(req, res) {
@@ -231,9 +269,9 @@ app.delete('/applications', checkSession, function(req, res) {
 })
 
 app.post('/logout', checkSession, function(req,res) {
-  console.log('axios received');
-  req.session.destroy();
-  res.status(200).redirect('/');
+  console.log('axios received')
+  req.session.destroy()
+  res.status(200).redirect('/')
 })
 
 app.post('/notes', checkSession, function(req, res) {
@@ -245,5 +283,5 @@ app.post('/notes', checkSession, function(req, res) {
 })
 
 app.get('/*', checkSession, function(req, res) {
-  res.status(200).redirect('/');
+  res.status(200).redirect('/')
 })

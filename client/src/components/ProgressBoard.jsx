@@ -1,5 +1,5 @@
 import React from 'react'
-import dragula from 'react-dragula'
+import drgl from 'react-dragula'
 import Phase from './Phase.jsx'
 import axios from 'axios'
 import NewPhase from './NewPhase.jsx'
@@ -15,18 +15,17 @@ export default class ProgressBoard extends React.Component{
 	}
 
   toggle(e){
-    this.setState({show: !this.state.show}, () => console.log(this.state))
+    this.setState({show: !this.state.show})
   }
 
   selectedPhase(phaseId){
-    console.log(phaseId)
     this.setState({
       selectedPhase: phaseId
     })
   }
 
   componentDidMount(){
-    dragula(Array.from(document.getElementsByClassName('phase')),{
+    drgl(Array.from(document.getElementsByClassName('phase')),{
       moves: (el, target, source, sibling) => {
         return el.id === 'title'? false : true
       }
@@ -36,7 +35,7 @@ export default class ProgressBoard extends React.Component{
     })
   }
   componentDidUpdate(){
-    dragula(Array.from(document.getElementsByClassName('phase')),{
+    drgl(Array.from(document.getElementsByClassName('phase')),{
       moves: (el, target, source, sibling) => {
         return el.id === 'title' ? false : true
       }
@@ -47,7 +46,7 @@ export default class ProgressBoard extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
-    dragula(Array.from(document.getElementsByClassName('phase')),{
+    drgl(Array.from(document.getElementsByClassName('phase')),{
       moves: (el, target, source, sibling) => {
         return el.id === 'title' ? false : true
       }

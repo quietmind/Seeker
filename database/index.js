@@ -222,3 +222,13 @@ module.exports.addNotes = function(body, callback) {
     }
   )
 }
+
+module.exports.saveNotificationData = function(body, callback){
+  body = JSON.parse(body)
+  connection.query(`UPDATE users
+    SET notif_endpoint="${body.endpoint}",
+    notif_key="${body.keys.p256dh}",
+    notif_auth="${body.keys.auth}"
+    WHERE id=${body.id}
+    `)
+}

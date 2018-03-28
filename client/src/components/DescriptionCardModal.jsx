@@ -4,6 +4,8 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
 
+let pubKey = 'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY';
+
 class DescriptionCard extends React.Component{
   constructor(props) {
     super(props)
@@ -16,12 +18,20 @@ class DescriptionCard extends React.Component{
       notes: []
     }
 
-    this.sendReminder = this.sendReminder.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.deleteApplication = this.deleteApplication.bind(this);
-    this.addNote = this.addNote.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
+    this.sendReminder       = this.sendReminder.bind(this);
+    this.handleChange       = this.handleChange.bind(this);
+    this.deleteApplication  = this.deleteApplication.bind(this);
+    this.addNote            = this.addNote.bind(this);
+    this.handleClose        = this.handleClose.bind(this);
+    this.handleOpen         = this.handleOpen.bind(this);
+    this.askPermission      = this.askPermission.bind(this);
+    this.urlB64ToUint8Array = this.urlB64ToUint8Array.bind(this)
+    this.subscribeUser      = this.subscribeUser.bind(this)
+    this.sendSubscriptionToServer = this.sendSubscriptionToServer.bind(this)
+  }
+
+  componentWillMount(){
+    this.askPermission()
   }
 
   handleOpen() {
@@ -31,6 +41,7 @@ class DescriptionCard extends React.Component{
   handleClose() {
     this.setState({ reminderText: '', notesText: '', modalOpen: false });
   }
+
 
   handleChange(date) {
     console.log(date);
@@ -52,6 +63,7 @@ class DescriptionCard extends React.Component{
     .then(()=>this.setState({date: '', reminderText: ''})
   )}
 
+
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
     .then(()=> {this.props.handleClick()})
@@ -61,6 +73,84 @@ class DescriptionCard extends React.Component{
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.id})
     .then(()=> this.setState({notesText: ''}))
   }
+
+  urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  subscribeUser() {
+   navigator.serviceWorker.ready.then((reg) => {
+    let subscribeParams = { userVisibleOnly: true };
+    //Setting the public key of our VAPID key pair.
+    let applicationServerKey = this.urlB64ToUint8Array(pubKey);
+    subscribeParams.applicationServerKey = applicationServerKey;
+    reg.pushManager.subscribe(subscribeParams)
+        .then((subscription) => {
+          console.log(JSON.stringify(subscription))
+            // Update status to subscribe current user on server, and to let
+            // other users know this user has subscribed
+            let endpoint = subscription.endpoint;
+            let key = subscription.getKey('p256dh');
+            let auth = subscription.getKey('auth');
+            let encodedKey = btoa(String.fromCharCode.apply(null, new Uint8Array(key)));
+            let encodedAuth = btoa(String.fromCharCode.apply(null, new Uint8Array(auth)));
+
+            const subscripObject = {
+              endpoint: endpoint,
+              keys: {
+                "p256dh": encodedKey,
+                "auth": encodedAuth
+              }
+    
+            }
+            this.sendSubscriptionToServer(subscripObject)
+        })
+        .catch((err) => {
+            // A problem occurred with the subscription.
+            console.log('Unable to subscribe to push.', err);
+        });
+    });
+
+  }
+
+  sendSubscriptionToServer(subscription) {
+    console.log('sending subscription')
+  
+    // console.log(encodedAuth, encodedKey)
+    axios.post('/saveSubscription', {
+      data: JSON.stringify(subscription)
+    }).then((res) => console.log(JSON.stringify(res)))
+  }
+
+  askPermission() {
+  return new Promise(function(resolve, reject) {
+    const permissionResult = Notification.requestPermission(function(result) {
+      resolve(result);
+    });
+
+    if (permissionResult) permissionResult.then(resolve, reject);
+    
+  })
+  .then( (permissionResult) => {
+    if (permissionResult !== 'granted') {
+      throw new Error('We weren\'t granted permission.');
+    } else {
+      this.subscribeUser()
+    }
+  });
+}
+
 
   render() {
     return (
