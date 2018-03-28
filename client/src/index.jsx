@@ -69,7 +69,7 @@ class App extends React.Component {
     axios.post('/users', {userEmail: userEmail, password: password})
     .then((response) => {
       console.log(response)
-      this.setState({userId: response.data[0], userEmail: response.data[1]})
+      this.setState({userId: response.data, userEmail: userEmail})
       this.getUserData()
     })
     .catch((err)=> alert("Invalid email or password"))

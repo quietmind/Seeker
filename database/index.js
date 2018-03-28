@@ -15,12 +15,12 @@ connection.connect((err) => {
   }
 })
 
-module.exports.createUser = function(userEmail, password, callback) {
+module.exports.createUser = function(userEmail, password, googleId, callback) {
   connection.query(
-    `INSERT INTO users (id, user_email, password) VALUES (?, ?, ?)`,
-    [null, userEmail, password],
-    function(err) {
-      callback(err)
+    `INSERT INTO users (id, user_email, password, google_id) VALUES (?, ?, ?, ?)`,
+    [null, userEmail, password, googleId],
+    function(err, response) {
+      callback(err, response)
     }
   )
 }
@@ -70,9 +70,27 @@ module.exports.addFile = function(userId, s3url, filename, callback) {
   )
 }
 
+module.exports.getUser = function(userId, callback) {
+  connection.query(
+    `SELECT * FROM users WHERE id = ${userId}`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
 module.exports.getUserCredentials = function(userEmail, callback) {
   connection.query(
     `SELECT * FROM users WHERE user_email = '${userEmail}'`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
+module.exports.getGoogleCredentials = function(googleId, callback) {
+  connection.query(
+    `SELECT * FROM users WHERE google_id = '${googleId}'`,
     function(err, results) {
       callback(err, results)
     }
@@ -124,8 +142,17 @@ module.exports.getFiles = function(userId, callback) {
   )
 }
 
+module.exports.updateToken = function(userId, accessToken, refreshToken, callback) {
+  connection.query(
+    `UPDATE users SET access_token = '${accessToken}', refresh_token = '${refreshToken}' WHERE id = ${userId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.updatePhaseOrder = function(phases, callback) {
-  for (var i = 0; i < phases.length; i++) {
+  for (let i = 0; i < phases.length; i++) {
     connection.query(
       `UPDATE phases SET phase_order = ${i} WHERE phase_id = ${phases[i]}`,
       function(err) {

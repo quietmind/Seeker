@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const bcrypt = require('bcrypt-nodejs')
 const passport = require('passport')
+const strategy = require('./passport.js');
 const db = require('../database/index.js')
 const app = express()
 const multer = require('multer')
@@ -25,7 +26,7 @@ webpush.setVapidDetails(
   vapidKeys.privateKey
 )
 
-app.enable('trust proxy')
+app.enable('trust proxy');
 const limiter = new RateLimit({
   windowMs: 15*60*1000,
   max: 0,
@@ -37,11 +38,11 @@ app.use(bodyParser.json())
 app.use(session({
   resave: false,
   saveUninitialized: false,
-  secret: 'someSuperSecretString',
-  cookie: {maxAge: 6000000}
+  secret: config.session.secret,
+  cookie: {maxAge: 1000 * 60 * 60 * 24}
 }));
-
-
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.listen(3000, function() {
   console.log('listening on port 3000!')
@@ -74,6 +75,16 @@ var upload = multer({
   })
 })
 
+app.get('/oauth', passport.authenticate('google', {
+  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/gmail.insert']
+}))
+
+app.get('/google', passport.authenticate('google'), (req, res) => {
+  console.log(req.user.id)
+  req.session.userId = req.user.id
+  res.redirect('/')
+})
+
 app.get('/session', function(req, res) {
   if (req.session.userId) {
     res.status(200).send(`${req.session.userId}`)
@@ -90,20 +101,13 @@ app.post('/users', function(req, res) {
       bcrypt.hash(req.body.password, null, null, function(err, hash) {
         if (err) console.error(err)
         console.log('hashed password')
-        db.createUser(req.body.userEmail, hash, function(err) {
+        db.createUser(req.body.userEmail, hash, null, function(err, results) {
           if (err) console.error(err)
-          console.log('created new user')
-          db.getUserCredentials(req.body.userEmail, function(err, results) {
+          console.log('created new user', results.insertId)
+          db.addDefaultPhases(results.insertId, function(err) {
             if (err) console.error(err)
-            console.log('got user id from db', results)
-            db.addDefaultPhases(results[0].id, function(err) {
-              if (err) console.error(err)
-              console.log('added default phases')
-              req.session.userId = results[0].id
-              var sendingData = [];
-              sendingData.push(results[0].id, results[0].user_email);
-              res.status(200).send(sendingData)
-            })
+            console.log('added default phases')
+            res.status(201).send(`${results.insertId}`)
           })
         })
       })

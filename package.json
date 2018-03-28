@@ -34,6 +34,7 @@
     "multer-s3": "^2.7.0",
     "mysql": "^2.15.0",
     "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
     "proptypes": "^1.1.0",
     "react": "^15.6.2",
     "react-addons-shallow-compare": "^0.14.8",

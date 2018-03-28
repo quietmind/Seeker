@@ -6,8 +6,9 @@ USE seeker;
 
 CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
-  user_email VARCHAR(100) NOT NULL,
-  password VARCHAR(100) NOT NULL,
+  user_email VARCHAR(100) UNIQUE,
+  password VARCHAR(100),
+  google_id VARCHAR(100) UNIQUE,
   PRIMARY KEY (id)
 );
 
