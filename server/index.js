@@ -159,20 +159,28 @@ app.get('/users', function(req, res) {
   })
 })
 
-app.post('/saveSubscription', function(req,res) {
-  const note = {
-    notification: {
-      "title": "DEMO",
-      "body": "This will be the body",
-      "icon": ""
-    }
-  }
+app.post('/saveSubscription', checkSession, function(req,res) {
   let newSub = JSON.parse(req.body.data)
-  console.log(newSub)
-  webpush.sendNotification(newSub, JSON.stringify(note))
-         .then((done) => console.log('finished'))
-         .catch((err) => console.log(err))
-  res.end()
+  newSub.id = req.session.userId
+  newSub = JSON.stringify(newSub)
+  db.saveNotificationData(newSub, function(err, results){
+    if(err) throw err
+    res.status(200).end()
+  })
+
+  // const note = {
+  //   notification: {
+  //     "title": "DEMO",
+  //     "body": "This will be the body",
+  //     "icon": ""
+  //   }
+  // }
+
+  // console.log(newSub)
+  // webpush.sendNotification(newSub, JSON.stringify(note))
+  //        .then((done) => console.log('finished'))
+  //        .catch((err) => console.log(err))
+  // res.end()
 })
 
 app.get('/phases', checkSession, function(req, res) {
