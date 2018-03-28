@@ -168,19 +168,22 @@ app.post('/saveSubscription', checkSession, function(req,res) {
     res.status(200).end()
   })
 
-  // const note = {
-  //   notification: {
-  //     "title": "DEMO",
-  //     "body": "This will be the body",
-  //     "icon": ""
-  //   }
-  // }
 
-  // console.log(newSub)
-  // webpush.sendNotification(newSub, JSON.stringify(note))
-  //        .then((done) => console.log('finished'))
-  //        .catch((err) => console.log(err))
-  // res.end()
+})
+
+app.post('/triggerPushNotifications', function(req, res) {
+  console.log(red.body)
+  const note = {
+    notification: {
+      "title": "DEMO",
+      "body": "This will be the body",
+      "icon": ""
+    }
+  }
+  webpush.sendNotification(newSub, JSON.stringify(note))
+         .then((done) => console.log('finished'))
+         .catch((err) => console.log(err))
+  res.end()
 })
 
 app.get('/phases', checkSession, function(req, res) {
