@@ -85,6 +85,8 @@ export default class ApplicationList extends React.Component{
 								email={this.props.email}
                 key={i}
 								id={this.props.userId}
+								notes={this.props.notes.filter((note) => note.app_id === app.id)}
+								handleClick={this.props.handleClick}
               />
 						))}
           </Table.Body>

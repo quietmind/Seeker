@@ -12,7 +12,8 @@ class DescriptionCard extends React.Component{
       date: moment(),
       reminderText: '',
       modalOpen: false,
-      notesText: ''
+      notesText: '',
+      notes: []
     }
 
     this.sendReminder = this.sendReminder.bind(this);
@@ -53,7 +54,7 @@ class DescriptionCard extends React.Component{
 
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
-    .then(()=> {this.handleClose()})
+    .then(()=> {this.props.handleClick()})
   }
 
   addNote() {
@@ -101,10 +102,17 @@ class DescriptionCard extends React.Component{
             <button onClick={this.sendReminder}>Submit</button>
           </div>
           <div class="reminder">
-            <p>Notes</p>
+            <p>Add a note to this entry</p>
             <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e)=>this.setState({notesText: e.target.value})}></input>
             <button onClick={this.addNote}>Submit</button>
           </div>
+          <h1>Notes:</h1>
+          {this.props.notes.map((note, i) => (
+            <p>{note.note_text}</p>
+          ))}
+          {this.state.notes.map((note, i) => (
+            <p>{note.note_text}</p>
+          ))}
           <button onClick={this.deleteApplication}>Delete this Application</button>
         </div>
       </Modal.Content>
