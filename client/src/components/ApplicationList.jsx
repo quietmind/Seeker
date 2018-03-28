@@ -87,6 +87,7 @@ export default class ApplicationList extends React.Component{
 								id={this.props.userId}
 								notes={this.props.notes.filter((note) => note.app_id === app.id)}
 								handleClick={this.props.handleClick}
+								files={this.props.files}
               />
 						))}
           </Table.Body>

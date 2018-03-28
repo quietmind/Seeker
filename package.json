@@ -41,6 +41,7 @@
     "react-datepicker": "^1.2.2",
     "react-dom": "^15.6.2",
     "react-dragula": "^1.1.17",
+    "react-pdf": "^3.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "request": "^2.83.0",

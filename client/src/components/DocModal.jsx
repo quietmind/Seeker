@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
+import DocList from './DocList.jsx';
 import axios from 'axios';
 
 class DocModal extends React.Component {
@@ -56,10 +57,14 @@ class DocModal extends React.Component {
       >
         <Header icon='wordpress forms' content='View and Update Your Documents' />
         <Modal.Content >
-          <label>Add a New Document</label>
+          <h1>Add a New Document (please use PDFs)</h1>
           <input type="text" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></input>
-          <input name="myFile" type="file" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></input>
+          <input name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></input>
           <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
+
+        </Modal.Content>
+        <Modal.Content>
+          <DocList files={this.props.files}/>
         </Modal.Content>
       </Modal>
     )

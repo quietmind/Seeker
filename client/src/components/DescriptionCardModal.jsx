@@ -87,7 +87,7 @@ class DescriptionCard extends React.Component{
         <p>Resume Provided:</p>
         <a href={this.props.resume.s3_url}>{this.props.resume ? this.props.resume.file_name : ''}</a>
         <p>Cover Letter Provided:</p>
-        <a href={this.props.resume.s3_url}>{this.props.coverletter ? this.props.coverletter.file_name : ''}</a>
+        <a href={this.props.coverletter.s3_url}>{this.props.coverletter ? this.props.coverletter.file_name : ''}</a>
         <p>Last Activity:<br></br>
         {this.props.app.last_update}</p>
         <div className="field">
