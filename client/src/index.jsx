@@ -21,6 +21,7 @@ class App extends React.Component {
       applications: [],
       reminders: [],
       files: [],
+      notes: [],
       userEmail: null
   	}
 
@@ -34,7 +35,7 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
     this.createPhase = this.createPhase.bind(this);
-    this.deletePhase = this.deletePhase.bind(this)
+    this.deletePhase = this.deletePhase.bind(this);
   }
 
   componentDidMount() {
@@ -85,14 +86,16 @@ class App extends React.Component {
       axios.get('/phases'),
       axios.get('/applications'),
       axios.get('/reminders'),
-      axios.get('/files')
+      axios.get('/files'),
+      axios.get('/notes')
     ])
     .then((response) => {
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
         reminders: response[2].data,
-        files: response[3].data
+        files: response[3].data,
+        notes: response[4].data
       })
     })
     .catch((err) => console.error(err))
@@ -155,6 +158,8 @@ class App extends React.Component {
       files={this.state.files}
       email={this.state.userEmail}
       userId={this.state.userId}
+      notes={this.state.notes}
+      handleClick={this.getUserData}
     />
   }
 
