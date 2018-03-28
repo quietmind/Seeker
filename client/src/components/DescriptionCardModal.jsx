@@ -84,10 +84,10 @@ class DescriptionCard extends React.Component{
       <Header icon='building' content={this.props.app.company} />
       <Modal.Content>
         <h1>{this.props.app.job_title}</h1>
-        <p>Resume Provided:<br></br>
-        {this.props.resume ? this.props.resume.file_name : ''}</p>
-        <p>Cover Letter Provided:<br></br>
-        {this.props.coverletter ? this.props.coverletter.file_name : ''}</p>
+        <p>Resume Provided:</p>
+        <a href={this.props.resume.s3_url}>{this.props.resume ? this.props.resume.file_name : ''}</a>
+        <p>Cover Letter Provided:</p>
+        <a href={this.props.resume.s3_url}>{this.props.coverletter ? this.props.coverletter.file_name : ''}</a>
         <p>Last Activity:<br></br>
         {this.props.app.last_update}</p>
         <div className="field">
