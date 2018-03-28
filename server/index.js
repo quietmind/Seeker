@@ -70,6 +70,7 @@ var upload = multer({
     s3: s3,
     bucket: config.bucket,
     acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function(req, file, cb) {
       cb(null, `${new Date()}-${file.originalname}`)
     }

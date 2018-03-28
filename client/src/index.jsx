@@ -222,13 +222,13 @@ class App extends React.Component {
                       <Icon name='book' />
                     My Apps
                   </Menu.Item>
-                  <DocModal 
-                    toggle={this.toggleMenu} 
+                  <DocModal
+                    toggle={this.toggleMenu}
                     getUserData={this.getUserData}/>
-                  <AppModal 
-                    toggle={this.toggleMenu} 
-                    getUserData={this.getUserData} 
-                    phases={this.state.phases} 
+                  <AppModal
+                    toggle={this.toggleMenu}
+                    getUserData={this.getUserData}
+                    phases={this.state.phases}
                     files={this.state.files}/>
               </Sidebar>
               <Sidebar.Pusher>
