@@ -12,7 +12,18 @@ const aws = require('aws-sdk')
 const RateLimit = require('express-rate-limit')
 const config = require('../configurations')
 const fs = require('fs')
+const webpush = require('web-push')
 
+const vapidKeys = {
+  publicKey:  'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY',
+  privateKey: 'TDqrGVKsB2ioHKEvpCqje8AIjQiahRRFOpXoUbAFyOU'
+}
+
+webpush.setVapidDetails(
+  'mailto:adammateo@gmail.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+)
 
 app.enable('trust proxy')
 const limiter = new RateLimit({
@@ -146,6 +157,22 @@ app.get('/users', function(req, res) {
       res.status(403).send()
     }
   })
+})
+
+app.post('/saveSubscription', function(req,res) {
+  const note = {
+    notification: {
+      "title": "DEMO",
+      "body": "This will be the body",
+      "icon": ""
+    }
+  }
+  let newSub = JSON.parse(req.body.data)
+  console.log(newSub)
+  webpush.sendNotification(newSub, JSON.stringify(note))
+         .then((done) => console.log('finished'))
+         .catch((err) => console.log(err))
+  res.end()
 })
 
 app.get('/phases', checkSession, function(req, res) {

@@ -36,9 +36,23 @@ class App extends React.Component {
     this.updateStatus = this.updateStatus.bind(this);
     this.createPhase = this.createPhase.bind(this);
     this.deletePhase = this.deletePhase.bind(this);
+    this.registerServiceWorker = this.registerServiceWorker.bind(this)
+  }
+
+  registerServiceWorker() {
+    console.log('things')
+    return navigator.serviceWorker.register('/sw.js')
+    .then((registration) => {
+      console.log(registration)
+      return registration;
+    })
+    .catch((err) => {
+      console.error('Unable to register service worker.', err);
+    });
   }
 
   componentDidMount() {
+    this.registerServiceWorker()
     axios.get('/session')
     .then((response) => this.setState({userId: response.data}, this.getUserData))
     .catch((err) => console.error(err))
