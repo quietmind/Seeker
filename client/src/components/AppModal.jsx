@@ -48,7 +48,7 @@ class AppModal extends React.Component {
 
   render() {
     return (
-      <Modal 
+      <Modal
         trigger={
           <Menu.Item onClick={this.handleOpen}>
             <Icon name='wordpress forms' />New App
@@ -81,12 +81,6 @@ class AppModal extends React.Component {
     )
   }
 }
-
-// I was considering changing the date input field to show an actual calendar: One option
-// would involve incorporating these modules:
-// import DatePicker from 'react-datepicker';
-// import moment from 'moment';
-
 
 export default AppModal;
 

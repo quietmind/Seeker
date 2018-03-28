@@ -50,7 +50,7 @@ class DocModal extends React.Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         closeIcon={true}
-        closeOnDimmerClick={false}
+        closeOnDimmerClick
         basic
         size='small'
       >

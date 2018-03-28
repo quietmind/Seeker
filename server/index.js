@@ -170,8 +170,14 @@ app.get('/reminders', checkSession, function(req, res) {
 })
 
 app.post('/reminders', checkSession, function(req, res) {
-  console.log(req.body)
   db.addReminder(req.body, function(err, results) {
+    res.status(200).send(results)
+  })
+})
+
+app.get('/notes', checkSession, function(req, res) {
+  db.getNotes(req.session.userId, function(err, results) {
+    if (err) console.error(err)    
     res.status(200).send(results)
   })
 })
@@ -212,9 +218,15 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.delete('/applications', checkSession, function(req, res) {
-  db.deleteApp(req.query.appId, function(err) {
+  db.deleteNotes(req.body.appId, function(err) {
     if (err) console.error(err)
-    res.status(202).send()
+    else db.deleteReminders(req.body.appId, function(err) {
+      if (err) console.error(err)
+      else db.deleteApp(req.body.appId, function(err) {
+        if (err) console.error(err)
+        res.status(201).send()
+      })
+    })
   })
 })
 
@@ -222,6 +234,14 @@ app.post('/logout', checkSession, function(req,res) {
   console.log('axios received');
   req.session.destroy();
   res.status(200).redirect('/');
+})
+
+app.post('/notes', checkSession, function(req, res) {
+  console.log(req.body);
+  db.addNotes(req.body, function(err) {
+    if (err) console.error(err)
+    res.status(201).send()
+  })
 })
 
 app.get('/*', checkSession, function(req, res) {

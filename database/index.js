@@ -97,6 +97,15 @@ module.exports.getUserApps = function(userId, callback) {
   )
 }
 
+module.exports.getNotes = function(userId, callback) {
+  connection.query(
+    `SELECT * FROM notes WHERE user_id = ${userId}`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
 module.exports.getReminders = function(userId, callback) {
   connection.query(
     `SELECT * FROM reminders WHERE user_id = ${userId}`,
@@ -167,7 +176,25 @@ module.exports.deletePhase = function(phaseId, callback) {
 
 module.exports.deleteApp = function(appId, callback) {
   connection.query(
-    `DELETE FROM applications WHERE id = ${req.body.appId}`,
+    `DELETE FROM applications WHERE id = ${appId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.deleteNotes = function(appId, callback) {
+  connection.query(
+    `DELETE FROM notes WHERE app_id = ${appId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.deleteReminders = function(appId, callback) {
+  connection.query(
+    `DELETE FROM reminders WHERE app_id = ${appId}`,
     function(err) {
       callback(err)
     }
@@ -176,9 +203,20 @@ module.exports.deleteApp = function(appId, callback) {
 
 module.exports.addReminder = function(body, callback) {
   connection.query(
-    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description],
+    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc, app_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description, body.appId],
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.addNotes = function(body, callback) {
+  connection.query(
+    `INSERT INTO notes (id, app_id, note_text, user_id)
+    VALUES (?, ?, ?, ?)`,
+    [null, body.appId, body.text, body.userId],
     function(err) {
       callback(err)
     }
