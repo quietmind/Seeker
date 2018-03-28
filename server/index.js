@@ -69,6 +69,7 @@ var upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: config.bucket,
+    acl: 'public-read',
     key: function(req, file, cb) {
       cb(null, `${new Date()}-${file.originalname}`)
     }
@@ -219,7 +220,7 @@ app.post('/reminders', checkSession, function(req, res) {
 
 app.get('/notes', checkSession, function(req, res) {
   db.getNotes(req.session.userId, function(err, results) {
-    if (err) console.error(err)    
+    if (err) console.error(err)
     res.status(200).send(results)
   })
 })
