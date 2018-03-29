@@ -134,7 +134,7 @@ class DescriptionCard extends React.Component{
   }
 
   askPermission() {
-  return new Promise(function(resolve, reject) {
+  return new Promise( (resolve, reject) => {
     const permissionResult = Notification.requestPermission(function(result) {
       resolve(result);
     });
