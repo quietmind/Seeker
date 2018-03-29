@@ -13,7 +13,7 @@ class DescriptionCard extends React.Component{
     this.state = {
       date: moment(),
       reminderText: '',
-      modalOpen: false,
+      open: false,
       notesText: '',
       notes: []
     }
@@ -35,11 +35,11 @@ class DescriptionCard extends React.Component{
   }
 
   handleOpen() {
-    this.setState({ modalOpen: true }, this.props.toggle)
+    this.setState({ open: true }, this.props.toggle)
   }
 
   handleClose() {
-    this.setState({ reminderText: '', notesText: '', modalOpen: false });
+    this.setState({ reminderText: '', notesText: '', open: false });
   }
 
 
@@ -66,7 +66,7 @@ class DescriptionCard extends React.Component{
 
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
-    .then(()=> {this.props.handleClick()})
+    .then((response) => this.props.handleClose())
   }
 
   addNote() {
@@ -156,7 +156,7 @@ class DescriptionCard extends React.Component{
     return (
       <Modal
       trigger={
-        <Table.Row className="appListItem">
+        <Table.Row className="appListItem" onClick={this.handleOpen}>
           <Table.Cell>{this.props.app.job_title}</Table.Cell>
           <Table.Cell>{this.props.app.company}</Table.Cell>
           <Table.Cell>{this.props.app.date_created}</Table.Cell>
@@ -166,8 +166,8 @@ class DescriptionCard extends React.Component{
           <Table.Cell>{this.props.coverletter ? this.props.coverletter.file_name : ''}</Table.Cell>
         </Table.Row>
       }
-      // open={this.state.modalOpen}
-      // onClose={this.handleClose}
+      open={this.state.open}
+      onClose={this.handleClose}
       closeIcon={true}
       // basic
       >
@@ -181,7 +181,7 @@ class DescriptionCard extends React.Component{
         <p>Last Activity:<br></br>
         {this.props.app.last_update}</p>
         <div className="field">
-          <div class="reminder">
+          <div className="reminder">
             <p>Add a Reminder</p>
             <DatePicker
               selected={this.state.startDate}
@@ -191,7 +191,7 @@ class DescriptionCard extends React.Component{
             <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(e)=>this.setState({reminderText: e.target.value})}></input>
             <button onClick={this.sendReminder}>Submit</button>
           </div>
-          <div class="reminder">
+          <div>
             <p>Add a note to this entry</p>
             <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e)=>this.setState({notesText: e.target.value})}></input>
             <button onClick={this.addNote}>Submit</button>

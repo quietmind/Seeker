@@ -22,6 +22,7 @@ export default class ApplicationList extends React.Component{
     this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
     this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
 		this.searchList = this.searchList.bind(this);
+		this.render = this.render.bind(this);
   }
 	componentDidMount() {
 		this.setState({apps: this.props.apps})
@@ -68,16 +69,18 @@ export default class ApplicationList extends React.Component{
 	searchList() {
 		var searchField = this.state.searchField;
 		var searchTerm = this.state.searchTerm;
-		console.log(searchField, searchTerm);
 		if (searchField === 'company' || searchField === 'job_title') {
 			var arrangedArray = this.props.apps.filter((application) => application[searchField].toLowerCase() == searchTerm.toLowerCase());
 		} else if (searchField === 'cover_letter_id' || searchField === 'resume_id') {
 			var foundFile = this.props.files.filter((file) => file.file_name.toLowerCase() == searchTerm.toLowerCase());
 			var arrangedArray = this.props.apps.filter((application) => application[searchField] == foundFile[0].id);
 		}
-			console.log(arrangedArray);
 			this.setState({apps: arrangedArray});
 		  this.setState({searchTerm: ''});
+	}
+
+	refreshPage() {
+		this.render();
 	}
 
 	render() {
