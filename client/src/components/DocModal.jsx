@@ -61,10 +61,7 @@ class DocModal extends React.Component {
           <input type="text" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></input>
           <input name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></input>
           <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
-
-        </Modal.Content>
-        <Modal.Content>
-          <DocList files={this.props.files}/>
+            <DocList fileList={this.props.files}/>
         </Modal.Content>
       </Modal>
     )
@@ -72,3 +69,10 @@ class DocModal extends React.Component {
 }
 
 export default DocModal;
+//
+
+
+//
+// </Modal.Content>
+// <Modal.Content>
+// <DocList files={this.props.files}/>
