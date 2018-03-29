@@ -66,7 +66,8 @@ class DescriptionCard extends React.Component{
 
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
-    .then((response) => this.props.handleClose())
+    .then((response) => this.props.handleClick())
+    .then((response) => this.handleClose())
   }
 
   addNote() {
