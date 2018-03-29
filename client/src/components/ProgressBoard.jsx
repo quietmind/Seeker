@@ -62,7 +62,8 @@ export default class ProgressBoard extends React.Component{
 
 		return(
 			<div className="progressboard-container">
-      <PhaseOptionModal 
+      <PhaseOptionModal
+         phases={this.props.phases.map(phase => ({text: `${phase.phase_label}`,  value: phase.phase_order }))}
          selectedPhase={this.state.selectedPhase} 
          deletePhase={this.props.deletePhase} 
          show={this.state.show} 
