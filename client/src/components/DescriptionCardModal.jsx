@@ -112,7 +112,7 @@ class DescriptionCard extends React.Component{
                 "p256dh": encodedKey,
                 "auth": encodedAuth
               }
-    
+
             }
             this.sendSubscriptionToServer(subscripObject)
         })
@@ -126,7 +126,7 @@ class DescriptionCard extends React.Component{
 
   sendSubscriptionToServer(subscription) {
     console.log('sending subscription')
-  
+
     // console.log(encodedAuth, encodedKey)
     axios.post('/saveSubscription', {
       data: JSON.stringify(subscription)
@@ -140,7 +140,7 @@ class DescriptionCard extends React.Component{
     });
 
     if (permissionResult) permissionResult.then(resolve, reject);
-    
+
   })
   .then( (permissionResult) => {
     if (permissionResult !== 'granted') {
