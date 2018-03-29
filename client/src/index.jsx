@@ -104,6 +104,7 @@ class App extends React.Component {
       axios.get('/notes')
     ])
     .then((response) => {
+      console.log(response);
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
@@ -224,7 +225,8 @@ class App extends React.Component {
                   </Menu.Item>
                   <DocModal
                     toggle={this.toggleMenu}
-                    getUserData={this.getUserData}/>
+                    getUserData={this.getUserData}
+                    files= {this.state.files}/>
                   <AppModal
                     toggle={this.toggleMenu}
                     getUserData={this.getUserData}

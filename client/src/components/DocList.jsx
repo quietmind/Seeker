@@ -13,21 +13,21 @@ class DocList extends React.Component {
 
   render() {
     const { pageNumber, numPages, scale } = this.state;
-
+console.log(this.props.fileList)
     return (
-    <div className="docDisplay">
-      <h1>Your Documents</h1>
-      {this.props.files.map((file) => (
-        <div>
-        <h2>{file.file_name}</h2>
-        <Document file={file.s3_url}>
-          <a href={file.s3_url}>
-            <Page pageNumber={pageNumber} scale = {scale} />
-          </a>    
-        </Document>
-        </div>
-      ))}
-    </div>
+      <div className="docDisplay">
+        <h1>Your Documents</h1>
+        {this.props.fileList.map((file) => (
+          <div>
+          <h2>{file.file_name}</h2>
+          <Document file={file.s3_url}>
+            <a href={file.s3_url}>
+              <Page pageNumber={pageNumber} scale = {scale} />
+            </a>
+          </Document>
+          </div>
+        ))}
+      </div>
     )
   }
 }
@@ -48,3 +48,15 @@ function isitPDF(fileName) {
 // IF AN IMAGE
 // <h2>{file.file_name}</h2>
 //   <img src={file.s3_url}></img
+
+// {this.props.fileList.map((file) => (
+//   <div>
+//   <h2>{file.file_name}</h2>
+//   <Document file={file.s3_url}>
+//     <a href={file.s3_url}>
+//       <Page pageNumber={pageNumber} scale = {scale} />
+//     </a>
+//   </Document>
+//   </div>
+// ))}
+const arr = [1, 2, 3];
