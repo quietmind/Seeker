@@ -7,7 +7,6 @@ import moment from 'moment'
 export default class Phase extends Component {
 	constructor(props){
 		super(props)
-		this.state = {}
 		this.clickHandler = this.clickHandler.bind(this)
 	}
 
