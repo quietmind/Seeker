@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Menu, Table, Input, Button, Form, Dropdown } from 'semantic-ui-react';
 import DescriptionCard from './DescriptionCardModal.jsx';
 import axios from 'axios';
 
@@ -9,7 +9,9 @@ export default class ApplicationList extends React.Component{
 		this.state ={
 			showModal: false,
 			featuredItem: null,
-			applications: []
+			applications: [],
+			searchTerm: '',
+			searchField: ''
 		}
 
     this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
@@ -19,6 +21,7 @@ export default class ApplicationList extends React.Component{
 		this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
     this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
     this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
+		// this.searchList = this.searchList.bind(this);
   }
 
 	arrangeByStatus() {
@@ -59,9 +62,25 @@ export default class ApplicationList extends React.Component{
     this.setState({applications: arrangedArray});
   }
 
+	// searchList() {
+	// 	var searchField = this.state.searchField;
+	// 	var searchTerm = this.state.searchTerm;
+	// 	console.log(searchField, searchTerm);
+	// 	var arrangedArray = this.props.apps.filter((application) => application.company === searchTerm);
+	// 	this.setState({applications: arrangedArray});
+	// 	this.setState({searchTerm: ''})
+	// }
+
 	render() {
 		return(
 			<div>
+				<Menu secondary attached="top">
+					<Menu.Item position="left">
+					<Input value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
+					<Form.Select options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
+					<Button onClick={this.searchList}>Search</Button>
+					</Menu.Item>
+				</Menu>
         <Table className="applicationListTable">
           <Table.Header className="applicationListHeaders">
             <Table.Row>
@@ -103,3 +122,11 @@ function dynamicSort(property) {
     return result;
   }
 }
+
+const searchOptions = [
+	{text: 'Id', value: 'id'},
+	{text: 'Company', value: 'company'},
+	{text: 'Job Title', value: 'job_title'},
+	{text: 'Resume', value: 'resume_id'},
+	{text: 'Cover Letter', value: 'cover_letter'},
+]
