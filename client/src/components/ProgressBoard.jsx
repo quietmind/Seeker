@@ -9,19 +9,18 @@ import PhaseOptionModal from './PhaseOptionModal.jsx'
 export default class ProgressBoard extends React.Component{
 	constructor(props){
 		super(props)
-    this.state={show: false, selectedPhase: null}
-    this.toggle = this.toggle.bind(this)
+    this.state = { show: false, selectedPhase: null }
+
+    this.toggle        = this.toggle.bind(this)
     this.selectedPhase = this.selectedPhase.bind(this)
 	}
 
   toggle(e){
-    this.setState({show: !this.state.show})
+    this.setState( { show: !this.state.show } )
   }
 
   selectedPhase(phasepacket){
-    this.setState({
-      selectedPhase: phasepacket
-    })
+    this.setState( { selectedPhase: phasepacket } )
   }
 
   componentDidMount(){
@@ -51,7 +50,7 @@ export default class ProgressBoard extends React.Component{
         return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
-      let updateStatus = {appId: el.id, newStatusId: target.id}
+      let updateStatus = { appId: el.id, newStatusId: target.id }
       if(target.id !== source.id) this.props.updateStatus(updateStatus)
     })
   } 
@@ -63,21 +62,20 @@ export default class ProgressBoard extends React.Component{
 		return(
 			<div className="progressboard-container">
       <PhaseOptionModal
+         toggle={this.toggle}
+         show={this.state.show}
          phases={this.props.phases}
-         dropDownPhases={this.props.phases.map(phase => ({text: `${phase.phase_label}`,  value: phase.phase_order }))}
-         updatePhaseOrder={this.props.updatePhaseOrder}
-         selectedPhase={this.state.selectedPhase} 
-         deletePhase={this.props.deletePhase} 
-         show={this.state.show} 
-         toggle={this.toggle}/> 
+         deletePhase={this.props.deletePhase}
+         selectedPhase={this.state.selectedPhase}
+         updatePhaseOrder={this.props.updatePhaseOrder}/> 
          {
            this.props.phases.map((phase,i) => {
              return <Phase 
                     key={i} 
                     phase={phase} 
-                    applications={this.props.apps.filter(app => app.phase_id === phase.id)} 
+                    toggle={this.toggle}
                     selectedPhase={this.selectedPhase} 
-                    toggle={this.toggle}/>
+                    applications={this.props.apps.filter(app => app.phase_id === phase.id)}/>
             })
           }
       <NewPhase createPhase={this.props.createPhase}/>
