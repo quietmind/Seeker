@@ -178,15 +178,25 @@ app.post('/saveSubscription', checkSession, function(req,res) {
 })
 
 app.post('/triggerPushNotifications', function(req, res) {
-  console.log(red.body)
+  let subscriptionDetails = req.body.user
+  let content = req.body.reminder
+
+  let subscripObject = {
+      endpoint: subscriptionDetails.notif_endpoint,
+      keys: {
+          "p256dh": subscriptionDetails.notif_key,
+          "auth": subscriptionDetails.notif_auth
+      }
+    }
+  console.log(subscripObject)
   const note = {
     notification: {
-      "title": "DEMO",
-      "body": "This will be the body",
+      "title": `Don't forget to...`,
+      "body": content.text_desc,
       "icon": ""
     }
   }
-  webpush.sendNotification(newSub, JSON.stringify(note))
+  webpush.sendNotification(subscripObject, JSON.stringify(note))
          .then((done) => console.log('finished'))
          .catch((err) => console.log(err))
   res.end()

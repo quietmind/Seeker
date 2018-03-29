@@ -18,15 +18,15 @@ class DescriptionCard extends React.Component{
       notes: []
     }
 
-    this.sendReminder       = this.sendReminder.bind(this);
-    this.handleChange       = this.handleChange.bind(this);
-    this.deleteApplication  = this.deleteApplication.bind(this);
-    this.addNote            = this.addNote.bind(this);
-    this.handleClose        = this.handleClose.bind(this);
-    this.handleOpen         = this.handleOpen.bind(this);
-    this.askPermission      = this.askPermission.bind(this);
-    this.urlB64ToUint8Array = this.urlB64ToUint8Array.bind(this)
-    this.subscribeUser      = this.subscribeUser.bind(this)
+    this.sendReminder             = this.sendReminder.bind(this);
+    this.handleChange             = this.handleChange.bind(this);
+    this.deleteApplication        = this.deleteApplication.bind(this);
+    this.addNote                  = this.addNote.bind(this);
+    this.handleClose              = this.handleClose.bind(this);
+    this.handleOpen               = this.handleOpen.bind(this);
+    this.askPermission            = this.askPermission.bind(this);
+    this.urlB64ToUint8Array       = this.urlB64ToUint8Array.bind(this)
+    this.subscribeUser            = this.subscribeUser.bind(this)
     this.sendSubscriptionToServer = this.sendSubscriptionToServer.bind(this)
   }
 
