@@ -26,10 +26,9 @@ function urlB64ToUint8Array(base64String) {
 self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
-
-  const title = 'DEMO';
-  const options = {
-    body: 'Yay it works.',
+  let title =  `Don't forget to...`;
+  let options = {
+    body: 'DO THE THING',
     icon: '',
     badge: ''
   };
@@ -43,7 +42,7 @@ self.addEventListener('notificationclick', function(event) {
   event.notification.close();
 
   event.waitUntil(
-    clients.openWindow('https://developers.google.com/web/')
+    clients.openWindow('https://10.16.2.119:3000')
   );
 });
 
