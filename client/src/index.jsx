@@ -37,6 +37,7 @@ class App extends React.Component {
     this.createPhase = this.createPhase.bind(this);
     this.deletePhase = this.deletePhase.bind(this);
     this.registerServiceWorker = this.registerServiceWorker.bind(this)
+    this.updatePhaseOrder = this.updatePhaseOrder.bind(this)
   }
 
   registerServiceWorker() {
@@ -143,6 +144,13 @@ class App extends React.Component {
     }
   }
 
+  updatePhaseOrder(newPhaseOrder){
+    console.log(newPhaseOrder)
+    axios.post('/order', { phases: newPhaseOrder })
+         .then((done) => this.getUserData())
+         .catch((err) => console.log(err))
+  }
+
   decorateProgressBoard() {
     return <ProgressBoard
       phases={this.state.phases}
@@ -152,6 +160,7 @@ class App extends React.Component {
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
       deletePhase={this.deletePhase}
+      updatePhaseOrder={this.updatePhaseOrder}
     />
   }
 
