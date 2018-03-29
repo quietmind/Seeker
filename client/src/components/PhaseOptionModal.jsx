@@ -13,7 +13,6 @@ export default class PhaseSettingsModal extends Component {
 }
 
   handleClick(){
-    console.log('click')
     this.props.deletePhase(this.props.selectedPhase.phaseId)
     this.props.toggle()
   }
@@ -32,7 +31,7 @@ export default class PhaseSettingsModal extends Component {
     return true
   }
 
-  reorder(e, {name, value}){
+  reorder(e, { name, value } ) {
     let phases = this.props.phases //all phases
     let targetIndex = this.props.selectedPhase.phaseOrder // index of phase we are acting on
     let selectPhase = phases[targetIndex - 1] // set phase to be reordered
@@ -58,7 +57,12 @@ export default class PhaseSettingsModal extends Component {
             this.state.reorderview 
             ?
               <Modal.Content textAlign="center">
-                <Dropdown placeholder='Rerrange Phases' fluid selection onChange={this.reorder} options={this.props.dropDownPhases} />
+                <Dropdown 
+                  fluid 
+                  selection 
+                  placeholder='Rerrange Phases' 
+                  onChange={this.reorder} 
+                  options={this.props.phases.map(phase => ({ text: `${phase.phase_label}`,  value: phase.phase_order }))} />
               </Modal.Content>
             :
               <Modal.Content textAlign="center">
