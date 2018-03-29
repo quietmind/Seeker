@@ -154,7 +154,7 @@ module.exports.updateToken = function(userId, accessToken, refreshToken, callbac
 module.exports.updatePhaseOrder = function(phases, callback) {
   for (let i = 0; i < phases.length; i++) {
     connection.query(
-      `UPDATE phases SET phase_order = ${i} WHERE phase_id = ${phases[i]}`,
+      `UPDATE phases SET phase_order = ${i} WHERE id = ${phases[i].id}`,
       function(err) {
         callback(err)
       }

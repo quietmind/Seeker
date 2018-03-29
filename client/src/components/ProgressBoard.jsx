@@ -18,9 +18,9 @@ export default class ProgressBoard extends React.Component{
     this.setState({show: !this.state.show})
   }
 
-  selectedPhase(phaseId){
+  selectedPhase(phasepacket){
     this.setState({
-      selectedPhase: phaseId
+      selectedPhase: phasepacket
     })
   }
 
@@ -62,7 +62,10 @@ export default class ProgressBoard extends React.Component{
 
 		return(
 			<div className="progressboard-container">
-      <PhaseOptionModal 
+      <PhaseOptionModal
+         phases={this.props.phases}
+         dropDownPhases={this.props.phases.map(phase => ({text: `${phase.phase_label}`,  value: phase.phase_order }))}
+         updatePhaseOrder={this.props.updatePhaseOrder}
          selectedPhase={this.state.selectedPhase} 
          deletePhase={this.props.deletePhase} 
          show={this.state.show} 

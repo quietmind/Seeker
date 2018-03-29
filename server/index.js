@@ -244,6 +244,7 @@ app.get('/files', checkSession, function(req, res) {
 })
 
 app.post('/order', checkSession, function(req, res) {
+  console.log(req.body)
   db.updatePhaseOrder(req.body.phases, function(err) {
     if (err) console.error(err)
     res.status(201).send()

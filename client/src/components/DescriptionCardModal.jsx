@@ -31,7 +31,7 @@ class DescriptionCard extends React.Component{
   }
 
   componentWillMount(){
-    this.askPermission()
+    if(Notification.permission === 'default') this.askPermission()
   }
 
   handleOpen() {
