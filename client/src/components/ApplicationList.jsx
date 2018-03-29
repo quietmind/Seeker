@@ -9,7 +9,7 @@ export default class ApplicationList extends React.Component{
 		this.state ={
 			showModal: false,
 			featuredItem: null,
-			applications: [],
+			apps: [],
 			searchTerm: '',
 			searchField: ''
 		}
@@ -21,8 +21,11 @@ export default class ApplicationList extends React.Component{
 		this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
     this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
     this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
-		// this.searchList = this.searchList.bind(this);
+		this.searchList = this.searchList.bind(this);
   }
+	componentDidMount() {
+		this.setState({apps: this.props.apps})
+	}
 
 	arrangeByStatus() {
 		this.setState({applications: this.props.apps.sort(dynamicSort("phase_id"))});
@@ -62,23 +65,29 @@ export default class ApplicationList extends React.Component{
     this.setState({applications: arrangedArray});
   }
 
-	// searchList() {
-	// 	var searchField = this.state.searchField;
-	// 	var searchTerm = this.state.searchTerm;
-	// 	console.log(searchField, searchTerm);
-	// 	var arrangedArray = this.props.apps.filter((application) => application.company === searchTerm);
-	// 	this.setState({applications: arrangedArray});
-	// 	this.setState({searchTerm: ''})
-	// }
+	searchList() {
+		var searchField = this.state.searchField;
+		var searchTerm = this.state.searchTerm;
+		console.log(searchField, searchTerm);
+		if (searchField === 'company' || searchField === 'job_title') {
+			var arrangedArray = this.props.apps.filter((application) => application[searchField].toLowerCase() == searchTerm.toLowerCase());
+		} else if (searchField === 'cover_letter_id' || searchField === 'resume_id') {
+			var foundFile = this.props.files.filter((file) => file.file_name.toLowerCase() == searchTerm.toLowerCase());
+			var arrangedArray = this.props.apps.filter((application) => application[searchField] == foundFile[0].id);
+		}
+			console.log(arrangedArray);
+			this.setState({apps: arrangedArray});
+		  this.setState({searchTerm: ''});
+	}
 
 	render() {
 		return(
 			<div>
 				<Menu secondary attached="top">
 					<Menu.Item position="left">
-					<Input value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
-					<Form.Select options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
-					<Button onClick={this.searchList}>Search</Button>
+						<Input value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
+						<Form.Select options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
+						<Button onClick={this.searchList}>Search</Button>
 					</Menu.Item>
 				</Menu>
         <Table className="applicationListTable">
@@ -94,7 +103,7 @@ export default class ApplicationList extends React.Component{
             </Table.Row>
           </Table.Header>
           <Table.Body className="applicationListBody">
-            {this.props.apps.map((app, i) => (
+            {this.state.apps.map((app, i) => (
               <DescriptionCard
                 app={app}
 								userId={this.props.userId}
@@ -128,5 +137,5 @@ const searchOptions = [
 	{text: 'Company', value: 'company'},
 	{text: 'Job Title', value: 'job_title'},
 	{text: 'Resume', value: 'resume_id'},
-	{text: 'Cover Letter', value: 'cover_letter'},
+	{text: 'Cover Letter', value: 'cover_letter_id'},
 ]
