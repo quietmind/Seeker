@@ -146,7 +146,7 @@ app.get('/users', function(req, res) {
   db.getUserCredentials(req.query.userEmail, function(err, results) {
     console.log('got a response from the db', results)
     if (err) console.error(err)
-    if (results.length > 0) {
+    if (results) {
       console.log('results array contained at least one entry', results[0])
       bcrypt.compare(req.query.password, results[0].password, function(err, match) {
         if (match) {

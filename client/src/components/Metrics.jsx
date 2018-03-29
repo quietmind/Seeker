@@ -13,9 +13,7 @@ export default class Metrics extends React.Component{
 				columns: [
 					['Applications', ...this.getCumulativeQuantities()]
 				],
-				types: {
-					Applications: 'bar'
-				}
+				type: 'bar'
 			},
 			axis1: {
 				x: {
@@ -34,7 +32,8 @@ export default class Metrics extends React.Component{
 				columns: [
 					['dates', ...this.getDateRange().map((date) => new Date(date))],
 					['New Applications', ...this.getQuantityPerDate()]
-				]
+				],
+				type: 'spline'
 			},
 			axis2: {
 				x: {
