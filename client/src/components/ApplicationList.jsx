@@ -11,7 +11,8 @@ export default class ApplicationList extends React.Component{
 			featuredItem: null,
 			apps: [...props.apps],
 			searchTerm: '',
-			searchField: ''
+			searchField: '',
+			searchLogicSwitch: false
 		}
 
     this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
@@ -24,10 +25,13 @@ export default class ApplicationList extends React.Component{
 		this.searchList = this.searchList.bind(this);
 		this.render = this.render.bind(this);
 		this.viewAll = this.viewAll.bind(this);
+		this.keepSwitchOff = this.keepSwitchOff.bind(this);
   }
 
 	componentDidUpdate() {
-		if (this.props.apps !== this.state.apps) {
+		if (this.state.searchLogicSwitch) {
+		}
+		else if (this.props.apps !== this.state.apps) {
 				this.setState({apps: this.props.apps});
 		}
 	}
@@ -79,12 +83,15 @@ export default class ApplicationList extends React.Component{
 			var foundFile = this.props.files.filter((file) => file.file_name.toLowerCase() == searchTerm.toLowerCase());
 			var arrangedArray = this.props.apps.filter((application) => application[searchField] == foundFile[0].id);
 		}
-			this.setState({apps: arrangedArray});
-		  this.setState({searchTerm: ''});
+		this.setState({apps: arrangedArray, searchTerm: '', searchLogicSwitch: true});
 	}
 
 	viewAll() {
-		this.setState({apps: this.props.apps})
+		this.setState({apps: this.props.apps, searchLogicSwitch: false})
+	}
+
+	keepSwitchOff() {
+		this.setState({searchLogicSwitch: false})
 	}
 
 	render() {
@@ -113,17 +120,18 @@ export default class ApplicationList extends React.Component{
           <Table.Body className="applicationListBody">
             {this.state.apps.map((app, i) => (
               <DescriptionCard
+								keepSwitch={this.keepSwitchOff}
                 key={i}
                 app={app}
 				userId={this.props.userId}
                 phase={this.props.phases.filter((phase)     => phase.id === app.phase_id)[0]}
                 resume={this.props.files.filter((file)      => file.id === app.resume_id)[0]}
                 coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
-				email={this.props.email}
-				id={this.props.userId}
-				notes={this.props.notes.filter((note) => note.app_id === app.id)}
-				handleClick={this.props.handleClick}
-				files={this.props.files}/>
+								email={this.props.email}
+								id={this.props.userId}
+								notes={this.props.notes.filter((note) => note.app_id === app.id)}
+								handleClick={this.props.handleClick}
+								files={this.props.files}/>
 						))}
           </Table.Body>
         </Table>

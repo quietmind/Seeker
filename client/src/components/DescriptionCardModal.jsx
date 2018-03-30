@@ -37,6 +37,7 @@ class DescriptionCard extends React.Component{
   }
 
   handleOpen() {
+    this.props.keepSwitch();
     this.setState({ open: true }, this.props.toggle)
   }
 
