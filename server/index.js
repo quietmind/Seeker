@@ -19,6 +19,7 @@ const contacts = google.people('v1')
 const axios = require('axios')
 const fs = require('fs')
 const webpush = require('web-push')
+const validator = require("email-validator");
 
 const oauth2Client = new OAuth2(
   config.google.clientID,
@@ -119,7 +120,7 @@ app.get('/session', function(req, res) {
 app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
   console.log('post request to /calendar received', oauth2Client)
   calendar.events.insert({
-    auth: oauth2Client, 
+    auth: oauth2Client,
     calendarId: 'primary',
     resource: {
       summary: req.body.job_title,
@@ -147,23 +148,50 @@ app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
 })
 
 app.post('/users', function(req, res) {
-  console.log('received post request', req.body)
-  db.getUserCredentials(req.body.userEmail, function(err, results) {
-    if (err) console.error(err)
-    console.log('queried the db', results)
-    if (results.length === 0) {
-      bcrypt.hash(req.body.password, null, null, function(err, hash) {
-        if (err) console.error(err)
-        console.log('hashed password')
-        db.createUser(req.body.userEmail, hash, null, function(err, results) {
+  if(!validator.validate(req.body.userEmail)) {
+    res.status(403).send();
+  } else  {
+    console.log('received post request', req.body)
+    db.getUserCredentials(req.body.userEmail, function(err, results) {
+      if (err) console.error(err)
+      console.log('queried the db', results)
+      if (results.length === 0) {
+        bcrypt.hash(req.body.password, null, null, function(err, hash) {
           if (err) console.error(err)
-          console.log('created new user', results.insertId)
-          db.addDefaultPhases(results.insertId, function(err) {
+          console.log('hashed password')
+          db.createUser(req.body.userEmail, hash, null, function(err, results) {
             if (err) console.error(err)
-            console.log('added default phases')
-            res.status(201).send(`${results.insertId}`)
+            console.log('created new user', results.insertId)
+            db.addDefaultPhases(results.insertId, function(err) {
+              if (err) console.error(err)
+              console.log('added default phases')
+              res.status(201).send(`${results.insertId}`)
+            })
           })
         })
+      } else {
+        res.status(403).send()
+      }
+    })
+  }
+})
+app.get('/users', function(req, res) {
+  console.log('request query', req.query)
+  db.getUserCredentials(req.query.userEmail, function(err, results) {
+    console.log('got a response from the db', results)
+    if (err) console.error(err)
+    if (results) {
+      console.log('results array contained at least one entry', results[0])
+      bcrypt.compare(req.query.password, results[0].password, function(err, match) {
+        if (match) {
+          console.log('results array contained a match')
+          req.session.userId = results[0].id
+          var sendingData = [];
+          sendingData.push(results[0].id, results[0].user_email);
+          res.status(200).send(sendingData)
+        } else {
+          res.status(403).send()
+        }
       })
     } else {
       res.status(403).send()
@@ -190,30 +218,6 @@ app.post('/files', checkSession, upload.any(), function(req, res) {
   db.addFile(req.session.userId, req.files[0].location, req.body.name, function(err) {
     if (err) console.error(err)
     res.status(201).send()
-  })
-})
-
-app.get('/users', function(req, res) {
-  console.log('request query', req.query)
-  db.getUserCredentials(req.query.userEmail, function(err, results) {
-    console.log('got a response from the db', results)
-    if (err) console.error(err)
-    if (results) {
-      console.log('results array contained at least one entry', results[0])
-      bcrypt.compare(req.query.password, results[0].password, function(err, match) {
-        if (match) {
-          console.log('results array contained a match')
-          req.session.userId = results[0].id
-          var sendingData = [];
-          sendingData.push(results[0].id, results[0].user_email);
-          res.status(200).send(sendingData)
-        } else {
-          res.status(403).send()
-        }
-      })
-    } else {
-      res.status(403).send()
-    }
   })
 })
 
