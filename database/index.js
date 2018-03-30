@@ -190,10 +190,10 @@ module.exports.updateStatus = function(data, callback){
   )
 }
 
-module.exports.deletePhase = function(phaseId, callback) {
+module.exports.deletePhase = function(packet, callback) {
   connection.query(`UPDATE applications
-    SET phase_id=1
-    WHERE phase_id=${phaseId}`, (err) => callback(err)
+    SET phase_id=${packet.firstPhase}
+    WHERE phase_id=${packet.phaseId}`, (err) => callback(err)
   )
   connection.query(
     `DELETE FROM phases WHERE id=${phaseId}`,

@@ -333,7 +333,7 @@ app.post('/updateStatus', checkSession, function(req, res){
 })
 
 app.post('/phases', checkSession, function(req, res) {
-  db.deletePhase(req.body.phaseId, function(err) {
+  db.deletePhase(req.body, function(err) {
     if (err) console.error(err)
     res.status(202).send()
   })
