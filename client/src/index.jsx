@@ -138,8 +138,9 @@ class App extends React.Component {
 
   deletePhase(phaseId){
     if(confirm('Are you sure you want to delete this Phase ?')){
-      let firstPhaseId = this.state.phases[0].phase_id
-      axios.post('/phases', {phaseId: phaseId, firstPhase: firstPhaseId}).then((done) => this.getUserData())
+      var firstPhaseId = this.state.phases[0].id
+      axios.post('/phases', {phaseId: phaseId, firstPhase: firstPhaseId})
+           .then((done) => this.getUserData())
     }
   }
 
