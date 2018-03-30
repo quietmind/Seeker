@@ -44,9 +44,10 @@ class DescriptionCard extends React.Component{
     this.setState({ reminderText: '', notesText: '', open: false });
   }
 
-
   handleChange(date) {
     console.log(date);
+    console.log(date.toDate())
+    console.log(date.toJSON())
     this.setState({
       startDate: date
     })
@@ -88,7 +89,8 @@ class DescriptionCard extends React.Component{
 
   addNote() {
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.id})
-    .then(()=> this.setState({notesText: ''}))
+    .then(() => this.props.handleClick())
+    .then(() => this.setState({notesText: ''}))
     .catch((err) => console.error(err))
   }
 
@@ -206,7 +208,8 @@ class DescriptionCard extends React.Component{
             <DatePicker
               selected={this.state.startDate}
               onChange={this.handleChange}
-              placeholder="Choose a date"
+              placeholderText="Choose a date"
+              dateFormat="LLL"
             />
             <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(e) => this.setState({reminderText: e.target.value})}></input>
             <button onClick={this.sendReminder}>Submit</button>
