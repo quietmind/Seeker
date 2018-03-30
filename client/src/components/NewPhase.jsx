@@ -16,7 +16,8 @@ export default class NewPhase extends Component {
 					  textAlign="center" 
 					  block 
 					  inverted 
-					  size="large">Add New Phase</Header>
+					  size="large">Add New Phase
+				  </Header>
 				</div>
 				<Button 
 				   fluid 
