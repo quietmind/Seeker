@@ -31,8 +31,6 @@ class DescriptionCard extends React.Component{
   }
 
   componentWillMount(){
-    console.log('phases',this.props.phase)
-    console.log('app', this.props.app)
     if(Notification.permission === 'default') this.askPermission()
   }
 

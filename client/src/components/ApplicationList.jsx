@@ -25,8 +25,7 @@ export default class ApplicationList extends React.Component{
 	  this.render               = this.render.bind(this);
   }
 	componentDidMount() {
-		console.log(this.props.phases)
-	  this.setState({apps: this.props.apps})
+	  this.setState( { apps: this.props.apps } )
 	}
 
 	arrangeByStatus() {

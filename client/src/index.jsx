@@ -110,7 +110,7 @@ class App extends React.Component {
         reminders: response[2].data,
         files: response[3].data,
         notes: response[4].data
-      })
+      }, () => console.log(this.state.phases))
     })
     .catch((err) => console.error(err))
   }
@@ -145,7 +145,6 @@ class App extends React.Component {
   }
 
   updatePhaseOrder(newPhaseOrder){
-    console.log(newPhaseOrder)
     axios.post('/order', { phases: newPhaseOrder })
          .then((done) => this.getUserData())
          .catch((err) => console.log(err))
