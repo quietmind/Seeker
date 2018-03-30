@@ -191,7 +191,6 @@ module.exports.updateStatus = function(data, callback){
 }
 
 module.exports.deletePhase = function(packet, callback) {
-  console.log('in db', packet)
   connection.query(`UPDATE applications
     SET phase_id=${packet.firstPhase}
     WHERE phase_id=${packet.phaseId}`, (err) => callback(err)

@@ -28,6 +28,7 @@ export default class ApplicationList extends React.Component{
 		this.keepSwitchOff = this.keepSwitchOff.bind(this);
   }
 
+
 	componentDidUpdate() {
 		if (this.state.searchLogicSwitch) {
 		}

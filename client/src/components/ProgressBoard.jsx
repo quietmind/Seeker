@@ -77,7 +77,7 @@ export default class ProgressBoard extends React.Component{
                     selectedPhase={this.selectedPhase} 
                     applications={this.props.apps.filter(app => app.phase_id === phase.id)}/>
             })
-          }
+        }
       <NewPhase createPhase={this.props.createPhase}/>
       </div>
 

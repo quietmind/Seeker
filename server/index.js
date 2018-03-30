@@ -200,7 +200,6 @@ app.get('/users', function(req, res) {
 })
 
 app.post('/phase', checkSession, function(req, res) {
-  console.log(req.body)
   db.createPhase(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
@@ -244,7 +243,6 @@ app.post('/triggerPushNotifications', function(req, res) {
           "auth": subscriptionDetails.notif_auth
       }
     }
-  console.log(subscripObject)
   const note = {
     notification: {
       "title": `Don't forget to...`,
@@ -348,7 +346,6 @@ app.post('/logout', function(req,res) {
 })
 
 app.post('/notes', checkSession, function(req, res) {
-  console.log(req.body);
   db.addNotes(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
