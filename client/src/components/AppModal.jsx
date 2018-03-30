@@ -11,8 +11,8 @@ class AppModal extends React.Component {
       companyName: '',
       phase: '',
       contact: '',
-      resume: '',
-      coverLetter: '',
+      resume: null,
+      coverLetter: null,
       modalOpen: false
     }
 
@@ -34,8 +34,8 @@ class AppModal extends React.Component {
     axios.post('/applications', {
       phaseId: this.state.phase,
       reminderId: null,
-      resumeId: this.state.resume || null,
-      coverLetterId: this.state.coverLetter || null,
+      resumeId: this.state.resume,
+      coverLetterId: this.state.coverLetter,
       jobTitle: this.state.jobTitle,
       company: this.state.companyName,
       contact: this.state.contact,
