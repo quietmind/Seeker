@@ -51,28 +51,43 @@ class DescriptionCard extends React.Component{
   }
 
   sendReminder() {
-    axios.post('/reminders', {date: this.state.date,
-                              description: this.state.reminderText,
-                              email: this.props.email,
-                              company: this.props.app.company,
-                              job_title: this.props.app.job_title,
-                              userId: this.props.userId,
-                              point_of_contact: this.props.app.point_of_contact,
-                              appId: this.props.app.id
-                              })
-    .then(()=>this.setState({date: '', reminderText: ''})
-  )}
-
+    if (this.props.email) {
+      axios.post('/reminders', {
+        date: this.state.date,
+        description: this.state.reminderText,
+        email: this.props.email,
+        company: this.props.app.company,
+        job_title: this.props.app.job_title,
+        userId: this.props.userId,
+        point_of_contact: this.props.app.point_of_contact,
+        appId: this.props.app.id
+      })
+      .then(() => this.setState({date: '', reminderText: ''}))
+      .catch((err) => console.error(err))
+    } else {
+      axios.post('/calendar', {
+        date: this.state.date,
+        description: this.state.reminderText,
+        company: this.props.app.company,
+        job_title: this.props.app.job_title,
+        point_of_contact: this.props.app.point_of_contact
+      })
+      .then(() => console.log('successfully created google calendar event'))
+      .catch((err) => console.error(err))
+    }
+  }
 
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
     .then((response) => this.props.handleClick())
     .then((response) => this.handleClose())
+    .catch((err) => console.error(err))
   }
 
   addNote() {
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.id})
     .then(()=> this.setState({notesText: ''}))
+    .catch((err) => console.error(err))
   }
 
   urlB64ToUint8Array(base64String) {
@@ -118,8 +133,8 @@ class DescriptionCard extends React.Component{
             this.sendSubscriptionToServer(subscripObject)
         })
         .catch((err) => {
-            // A problem occurred with the subscription.
-            console.log('Unable to subscribe to push.', err);
+          // A problem occurred with the subscription.
+          console.log('Unable to subscribe to push.', err);
         });
     });
 
@@ -131,7 +146,9 @@ class DescriptionCard extends React.Component{
     // console.log(encodedAuth, encodedKey)
     axios.post('/saveSubscription', {
       data: JSON.stringify(subscription)
-    }).then((res) => console.log(JSON.stringify(res)))
+    })
+    .then((res) => console.log(JSON.stringify(res)))
+    .catch((err) => console.error(err))
   }
 
   askPermission() {

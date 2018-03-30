@@ -88,10 +88,8 @@ class App extends React.Component {
   }
 
   logout() {
-  console.log('client side called')
     axios.post('/logout')
     .then(() => {
-    console.log('response received')
     this.setState({userId: null})
     })
   }
@@ -102,7 +100,7 @@ class App extends React.Component {
       axios.get('/applications'),
       axios.get('/reminders'),
       axios.get('/files'),
-      axios.get('/notes')
+      axios.get('/notes'),
     ])
     .then((response) => {
       console.log(response);
@@ -112,7 +110,7 @@ class App extends React.Component {
         reminders: response[2].data,
         files: response[3].data,
         notes: response[4].data
-      })
+      }, () => axios.post('/calendar'))
     })
     .catch((err) => console.error(err))
   }

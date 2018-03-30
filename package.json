@@ -27,6 +27,7 @@
     "express": "^4.15.0",
     "express-rate-limit": "^2.11.0",
     "express-session": "^1.15.6",
+    "googleapis": "^27.0.0",
     "history": "^4.7.2",
     "jquery": "^3.1.1",
     "moment": "^2.21.0",

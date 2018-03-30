@@ -20,6 +20,7 @@ passport.use(
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret
   }, function (accessToken, refreshToken, profile, done) {
+    console.log('refresh token', refreshToken)
     db.getGoogleCredentials(profile.id, function(err, results) {
       if (err) console.error(err)
       if (results.length === 0) {

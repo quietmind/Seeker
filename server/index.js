@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const bcrypt = require('bcrypt-nodejs')
 const passport = require('passport')
-const strategy = require('./passport.js');
+const strategy = require('./passport.js')
 const db = require('../database/index.js')
 const app = express()
 const multer = require('multer')
@@ -12,12 +12,16 @@ const multerS3 = require('multer-s3')
 const aws = require('aws-sdk')
 const RateLimit = require('express-rate-limit')
 const config = require('../configurations')
+const {google} = require('googleapis')
+const calendar = google.calendar('v3');
+const contacts = google.people('v1')
+const axios = require('axios')
 const fs = require('fs')
 const webpush = require('web-push')
 
 const vapidKeys = {
-  publicKey:  'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY',
-  privateKey: 'TDqrGVKsB2ioHKEvpCqje8AIjQiahRRFOpXoUbAFyOU'
+  publicKey:  config.vapidKeys.publicKey,
+  privateKey: config.vapidKeys.privateKey
 }
 
 webpush.setVapidDetails(
@@ -48,12 +52,20 @@ app.listen(3000, function() {
   console.log('listening on port 3000!')
 })
 
-const checkSession =function(req, res, next) {
+const checkSession = function(req, res, next) {
   if (req.session.userId) {
     next()
   } else {
     console.log("user not logged in")
     res.redirect('/')
+  }
+}
+
+const checkGoogleAuth = function(req, res, next) {
+  if (req.session.accessToken) {
+    next()
+  } else {
+    console.log("user does not have google credentials")
   }
 }
 
@@ -82,8 +94,8 @@ app.get('/oauth', passport.authenticate('google', {
 }))
 
 app.get('/google', passport.authenticate('google'), (req, res) => {
-  console.log(req.user.id)
   req.session.userId = req.user.id
+  req.session.accessToken = req.user.access_token
   res.redirect('/')
 })
 
@@ -92,6 +104,60 @@ app.get('/session', function(req, res) {
     res.status(200).send(`${req.session.userId}`)
   } else
     res.status(403).send()
+})
+
+// app.post('/calendar', checkSession, function(req, res) {
+//   axios.get(`https://www.googleapis.com/calendar/v3/users/me/calendarList`, {
+//     auth: req.session.accessToken
+//   })
+//   .then((response) => {
+//     console.log('got response', response)
+//     axios.post(`https://www.googleapis.com/calendar/v3/calendars/${response.data[0].id}/events`, {
+//       auth: req.session.accessToken
+//     })
+//     .then(() => {
+//       res.status(201).send()
+//     })
+//     .catch((err) => {
+//       console.error(err)
+//     })
+//   })
+//   .catch((err) => {
+//     console.error(err)
+//   })
+// })
+
+// app.post('/contacts', function(req, res) {
+//   axios.post(`https://people.googleapis.com/v1/people:createContact`, {
+//     auth: req.session.accessToken
+//   })
+// })
+
+app.post('/calendar', checkSession, checkGoogleAuth, function(req, res) {
+  calendar.events.insert({
+    auth: `Bearer ${req.session.accessToken}`, 
+    calendarId: 'primary',
+    resource: {
+      summary: req.body.job_title,
+      location: req.body.company,
+      description: req.body.description,
+      start: {
+        date: req.body.date
+      },
+      endTimeUnspecified: true,
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 24 * 60 },
+          { method: 'sms', minutes: 0 },
+          { method: 'popup', minutes: 0 }
+        ]
+      }
+    }, function(err) {
+      if (err) console.error(err)
+      res.status(201).send()
+    }
+  })
 })
 
 app.post('/users', function(req, res) {
@@ -286,8 +352,7 @@ app.delete('/applications', checkSession, function(req, res) {
   })
 })
 
-app.post('/logout', checkSession, function(req,res) {
-  console.log('axios received')
+app.post('/logout', function(req,res) {
   req.session.destroy()
   res.status(200).redirect('/')
 })
