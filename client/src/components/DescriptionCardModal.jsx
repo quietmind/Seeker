@@ -50,7 +50,7 @@ class DescriptionCard extends React.Component{
     console.log(date.toDate())
     console.log(date.toJSON())
     this.setState({
-      startDate: date
+      date: date
     })
   }
 
@@ -69,14 +69,14 @@ class DescriptionCard extends React.Component{
       .then(() => this.setState({date: '', reminderText: ''}))
       .catch((err) => console.error(err))
     } else {
+      console.log('selected date', this.state.date)
       axios.post('/calendar', {
-        date: this.state.date,
+        date: `${this.state.date._d.getFullYear()}-${this.state.date._d.getMonth()+1}-${this.state.date._d.getDate()}`,
         description: this.state.reminderText,
         company: this.props.app.company,
         job_title: this.props.app.job_title,
         point_of_contact: this.props.app.point_of_contact
       })
-      .then((response) => console.log(response))
       .catch((err) => console.error(err))
     }
   }
@@ -207,7 +207,7 @@ class DescriptionCard extends React.Component{
           <div className="reminder">
             <p>Add a Reminder</p>
             <DatePicker
-              selected={this.state.startDate}
+              selected={this.state.date}
               onChange={this.handleChange}
               placeholderText="Choose a date"
               dateFormat="LLL"

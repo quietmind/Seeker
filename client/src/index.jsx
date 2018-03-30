@@ -103,7 +103,6 @@ class App extends React.Component {
       axios.get('/notes'),
     ])
     .then((response) => {
-      console.log(response);
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
