@@ -35,6 +35,7 @@ class DescriptionCard extends React.Component{
   }
 
   handleOpen() {
+    this.props.keepSwitch();
     this.setState({ open: true }, this.props.toggle)
   }
 
@@ -42,11 +43,9 @@ class DescriptionCard extends React.Component{
     this.setState({ reminderText: '', notesText: '', open: false });
   }
 
-
   handleChange(date) {
-    console.log(date);
     this.setState({
-      startDate: date
+      date: date
     })
   }
 
@@ -65,14 +64,14 @@ class DescriptionCard extends React.Component{
       .then(() => this.setState({date: '', reminderText: ''}))
       .catch((err) => console.error(err))
     } else {
+      console.log('selected date', this.state.date)
       axios.post('/calendar', {
-        date: this.state.date,
+        date: `${this.state.date._d.getFullYear()}-${this.state.date._d.getMonth()+1}-${this.state.date._d.getDate()}`,
         description: this.state.reminderText,
         company: this.props.app.company,
         job_title: this.props.app.job_title,
         point_of_contact: this.props.app.point_of_contact
       })
-      .then((response) => console.log(response))
       .catch((err) => console.error(err))
     }
   }
@@ -86,7 +85,8 @@ class DescriptionCard extends React.Component{
 
   addNote() {
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.id})
-    .then(()=> this.setState({notesText: ''}))
+    .then(() => this.props.handleClick())
+    .then(() => this.setState({notesText: ''}))
     .catch((err) => console.error(err))
   }
 
@@ -202,9 +202,10 @@ class DescriptionCard extends React.Component{
           <div className="reminder">
             <p>Add a Reminder</p>
             <DatePicker
-              selected={this.state.startDate}
+              selected={this.state.date}
               onChange={this.handleChange}
-              placeholder="Choose a date"
+              placeholderText="Choose a date"
+              dateFormat="LLL"
             />
             <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(e) => this.setState({reminderText: e.target.value})}></input>
             <button onClick={this.sendReminder}>Submit</button>

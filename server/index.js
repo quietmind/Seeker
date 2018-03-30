@@ -13,11 +13,19 @@ const aws = require('aws-sdk')
 const RateLimit = require('express-rate-limit')
 const config = require('../configurations')
 const {google} = require('googleapis')
-const calendar = google.calendar('v3');
+const OAuth2 = google.auth.OAuth2
+const calendar = google.calendar('v3')
 const contacts = google.people('v1')
 const axios = require('axios')
 const fs = require('fs')
 const webpush = require('web-push')
+const validator = require("email-validator");
+
+const oauth2Client = new OAuth2(
+  config.google.clientID,
+  config.google.clientSecret,
+  ''
+)
 
 const vapidKeys = {
   publicKey:  config.vapidKeys.publicKey,
@@ -61,12 +69,12 @@ const checkSession = function(req, res, next) {
   }
 }
 
-const checkGoogleAuth = function(req, res, next) {
-  if (req.session.accessToken) {
-    next()
-  } else {
-    console.log("user does not have google credentials")
-  }
+const setOAuthCreds = function(req, res, next) {
+  oauth2Client.setCredentials({
+    access_token: req.session.accessToken,
+    refresh_token: req.session.refreshToken
+  })
+  next()
 }
 
 aws.config.update({
@@ -90,12 +98,15 @@ var upload = multer({
 })
 
 app.get('/oauth', passport.authenticate('google', {
-  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/gmail.insert']
+  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/gmail.insert'],
+  accessType: 'offline',
+  prompt: 'consent'
 }))
 
 app.get('/google', passport.authenticate('google'), (req, res) => {
   req.session.userId = req.user.id
   req.session.accessToken = req.user.access_token
+  req.session.refreshToken = req.user.refresh_token
   res.redirect('/')
 })
 
@@ -106,37 +117,10 @@ app.get('/session', function(req, res) {
     res.status(403).send()
 })
 
-// app.post('/calendar', checkSession, function(req, res) {
-//   axios.get(`https://www.googleapis.com/calendar/v3/users/me/calendarList`, {
-//     auth: req.session.accessToken
-//   })
-//   .then((response) => {
-//     console.log('got response', response)
-//     axios.post(`https://www.googleapis.com/calendar/v3/calendars/${response.data[0].id}/events`, {
-//       auth: req.session.accessToken
-//     })
-//     .then(() => {
-//       res.status(201).send()
-//     })
-//     .catch((err) => {
-//       console.error(err)
-//     })
-//   })
-//   .catch((err) => {
-//     console.error(err)
-//   })
-// })
-
-// app.post('/contacts', function(req, res) {
-//   axios.post(`https://people.googleapis.com/v1/people:createContact`, {
-//     auth: req.session.accessToken
-//   })
-// })
-
-app.post('/calendar', checkSession, checkGoogleAuth, function(req, res) {
-  console.log('post request to /calendar received')
+app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
+  console.log('post request to /calendar received', oauth2Client)
   calendar.events.insert({
-    auth: `Bearer ${req.session.accessToken}`, 
+    auth: oauth2Client,
     calendarId: 'primary',
     resource: {
       summary: req.body.job_title,
@@ -145,7 +129,9 @@ app.post('/calendar', checkSession, checkGoogleAuth, function(req, res) {
       start: {
         date: req.body.date
       },
-      endTimeUnspecified: true,
+      end: {
+        date: req.body.date
+      },
       reminders: {
         useDefault: false,
         overrides: [
@@ -155,30 +141,57 @@ app.post('/calendar', checkSession, checkGoogleAuth, function(req, res) {
         ]
       }
     }
-  }, function(err) {
+  }, function(err, response) {
     if (err) console.error(err)
     res.status(201).send()
   })
 })
 
 app.post('/users', function(req, res) {
-  console.log('received post request', req.body)
-  db.getUserCredentials(req.body.userEmail, function(err, results) {
-    if (err) console.error(err)
-    console.log('queried the db', results)
-    if (results.length === 0) {
-      bcrypt.hash(req.body.password, null, null, function(err, hash) {
-        if (err) console.error(err)
-        console.log('hashed password')
-        db.createUser(req.body.userEmail, hash, null, function(err, results) {
+  if(!validator.validate(req.body.userEmail)) {
+    res.status(403).send();
+  } else  {
+    console.log('received post request', req.body)
+    db.getUserCredentials(req.body.userEmail, function(err, results) {
+      if (err) console.error(err)
+      console.log('queried the db', results)
+      if (results.length === 0) {
+        bcrypt.hash(req.body.password, null, null, function(err, hash) {
           if (err) console.error(err)
-          console.log('created new user', results.insertId)
-          db.addDefaultPhases(results.insertId, function(err) {
+          console.log('hashed password')
+          db.createUser(req.body.userEmail, hash, null, function(err, results) {
             if (err) console.error(err)
-            console.log('added default phases')
-            res.status(201).send(`${results.insertId}`)
+            console.log('created new user', results.insertId)
+            db.addDefaultPhases(results.insertId, function(err) {
+              if (err) console.error(err)
+              console.log('added default phases')
+              res.status(201).send(`${results.insertId}`)
+            })
           })
         })
+      } else {
+        res.status(403).send()
+      }
+    })
+  }
+})
+app.get('/users', function(req, res) {
+  console.log('request query', req.query)
+  db.getUserCredentials(req.query.userEmail, function(err, results) {
+    console.log('got a response from the db', results)
+    if (err) console.error(err)
+    if (results) {
+      console.log('results array contained at least one entry', results[0])
+      bcrypt.compare(req.query.password, results[0].password, function(err, match) {
+        if (match) {
+          console.log('results array contained a match')
+          req.session.userId = results[0].id
+          var sendingData = [];
+          sendingData.push(results[0].id, results[0].user_email);
+          res.status(200).send(sendingData)
+        } else {
+          res.status(403).send()
+        }
       })
     } else {
       res.status(403).send()
@@ -204,30 +217,6 @@ app.post('/files', checkSession, upload.any(), function(req, res) {
   db.addFile(req.session.userId, req.files[0].location, req.body.name, function(err) {
     if (err) console.error(err)
     res.status(201).send()
-  })
-})
-
-app.get('/users', function(req, res) {
-  console.log('request query', req.query)
-  db.getUserCredentials(req.query.userEmail, function(err, results) {
-    console.log('got a response from the db', results)
-    if (err) console.error(err)
-    if (results) {
-      console.log('results array contained at least one entry', results[0])
-      bcrypt.compare(req.query.password, results[0].password, function(err, match) {
-        if (match) {
-          console.log('results array contained a match')
-          req.session.userId = results[0].id
-          var sendingData = [];
-          sendingData.push(results[0].id, results[0].user_email);
-          res.status(200).send(sendingData)
-        } else {
-          res.status(403).send()
-        }
-      })
-    } else {
-      res.status(403).send()
-    }
   })
 })
 

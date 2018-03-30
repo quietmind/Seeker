@@ -47,6 +47,10 @@ class AppModal extends React.Component {
   }
 
   render() {
+    var resumeOptions = [{text: 'N/A', value: null, key: null}];
+    resumeOptions = resumeOptions.concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
+    var coverLetterOptions = [{text: 'N/A', value: null, key: null}].concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
+    console.log(resumeOptions);
     return (
       <Modal
         trigger={
@@ -69,8 +73,8 @@ class AppModal extends React.Component {
             </Form.Group>
             <Form.Group widths='equal'>
               <Form.Input fluid label='Point of Contact' placeholder='Contact Email' value={this.state.contact} onChange={(event) => this.setState({contact: event.target.value})}/>
-              <Form.Select fluid label='Resume Used' options={this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}})} placeholder='Resume' value= {this.state.resume} onChange={(e, { value })=>this.setState({resume: value})}/>
-              <Form.Select fluid label='Cover Letter Used' options={this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}})} placeholder='Cover Letter' value={this.state.coverletter} onChange={(e, { value })=>this.setState({coverLetter: value})}/>
+              <Form.Select fluid label='Resume Used' options={resumeOptions} placeholder='Resume' value= {this.state.resume} onChange={(e, { value })=>this.setState({resume: value})}/>
+              <Form.Select fluid label='Cover Letter Used' options={coverLetterOptions} placeholder='Cover Letter' value={this.state.coverletter} onChange={(e, { value })=>this.setState({coverLetter: value})}/>
             </Form.Group>
           <Button onClick={() => {this.handleSubmit()}}>Submit</Button>
           </Form>
