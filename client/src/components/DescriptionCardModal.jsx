@@ -72,7 +72,7 @@ class DescriptionCard extends React.Component{
         job_title: this.props.app.job_title,
         point_of_contact: this.props.app.point_of_contact
       })
-      .then(() => console.log('successfully created google calendar event'))
+      .then((response) => console.log(response))
       .catch((err) => console.error(err))
     }
   }
@@ -187,7 +187,7 @@ class DescriptionCard extends React.Component{
       open={this.state.open}
       onClose={this.handleClose}
       closeIcon={true}
-      // basic
+      size='small'
       >
       <Header icon='building' content={this.props.app.company} />
       <Modal.Content>
@@ -206,12 +206,12 @@ class DescriptionCard extends React.Component{
               onChange={this.handleChange}
               placeholder="Choose a date"
             />
-            <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(e)=>this.setState({reminderText: e.target.value})}></input>
+            <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(e) => this.setState({reminderText: e.target.value})}></input>
             <button onClick={this.sendReminder}>Submit</button>
           </div>
           <div>
             <p>Add a note to this entry</p>
-            <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e)=>this.setState({notesText: e.target.value})}></input>
+            <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e) => this.setState({notesText: e.target.value})}></input>
             <button onClick={this.addNote}>Submit</button>
           </div>
           <h1>Notes:</h1>

@@ -134,6 +134,7 @@ app.get('/session', function(req, res) {
 // })
 
 app.post('/calendar', checkSession, checkGoogleAuth, function(req, res) {
+  console.log('post request to /calendar received')
   calendar.events.insert({
     auth: `Bearer ${req.session.accessToken}`, 
     calendarId: 'primary',
@@ -153,10 +154,10 @@ app.post('/calendar', checkSession, checkGoogleAuth, function(req, res) {
           { method: 'popup', minutes: 0 }
         ]
       }
-    }, function(err) {
-      if (err) console.error(err)
-      res.status(201).send()
     }
+  }, function(err) {
+    if (err) console.error(err)
+    res.status(201).send()
   })
 })
 

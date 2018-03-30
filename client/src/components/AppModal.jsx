@@ -57,8 +57,6 @@ class AppModal extends React.Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         closeIcon={true}
-
-        basic
         size='small'
       >
         <Header icon='wordpress forms' content='Enter Your Latest Job Application' />
