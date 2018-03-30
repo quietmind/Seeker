@@ -31,8 +31,6 @@ class DescriptionCard extends React.Component{
   }
 
   componentWillMount(){
-    console.log('phases',this.props.phase)
-    console.log('app', this.props.app)
     if(Notification.permission === 'default') this.askPermission()
   }
 
@@ -46,9 +44,6 @@ class DescriptionCard extends React.Component{
   }
 
   handleChange(date) {
-    console.log(date);
-    console.log(date.toDate())
-    console.log(date.toJSON())
     this.setState({
       date: date
     })
