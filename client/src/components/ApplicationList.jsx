@@ -9,7 +9,7 @@ export default class ApplicationList extends React.Component{
 		this.state ={
 			showModal: false,
 			featuredItem: null,
-			apps: [],
+			apps: [...props.apps],
 			searchTerm: '',
 			searchField: ''
 		}
@@ -23,9 +23,13 @@ export default class ApplicationList extends React.Component{
     this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
 		this.searchList = this.searchList.bind(this);
 		this.render = this.render.bind(this);
+		this.viewAll = this.viewAll.bind(this);
   }
-	componentDidMount() {
-		this.setState({apps: this.props.apps})
+
+	componentDidUpdate() {
+		if (this.props.apps !== this.state.apps) {
+				this.setState({apps: this.props.apps});
+		}
 	}
 
 	arrangeByStatus() {
@@ -79,8 +83,8 @@ export default class ApplicationList extends React.Component{
 		  this.setState({searchTerm: ''});
 	}
 
-	refreshPage() {
-		this.render();
+	viewAll() {
+		this.setState({apps: this.props.apps})
 	}
 
 	render() {
@@ -91,6 +95,7 @@ export default class ApplicationList extends React.Component{
 						<Input value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
 						<Form.Select options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
 						<Button onClick={this.searchList}>Search</Button>
+						<Button onClick={this.viewAll}>View All</Button>
 					</Menu.Item>
 				</Menu>
         <Table className="applicationListTable">

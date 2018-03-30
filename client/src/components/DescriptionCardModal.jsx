@@ -42,7 +42,6 @@ class DescriptionCard extends React.Component{
     this.setState({ reminderText: '', notesText: '', open: false });
   }
 
-
   handleChange(date) {
     console.log(date);
     this.setState({
