@@ -30,7 +30,11 @@ export default class Phase extends Component {
 				  className="headericon" 
 				  name="ellipsis vertical"
 				  textAlign="right"
-				  onClick={this.clickHandler} /></Header> 
+				  onClick={this.clickHandler}/>
+				  <Header.Subheader>
+				  	{this.props.applications.length} Jobs
+				  </Header.Subheader>
+				  </Header> 
 			</div>
 			{
 		      this.props.applications.map((app,i) =>  {
