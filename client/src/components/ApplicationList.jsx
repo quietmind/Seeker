@@ -14,38 +14,39 @@ export default class ApplicationList extends React.Component{
 			searchField: ''
 		}
 
-    this.arrangeByJobTitle = this.arrangeByJobTitle.bind(this);
-    this.arrangeByCompany = this.arrangeByCompany.bind(this);
-		this.arrangeByStatus = this.arrangeByStatus.bind(this);
-		this.arrangeByResume = this.arrangeByResume.bind(this);
-		this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
-    this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
-    this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
-		this.searchList = this.searchList.bind(this);
-		this.render = this.render.bind(this);
+      this.arrangeByJobTitle    = this.arrangeByJobTitle.bind(this);
+      this.arrangeByCompany     = this.arrangeByCompany.bind(this);
+	  this.arrangeByStatus      = this.arrangeByStatus.bind(this);
+	  this.arrangeByResume      = this.arrangeByResume.bind(this);
+	  this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
+      this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
+      this.arrangeByLastUpdate  = this.arrangeByLastUpdate.bind(this);
+	  this.searchList           = this.searchList.bind(this);
+	  this.render               = this.render.bind(this);
   }
 	componentDidMount() {
-		this.setState({apps: this.props.apps})
+		console.log(this.props.phases)
+	  this.setState({apps: this.props.apps})
 	}
 
 	arrangeByStatus() {
-		this.setState({applications: this.props.apps.sort(dynamicSort("phase_id"))});
+	  this.setState({applications: this.props.apps.sort(dynamicSort("phase_id"))});
 	}
 
-  arrangeByResume() {
-    this.setState({applications: this.props.apps.sort(dynamicSort("resume_id"))});
-  }
+    arrangeByResume() {
+      this.setState({applications: this.props.apps.sort(dynamicSort("resume_id"))});
+    }
 
 	arrangeByCoverLetter() {
-		this.setState({applications: this.props.apps.sort(dynamicSort("cover_letter_id"))});
+	  this.setState({applications: this.props.apps.sort(dynamicSort("cover_letter_id"))});
 	}
 
 	arrangeByJobTitle() {
-		this.setState({applications: this.props.apps.sort(dynamicSort("job_title"))});
+      this.setState({applications: this.props.apps.sort(dynamicSort("job_title"))});
 	}
 
   arrangeByCompany() {
-    this.setState({applications: this.props.apps.sort(dynamicSort("company"))});
+      this.setState({applications: this.props.apps.sort(dynamicSort("company"))});
   }
 
   arrangeByDateCreated() {
@@ -108,18 +109,17 @@ export default class ApplicationList extends React.Component{
           <Table.Body className="applicationListBody">
             {this.state.apps.map((app, i) => (
               <DescriptionCard
-                app={app}
-								userId={this.props.userId}
-                phase={this.props.phases.filter((phase) => phase.id === app.phase_id)[0]}
-                resume={this.props.files.filter((file) => file.id === app.resume_id)[0]}
-                coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
-								email={this.props.email}
                 key={i}
-								id={this.props.userId}
-								notes={this.props.notes.filter((note) => note.app_id === app.id)}
-								handleClick={this.props.handleClick}
-								files={this.props.files}
-              />
+                app={app}
+				userId={this.props.userId}
+                phase={this.props.phases.filter((phase)     => phase.id === app.phase_id)[0]}
+                resume={this.props.files.filter((file)      => file.id === app.resume_id)[0]}
+                coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
+				email={this.props.email}
+				id={this.props.userId}
+				notes={this.props.notes.filter((note) => note.app_id === app.id)}
+				handleClick={this.props.handleClick}
+				files={this.props.files}/>
 						))}
           </Table.Body>
         </Table>

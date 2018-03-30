@@ -110,7 +110,7 @@ class App extends React.Component {
         reminders: response[2].data,
         files: response[3].data,
         notes: response[4].data
-      }, () => axios.post('/calendar'))
+      })
     })
     .catch((err) => console.error(err))
   }
@@ -138,7 +138,8 @@ class App extends React.Component {
 
   deletePhase(phaseId){
     if(confirm('Are you sure you want to delete this Phase ?')){
-      axios.post('/phases', {phaseId: phaseId}).then((done) => this.getUserData())
+      let firstPhaseId = this.state.phases[0].phase_id
+      axios.post('/phases', {phaseId: phaseId, firstPhase: firstPhaseId}).then((done) => this.getUserData())
     }
   }
 
