@@ -9,6 +9,8 @@ CREATE TABLE users (
   user_email VARCHAR(100) UNIQUE,
   password VARCHAR(100),
   google_id VARCHAR(100) UNIQUE,
+  access_token VARCHAR(100),
+  refresh_token VARCHAR(100)
   PRIMARY KEY (id)
 );
 
