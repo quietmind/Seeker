@@ -26,7 +26,7 @@ class AppModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ jobTitle: '', companyName: '', phase: '', contact: '', resume: '', coverLetter: '', modalOpen: false })
+    this.setState({ jobTitle: '', companyName: '', phase: '', contact: null, resume: null, coverLetter: null, modalOpen: false })
     this.props.getUserData()
   }
 
