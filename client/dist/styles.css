@@ -126,6 +126,10 @@
 	box-shadow: 1px 1px 1px gray;
 }
 
+.applist-search{
+  left: 25%;
+}
+
 @keyframes pop{
    0% {
     transform: translateY(0px);
