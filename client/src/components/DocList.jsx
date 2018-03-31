@@ -13,7 +13,6 @@ class DocList extends React.Component {
 
   render() {
     const { pageNumber, numPages, scale } = this.state;
-console.log(this.props.fileList)
     return (
       <div className="docDisplay">
         <h1>Your Documents</h1>
