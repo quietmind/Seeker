@@ -37,8 +37,8 @@ module.exports.createPhase = function(data, callback) {
 
 module.exports.createApp = function(userId, data, callback) {
   connection.query(
-    `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, point_of_contact, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [null, userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.contact, data.date, data.date],
+    `INSERT INTO applications (id, user_id, phase_id, job_title, company, date_created, last_update, reminder_id, resume_id, cover_letter_id, point_of_contact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, userId, data.phaseId, data.jobTitle, data.company, data.date, data.date, data.reminderId, data.resumeId, data.coverLetterId, data.contact],
     function(err) {
       if (err) console.error(err);
       callback(err)
@@ -166,13 +166,13 @@ module.exports.updateApp = function(data, callback) {
   connection.query(
     `UPDATE applications
     SET phase_id = ${data.phaseId},
+    job_title = '${data.jobTitle}',
+    company = '${data.company}',
+    last_update = ${data.date},
     reminder_id = ${data.reminderId},
     resume_id = ${data.resumeId},
     cover_letter_id = ${data.coverLetterId},
-    job_title = '${data.jobTitle}',
-    company = '${data.company}',
     point_of_contact = '${data.contact},
-    last_update = ${data.date}
     WHERE id = ${data.appId}`,
     function(err) {
       callback(err)
