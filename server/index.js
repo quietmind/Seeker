@@ -98,7 +98,7 @@ var upload = multer({
 })
 
 app.get('/oauth', passport.authenticate('google', {
-  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/gmail.insert'],
+  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts'],
   accessType: 'offline',
   prompt: 'consent'
 }))
@@ -142,6 +142,30 @@ app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
       }
     }
   }, function(err, response) {
+    if (err) console.error(err)
+    res.status(201).send()
+  })
+})
+
+app.post('/contacts', checkSession, setOAuthCreds, function(req, res) {
+  contacts.people.createContact({
+    auth: oauth2Client,
+    parent: 'people/me',
+    resource: {
+      names: [
+        { familyName: 'Contact', givenName: 'Some' } //req.body.firstName, req.body.lastName
+      ],
+      emailAddresses: [
+        { value: 'fake@mail.com', displayName: 'fake@mail.com' } //req.body.email, req.body.email
+      ],
+      phoneNumbers: [
+        { value: '123-456-7890' } //req.body.phone
+      ],
+      organizations: [
+        { name: 'Company', title: 'Title', department: 'Department' } //req.body.company, req.body.title, req.body.department
+      ]
+    }
+  }, (err, response) => {
     if (err) console.error(err)
     res.status(201).send()
   })
