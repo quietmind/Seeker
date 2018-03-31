@@ -9,8 +9,11 @@ CREATE TABLE users (
   user_email VARCHAR(100) UNIQUE,
   password VARCHAR(100),
   google_id VARCHAR(100) UNIQUE,
+  notif_endpoint VARCHAR(1000),
+  notif_key VARCHAR(500),
+  notif_auth VARCHAR(500),
   access_token VARCHAR(100),
-  refresh_token VARCHAR(100)
+  refresh_token VARCHAR(100),
   PRIMARY KEY (id)
 );
 

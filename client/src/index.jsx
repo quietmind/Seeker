@@ -41,10 +41,8 @@ class App extends React.Component {
   }
 
   registerServiceWorker() {
-    console.log('things')
     return navigator.serviceWorker.register('/sw.js')
     .then((registration) => {
-      console.log(registration)
       return registration;
     })
     .catch((err) => {
@@ -69,7 +67,6 @@ class App extends React.Component {
     event.preventDefault()
     axios.post('/users', {userEmail: userEmail, password: password})
     .then((response) => {
-      console.log(response)
       this.setState({userId: response.data, userEmail: userEmail})
       this.getUserData()
     })
@@ -80,7 +77,6 @@ class App extends React.Component {
     event.preventDefault()
     axios.get('/users', {params: {userEmail: userEmail, password: password}})
     .then((response) => {
-      console.log(response)
       this.setState({userId: response.data[0], userEmail: response.data[1]})
       this.getUserData()
     })
@@ -109,13 +105,12 @@ class App extends React.Component {
         reminders: response[2].data,
         files: response[3].data,
         notes: response[4].data
-      }, () => console.log(this.state.phases))
+      })
     })
     .catch((err) => console.error(err))
   }
 
   updateStatus(status) {
-    console.log(status)
     axios.post('/updateStatus', status)
     .then((response) => {
       this.getUserData()
@@ -146,7 +141,7 @@ class App extends React.Component {
   updatePhaseOrder(newPhaseOrder){
     axios.post('/order', { phases: newPhaseOrder })
          .then((done) => this.getUserData())
-         .catch((err) => console.log(err))
+         .catch((err) => console.error(err))
   }
 
   decorateProgressBoard() {
