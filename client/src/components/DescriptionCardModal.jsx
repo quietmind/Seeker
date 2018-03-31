@@ -64,7 +64,6 @@ class DescriptionCard extends React.Component{
       .then(() => this.setState({date: '', reminderText: ''}))
       .catch((err) => console.error(err))
     } else {
-      console.log('selected date', this.state.date)
       axios.post('/calendar', {
         date: `${this.state.date._d.getFullYear()}-${this.state.date._d.getMonth()+1}-${this.state.date._d.getDate()}`,
         description: this.state.reminderText,

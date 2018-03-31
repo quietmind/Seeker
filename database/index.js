@@ -37,8 +37,8 @@ module.exports.createPhase = function(data, callback) {
 
 module.exports.createApp = function(userId, data, callback) {
   connection.query(
-    `INSERT INTO applications (id, user_id, phase_id, reminder_id, resume_id, cover_letter_id, job_title, company, point_of_contact, date_created, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [null, userId, data.phaseId, data.reminderId, data.resumeId, data.coverLetterId, data.jobTitle, data.company, data.contact, data.date, data.date],
+    `INSERT INTO applications (id, user_id, phase_id, job_title, company, date_created, last_update, reminder_id, resume_id, cover_letter_id, point_of_contact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, userId, data.phaseId, data.jobTitle, data.company, data.date, data.date, data.reminderId, data.resumeId, data.coverLetterId, data.contact],
     function(err) {
       if (err) console.error(err);
       callback(err)
@@ -166,13 +166,13 @@ module.exports.updateApp = function(data, callback) {
   connection.query(
     `UPDATE applications
     SET phase_id = ${data.phaseId},
+    job_title = '${data.jobTitle}',
+    company = '${data.company}',
+    last_update = ${data.date},
     reminder_id = ${data.reminderId},
     resume_id = ${data.resumeId},
     cover_letter_id = ${data.coverLetterId},
-    job_title = '${data.jobTitle}',
-    company = '${data.company}',
     point_of_contact = '${data.contact},
-    last_update = ${data.date}
     WHERE id = ${data.appId}`,
     function(err) {
       callback(err)
@@ -181,7 +181,8 @@ module.exports.updateApp = function(data, callback) {
 }
 
 module.exports.updateStatus = function(data, callback){
-  connection.query(`UPDATE applications
+  connection.query(
+    `UPDATE applications
     SET phase_id=${data.newStatusId}
     WHERE id=${data.appId}`,
     function(err){
@@ -191,7 +192,8 @@ module.exports.updateStatus = function(data, callback){
 }
 
 module.exports.deletePhase = function(packet, callback) {
-  connection.query(`UPDATE applications
+  connection.query(
+    `UPDATE applications
     SET phase_id=${packet.firstPhase}
     WHERE phase_id=${packet.phaseId}`, (err) => callback(err)
   )
@@ -230,8 +232,7 @@ module.exports.deleteReminders = function(appId, callback) {
 
 module.exports.addReminder = function(body, callback) {
   connection.query(
-    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc, app_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc, app_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description, body.appId],
     function(err) {
       callback(err)
@@ -241,8 +242,7 @@ module.exports.addReminder = function(body, callback) {
 
 module.exports.addNotes = function(body, callback) {
   connection.query(
-    `INSERT INTO notes (id, app_id, note_text, user_id)
-    VALUES (?, ?, ?, ?)`,
+    `INSERT INTO notes (id, app_id, note_text, user_id) VALUES (?, ?, ?, ?)`,
     [null, body.appId, body.text, body.userId],
     function(err) {
       callback(err)
@@ -257,5 +257,5 @@ module.exports.saveNotificationData = function(body, callback){
     notif_key="${body.keys.p256dh}",
     notif_auth="${body.keys.auth}"
     WHERE id=${body.id}
-    `)
+  `)
 }

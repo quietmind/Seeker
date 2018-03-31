@@ -98,7 +98,7 @@ var upload = multer({
 })
 
 app.get('/oauth', passport.authenticate('google', {
-  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/gmail.insert'],
+  scope: ['profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/contacts'],
   accessType: 'offline',
   prompt: 'consent'
 }))
@@ -118,7 +118,6 @@ app.get('/session', function(req, res) {
 })
 
 app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
-  console.log('post request to /calendar received', oauth2Client)
   calendar.events.insert({
     auth: oauth2Client,
     calendarId: 'primary',
@@ -147,24 +146,43 @@ app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
   })
 })
 
+app.post('/contacts', checkSession, setOAuthCreds, function(req, res) {
+  contacts.people.createContact({
+    auth: oauth2Client,
+    parent: 'people/me',
+    resource: {
+      names: [
+        { familyName: 'Contact', givenName: 'Some' } //req.body.firstName, req.body.lastName
+      ],
+      emailAddresses: [
+        { value: 'fake@mail.com', displayName: 'fake@mail.com' } //req.body.email, req.body.email
+      ],
+      phoneNumbers: [
+        { value: '123-456-7890' } //req.body.phone
+      ],
+      organizations: [
+        { name: 'Company', title: 'Title', department: 'Department' } //req.body.company, req.body.title, req.body.department
+      ]
+    }
+  }, (err, response) => {
+    if (err) console.error(err)
+    res.status(201).send()
+  })
+})
+
 app.post('/users', function(req, res) {
   if(!validator.validate(req.body.userEmail)) {
     res.status(403).send();
   } else  {
-    console.log('received post request', req.body)
     db.getUserCredentials(req.body.userEmail, function(err, results) {
       if (err) console.error(err)
-      console.log('queried the db', results)
       if (results.length === 0) {
         bcrypt.hash(req.body.password, null, null, function(err, hash) {
           if (err) console.error(err)
-          console.log('hashed password')
           db.createUser(req.body.userEmail, hash, null, function(err, results) {
             if (err) console.error(err)
-            console.log('created new user', results.insertId)
             db.addDefaultPhases(results.insertId, function(err) {
               if (err) console.error(err)
-              console.log('added default phases')
               res.status(201).send(`${results.insertId}`)
             })
           })
@@ -175,16 +193,13 @@ app.post('/users', function(req, res) {
     })
   }
 })
+
 app.get('/users', function(req, res) {
-  console.log('request query', req.query)
   db.getUserCredentials(req.query.userEmail, function(err, results) {
-    console.log('got a response from the db', results)
     if (err) console.error(err)
     if (results) {
-      console.log('results array contained at least one entry', results[0])
       bcrypt.compare(req.query.password, results[0].password, function(err, match) {
         if (match) {
-          console.log('results array contained a match')
           req.session.userId = results[0].id
           var sendingData = [];
           sendingData.push(results[0].id, results[0].user_email);
@@ -252,7 +267,7 @@ app.post('/triggerPushNotifications', function(req, res) {
   }
   webpush.sendNotification(subscripObject, JSON.stringify(note))
          .then((done) => console.log('finished'))
-         .catch((err) => console.log(err))
+         .catch((err) => console.error(err))
   res.end()
 })
 
@@ -298,7 +313,6 @@ app.get('/files', checkSession, function(req, res) {
 })
 
 app.post('/order', checkSession, function(req, res) {
-  console.log(req.body)
   db.updatePhaseOrder(req.body.phases, function(err) {
     if (err) console.error(err)
     res.status(201).send()
@@ -327,7 +341,6 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.delete('/applications', checkSession, function(req, res) {
-  console.log("axios MADE");
   db.deleteNotes(req.body.appId, function(err) {
     if (err) console.error(err)
     else db.deleteReminders(req.body.appId, function(err) {

@@ -32,13 +32,13 @@ export default class PhaseSettingsModal extends Component {
   }
 
   reorder(e, { name, value } ) {
-    console.log(value)
     let phases = this.props.phases //all phases
     let phaseToMoveIndex = this.props.selectedPhase.phaseOrder -1  // index of phase we are acting on
     let selectPhase = phases[phaseToMoveIndex] // set phase to be reordered
     phases.splice(value, 0, selectPhase)
     phases.splice(phaseToMoveIndex + 1, 1)
     this.props.updatePhaseOrder(phases)
+
     this.handleClose() // close the modal 
   }
 

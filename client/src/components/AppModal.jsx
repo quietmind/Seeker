@@ -26,7 +26,7 @@ class AppModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ jobTitle: '', companyName: '', phase: '', contact: '', resume: '', coverLetter: '', modalOpen: false })
+    this.setState({ jobTitle: '', companyName: '', phase: '', contact: null, resume: null, coverLetter: null, modalOpen: false })
     this.props.getUserData()
   }
 
@@ -50,7 +50,6 @@ class AppModal extends React.Component {
     var resumeOptions = [{text: 'N/A', value: null, key: null}];
     resumeOptions = resumeOptions.concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
     var coverLetterOptions = [{text: 'N/A', value: null, key: null}].concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
-    console.log(resumeOptions);
     return (
       <Modal
         trigger={

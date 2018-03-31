@@ -41,9 +41,9 @@ export default class ApplicationList extends React.Component{
 	  this.setState({applications: this.props.apps.sort(dynamicSort("phase_id"))});
 	}
 
-    arrangeByResume() {
-      this.setState({applications: this.props.apps.sort(dynamicSort("resume_id"))});
-    }
+	arrangeByResume() {
+		this.setState({applications: this.props.apps.sort(dynamicSort("resume_id"))});
+	}
 
 	arrangeByCoverLetter() {
 	  this.setState({applications: this.props.apps.sort(dynamicSort("cover_letter_id"))});
