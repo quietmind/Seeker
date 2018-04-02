@@ -58,6 +58,10 @@
 	animation: pulse 0.3s linear 1;
 }
 
+.AppItem:active{
+  animation: none;
+}
+
 .gu-mirror {
   cursor:move; cursor:-webkit-grabbing; cursor:-moz-grabbing; cursor:grabbing;
   position: fixed !important;
