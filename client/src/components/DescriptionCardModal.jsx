@@ -171,14 +171,15 @@ class DescriptionCard extends React.Component{
 
 
   render() {
+
     return (
       <Modal
       trigger={
         <Table.Row className="appListItem" onClick={this.handleOpen}>
           <Table.Cell>{this.props.app.job_title}</Table.Cell>
           <Table.Cell>{this.props.app.company}</Table.Cell>
-          <Table.Cell>{this.props.app.date_created}</Table.Cell>
-          <Table.Cell>{this.props.app.last_update}</Table.Cell>
+          <Table.Cell>{new Date(this.props.app.date_created).toDateString().substring(4)}</Table.Cell>
+          <Table.Cell>{new Date(this.props.app.last_update).toDateString().substring(4)}</Table.Cell>
           <Table.Cell>{this.props.phase.phase_label}</Table.Cell>
           <Table.Cell>{this.props.resume ? this.props.resume.file_name :  ''}</Table.Cell>
           <Table.Cell>{this.props.coverletter ? this.props.coverletter.file_name : ''}</Table.Cell>
@@ -196,8 +197,10 @@ class DescriptionCard extends React.Component{
         <a href={this.props.resume ? this.props.resume.s3_url :  ''}>{this.props.resume ? this.props.resume.file_name : ''}</a>
         <p>Cover Letter Provided:</p>
         <a href={this.props.coverletter ? this.props.coverletter.s3_url :  ''}>{this.props.coverletter ? this.props.coverletter.file_name : ''}</a>
+        <p>Created At:<br></br>
+        {new Date(this.props.app.date_created).toDateString().substring(4)}</p>
         <p>Last Activity:<br></br>
-        {this.props.app.last_update}</p>
+        {new Date(this.props.app.last_update).toDateString().substring(4)}</p>
         <div className="field">
           <div className="reminder">
             <p>Add a Reminder</p>
