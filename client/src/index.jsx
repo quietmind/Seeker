@@ -94,9 +94,9 @@ class App extends React.Component {
     Promise.all([
       axios.get('/phases'),
       axios.get('/applications'),
-      axios.get('/reminders'),
       axios.get('/files'),
       axios.get('/notes'),
+      axios.get('/reminders')
     ])
     .then((response) => {
       this.setState({

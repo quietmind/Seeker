@@ -269,9 +269,6 @@ class DescriptionCard extends React.Component{
           {this.props.notes.map((note, i) => (
             <p key={i}>{note.note_text}</p>
           ))}
-          {this.state.notes.map((note, i) => (
-            <p key={i}>{note.note_text}</p>
-          ))}
           <button onClick={this.deleteApplication}>Delete this Application</button>
         </div>
       </Modal.Content>
