@@ -70,6 +70,16 @@ module.exports.addFile = function(userId, s3url, filename, callback) {
   )
 }
 
+module.exports.addContact = function(userId, data, callback) {
+  connection.query(
+    `INSERT INTO contacts (id, user_id, contact_email, contact_phone, first_name, last_name, company, job_title, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, userId, data.contactEmail, data.contactPhone, data.firstName, data.lastName, data.company, data.title, data.department],
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.getUser = function(userId, callback) {
   connection.query(
     `SELECT * FROM users WHERE id = ${userId}`,

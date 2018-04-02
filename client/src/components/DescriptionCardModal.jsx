@@ -15,9 +15,18 @@ class DescriptionCard extends React.Component{
       reminderText: '',
       open: false,
       notesText: '',
-      notes: []
+      notes: [],
+      firstName: '',
+      lastName: '',
+      contactPhone: '',
+      contactEmail: '',
+      title: '',
+      department: '',
+      reminderId: null,
+      contactId: null
     }
 
+    this.addContact               = this.addContact.bind(this)
     this.sendReminder             = this.sendReminder.bind(this);
     this.handleChange             = this.handleChange.bind(this);
     this.deleteApplication        = this.deleteApplication.bind(this);
@@ -61,16 +70,48 @@ class DescriptionCard extends React.Component{
         point_of_contact: this.props.app.point_of_contact,
         appId: this.props.app.id
       })
-      .then(() => this.setState({date: '', reminderText: ''}))
+      .then((response) => this.setState({reminderId: response.data}))
       .catch((err) => console.error(err))
     } else {
       axios.post('/calendar', {
         date: `${this.state.date._d.getFullYear()}-${this.state.date._d.getMonth()+1}-${this.state.date._d.getDate()}`,
         description: this.state.reminderText,
+        email: this.props.email,
         company: this.props.app.company,
         job_title: this.props.app.job_title,
-        point_of_contact: this.props.app.point_of_contact
+        userId: this.props.userId,
+        point_of_contact: this.props.app.point_of_contact,
+        appId: this.props.app.id
       })
+      .then((response) => this.setState({reminderId: response.data}))
+      .catch((err) => console.error(err))
+    }
+  }
+
+  addContact() {
+    if (this.props.email) {
+      axios.post('/contacts', {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        contactPhone: this.state.contactPhone,
+        contactEmail: this.state.contactEmail,
+        company: this.props.app.company,
+        title: this.state.title,
+        department: this.state.department
+      })
+      .then((response) => this.setState({contactId: response.data}))
+      .catch((err) => console.error(err))
+    } else {
+      axios.post('/people', {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        contactPhone: this.state.contactPhone,
+        contactEmail: this.state.contactEmail,
+        company: this.props.app.company,
+        title: this.state.title,
+        department: this.state.department
+      })
+      .then((response) => this.setState({contactId: response.data}))
       .catch((err) => console.error(err))
     }
   }
@@ -206,12 +247,22 @@ class DescriptionCard extends React.Component{
               placeholderText="Choose a date"
               dateFormat="LLL"
             />
-            <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(e) => this.setState({reminderText: e.target.value})}></input>
+            <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
             <button onClick={this.sendReminder}>Submit</button>
+          </div>
+          <div className="contact">
+            <p>Add a Point of Contact</p>
+            <input type="text" value={this.state.firstName} placeholder="First Name" onChange={(event) => this.setState({firstName: event.target.value})}></input>
+            <input type="text" value={this.state.lastName} placeholder="Last Name" onChange={(event) => this.setState({lastName: event.target.value})}></input>
+            <input type="text" value={this.state.contactPhone} placeholder="Phone #" onChange={(event) => this.setState({contactPhone: event.target.value})}></input>
+            <input type="text" value={this.state.contactEmail} placeholder="Email" onChange={(event) => this.setState({contactEmail: event.target.value})}></input>
+            <input type="text" value={this.state.title} placeholder="Title" onChange={(event) => this.setState({title: event.target.value})}></input>
+            <input type="text" value={this.state.department} placeholder="Department" onChange={(event) => this.setState({department: event.target.value})}></input>
+            <button onClick={this.addContact}>Submit</button>
           </div>
           <div>
             <p>Add a note to this entry</p>
-            <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e) => this.setState({notesText: e.target.value})}></input>
+            <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(event) => this.setState({notesText: event.target.value})}></input>
             <button onClick={this.addNote}>Submit</button>
           </div>
           <h1>Notes:</h1>

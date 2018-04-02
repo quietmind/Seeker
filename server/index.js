@@ -142,31 +142,40 @@ app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
     }
   }, function(err, response) {
     if (err) console.error(err)
-    res.status(201).send()
+    db.addReminder(req.body, function(err, results) {
+      res.status(201).send(results.insertId)
+    })
   })
 })
 
-app.post('/contacts', checkSession, setOAuthCreds, function(req, res) {
+app.post('/people', checkSession, setOAuthCreds, function(req, res) {
   contacts.people.createContact({
     auth: oauth2Client,
     parent: 'people/me',
     resource: {
       names: [
-        { familyName: 'Contact', givenName: 'Some' } //req.body.firstName, req.body.lastName
+        { familyName: req.body.lastName, givenName: req.body.firstName }
       ],
       emailAddresses: [
-        { value: 'fake@mail.com', displayName: 'fake@mail.com' } //req.body.email, req.body.email
+        { value: req.body.contactEmail, displayName: req.body.contactEmail }
       ],
       phoneNumbers: [
-        { value: '123-456-7890' } //req.body.phone
+        { value: req.body.contactPhone }
       ],
       organizations: [
-        { name: 'Company', title: 'Title', department: 'Department' } //req.body.company, req.body.title, req.body.department
+        { name: req.body.company, title: req.body.title, department: req.body.department } 
       ]
     }
   }, (err, response) => {
     if (err) console.error(err)
     res.status(201).send()
+  })
+})
+
+app.post('/contacts', checkSession, function(req, res) {
+  db.addContact(req.session.userId, req.body, function(err) {
+    if (err) console.error(err)
+    res.status(200).send()
   })
 })
 
@@ -202,7 +211,7 @@ app.get('/users', function(req, res) {
       bcrypt.compare(req.query.password, results[0].password, function(err, match) {
         if (match) {
           req.session.userId = results[0].id
-          res.status(200).send(results[0].id)
+          res.status(200).send(`${results[0].id}`)
         } else {
           res.status(403).send()
         }
@@ -242,8 +251,6 @@ app.post('/saveSubscription', checkSession, function(req,res) {
     if(err) throw err
     res.status(200).end()
   })
-
-
 })
 
 app.post('/triggerPushNotifications', function(req, res) {
@@ -293,7 +300,7 @@ app.get('/reminders', checkSession, function(req, res) {
 
 app.post('/reminders', checkSession, function(req, res) {
   db.addReminder(req.body, function(err, results) {
-    res.status(200).send(results)
+    res.status(200).send(results.insertId)
   })
 })
 
