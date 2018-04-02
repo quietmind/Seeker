@@ -108,7 +108,6 @@ class DescriptionCard extends React.Component{
   sendSubscriptionToServer(subscription) {
     console.log('sending subscription')
 
-    // console.log(encodedAuth, encodedKey)
     axios.post('/saveSubscription', {
       data: JSON.stringify(subscription)
     })
@@ -145,11 +144,11 @@ class DescriptionCard extends React.Component{
     if (activeItem === 'Recap') {
       cardContent = <Recap resume={this.props.resume} coverletter={this.props.coverletter} app={this.props.app} />;
     } else if (activeItem === 'Notes') {
-      cardContent = <Notes notes={this.props.notes} />;
+      cardContent = <Notes notes={this.props.notes} app={this.props.app} handleClick={this.props.handleClick} />;
     } else if (activeItem === 'Reminder') {
       cardContent = <Reminder email={this.props.email} app={this.props.app} />;
     } else if (activeItem === 'Contact') {
-      cardContent = <Contact app={this.props.app}/>;
+      cardContent = <Contact app={this.props.app} />;
     }
 
     return (
@@ -214,7 +213,7 @@ class Notes extends React.Component {
   }
 
   addNote() {
-    axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.id})
+    axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.app.user_id})
     .then(() => this.props.handleClick())
     .then(() => this.setState({notesText: ''}))
     .catch((err) => console.error(err))

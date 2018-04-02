@@ -99,12 +99,14 @@ class App extends React.Component {
       axios.get('/reminders')
     ])
     .then((response) => {
+    console.log('HELLO');
+      console.log(response);
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
-        reminders: response[2].data,
-        files: response[3].data,
-        notes: response[4].data
+        reminders: response[4].data,
+        files: response[2].data,
+        notes: response[3].data
       })
     })
     .catch((err) => console.error(err))
