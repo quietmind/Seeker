@@ -14,7 +14,7 @@ app.listen(8080, function() {
 
 // '* * * 24 * *'
 schedule.scheduleJob('0 * * * * *', function(){
-	//get current date 
+	//get current date
 	let today = moment(new Date()).format('YYYY-MM-DD')
 
 	//query reminders db for all reminders that are due today
@@ -22,7 +22,7 @@ schedule.scheduleJob('0 * * * * *', function(){
 		if(err) console.error(err)
 		var data = result
 
-		//for each reminder find the user assocaited 
+		//for each reminder find the user assocaited
 		data.forEach(reminder => {
 			db.query(`SELECT * FROM users WHERE id=${reminder.user_id}`, (err,result) =>{
 				if(err) throw err
@@ -37,7 +37,7 @@ schedule.scheduleJob('0 * * * * *', function(){
 					axios.post("http://localhost:3000/triggerPushNotifications", packet)
 					     .then((done) => console.log('done'))
 					     .catch((err) => console.log(err))
-					
+
 				} else {
 					//if the user has not subscribed to push notifiations
 					// send them an email reminder
@@ -49,7 +49,3 @@ schedule.scheduleJob('0 * * * * *', function(){
 		})
 	})
 })
-
-
-
-
