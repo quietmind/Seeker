@@ -74,8 +74,8 @@ module.exports.addContact = function(userId, data, callback) {
   connection.query(
     `INSERT INTO contacts (id, user_id, contact_email, contact_phone, first_name, last_name, company, job_title, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, userId, data.contactEmail, data.contactPhone, data.firstName, data.lastName, data.company, data.title, data.department],
-    function(err) {
-      callback(err)
+    function(err, response) {
+      callback(err, response)
     }
   )
 }
@@ -143,6 +143,15 @@ module.exports.getReminders = function(userId, callback) {
   )
 }
 
+module.exports.getContacts = function(userId, callback) {
+  connection.query(
+    `SELECT * FROM contacts WHERE user_id = ${userId}`,
+    function(err, results) {
+      callback(err, results)
+    }
+  )
+}
+
 module.exports.getFiles = function(userId, callback) {
   connection.query(
     `SELECT * FROM files WHERE user_id = ${userId}`,
@@ -174,16 +183,10 @@ module.exports.updatePhaseOrder = function(phases, callback) {
 
 module.exports.updateApp = function(data, callback) {
   connection.query(
-    `UPDATE applications
-    SET phase_id = ${data.phaseId},
-    job_title = '${data.jobTitle}',
-    company = '${data.company}',
-    last_update = ${data.date},
-    reminder_id = ${data.reminderId},
-    resume_id = ${data.resumeId},
-    cover_letter_id = ${data.coverLetterId},
-    point_of_contact = '${data.contact},
-    WHERE id = ${data.appId}`,
+    `UPDATE applications 
+    SET reminder_id = ${data.reminder_id}, 
+    point_of_contact = ${data.point_of_contact}
+    WHERE id = ${data.id}`,
     function(err) {
       callback(err)
     }
@@ -241,11 +244,13 @@ module.exports.deleteReminders = function(appId, callback) {
 }
 
 module.exports.addReminder = function(body, callback) {
+  console.log('db helper ran', body)
   connection.query(
     `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc, app_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description, body.appId],
-    function(err) {
-      callback(err)
+    function(err, response) {
+      console.log('response', response)
+      callback(err, response)
     }
   )
 }

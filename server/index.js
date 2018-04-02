@@ -118,6 +118,7 @@ app.get('/session', function(req, res) {
 })
 
 app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
+  console.log('request sent to google API', req.body)
   calendar.events.insert({
     auth: oauth2Client,
     calendarId: 'primary',
@@ -134,17 +135,14 @@ app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
       reminders: {
         useDefault: false,
         overrides: [
-          { method: 'email', minutes: 24 * 60 },
-          { method: 'sms', minutes: 0 },
-          { method: 'popup', minutes: 0 }
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 30 }
         ]
       }
     }
   }, function(err, response) {
     if (err) console.error(err)
-    db.addReminder(req.body, function(err, results) {
-      res.status(201).send(results.insertId)
-    })
+    res.status(201).send()
   })
 })
 
@@ -168,14 +166,14 @@ app.post('/people', checkSession, setOAuthCreds, function(req, res) {
     }
   }, (err, response) => {
     if (err) console.error(err)
-    res.status(201).send()
+    res.status(201).send(response.resourceName)
   })
 })
 
 app.post('/contacts', checkSession, function(req, res) {
-  db.addContact(req.session.userId, req.body, function(err) {
+  db.addContact(req.session.userId, req.body, function(err, results) {
     if (err) console.error(err)
-    res.status(200).send()
+    res.status(200).send(`${results.insertId}`)
   })
 })
 
@@ -298,9 +296,17 @@ app.get('/reminders', checkSession, function(req, res) {
   })
 })
 
+app.get('/contacts', checkSession, function(req, res) {
+  db.getContacts(req.session.userId, function(err, results) {
+    if (err) console.error(err)
+    res.status(200).send(results)
+  })
+})
+
 app.post('/reminders', checkSession, function(req, res) {
+  console.log('server received request', req.body)
   db.addReminder(req.body, function(err, results) {
-    res.status(200).send(results.insertId)
+    res.status(200).send(`${results.insertId}`)
   })
 })
 

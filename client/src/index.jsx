@@ -20,6 +20,7 @@ class App extends React.Component {
       phases: [],
       applications: [],
       reminders: [],
+      contacts: [],
       files: [],
       notes: [],
       userEmail: null
@@ -91,12 +92,14 @@ class App extends React.Component {
   }
 
   getUserData() {
+    console.log('fetched user data')
     Promise.all([
       axios.get('/phases'),
       axios.get('/applications'),
+      axios.get('/reminders'),
+      axios.get('/contacts'),
       axios.get('/files'),
-      axios.get('/notes'),
-      axios.get('/reminders')
+      axios.get('/notes')
     ])
     .then((response) => {
     console.log('HELLO');
@@ -104,9 +107,10 @@ class App extends React.Component {
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
-        reminders: response[4].data,
-        files: response[2].data,
-        notes: response[3].data
+        reminders: response[2].data,
+        contacts: response[3].data,
+        files: response[4].data,
+        notes: response[5].data
       })
     })
     .catch((err) => console.error(err))
@@ -159,6 +163,7 @@ class App extends React.Component {
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
+      contacts={this.state.contacts}
       files={this.state.files}
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
@@ -181,6 +186,7 @@ class App extends React.Component {
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
+      contacts={this.state.contacts}
       files={this.state.files}
       email={this.state.userEmail}
       userId={this.state.userId}

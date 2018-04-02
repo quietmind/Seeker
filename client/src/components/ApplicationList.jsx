@@ -127,6 +127,7 @@ export default class ApplicationList extends React.Component{
                 key={i}
                 app={app}
 								userId={this.props.userId}
+<<<<<<< HEAD
                 phase={this.props.phases.filter((phase)     => phase.id === app.phase_id)[0]}
                 resume={this.props.files.filter((file)      => file.id === app.resume_id)[0]}
                 coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
@@ -135,6 +136,18 @@ export default class ApplicationList extends React.Component{
 								notes={this.props.notes.filter((note) => note.app_id === app.id)}
 								handleClick={this.props.handleClick}
 								files={this.props.files}/>
+=======
+                phase={this.props.phases.filter((phase) => phase.id === app.phase_id)[0]}
+								resume={this.props.files.filter((file) => file.id === app.resume_id)[0]}
+								contact={this.props.contacts.filter((contact) => contact.id === app.point_of_contact)[0]}
+								reminder={this.props.reminders.filter((reminder) => reminder.id === app.reminder_id)[0]}
+                coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
+								email={this.props.email}
+								notes={this.props.notes.filter((note) => note.app_id === app.id)}
+								handleClick={this.props.handleClick}
+								files={this.props.files}
+							/>
+>>>>>>> Associate contacts and reminders with applications
 						))}
           </Table.Body>
         </Table>

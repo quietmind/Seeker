@@ -12,17 +12,20 @@ class DescriptionCard extends React.Component{
     super(props)
 
     this.state = {
+      activeItem: 'Recap',
+      reminderSet: this.props.reminder,
+      contactSet: this.props.contact,
+      date: this.props.reminder ? this.props.reminder.due_date : moment(),
+      reminderText: this.props.reminder ? this.props.reminder.text_desc : '',
       open: false,
       notesText: '',
       notes: [],
-      firstName: '',
-      lastName: '',
-      contactPhone: '',
-      contactEmail: '',
-      title: '',
-      department: '',
-      contactId: null,
-      activeItem: 'Recap'
+      firstName: this.props.contact ? this.props.contact.first_name : '',
+      lastName: this.props.contact ? this.props.contact.last_name : '',
+      contactPhone: this.props.contact ? this.props.contact.contact_phone : '',
+      contactEmail: this.props.contact ? this.props.contact.contact_email : '',
+      title: this.props.contact ? this.props.contact.job_title : '',
+      department: this.props.contact ? this.props.contact.department : ''
     }
 
     this.deleteApplication        = this.deleteApplication.bind(this);
@@ -45,7 +48,80 @@ class DescriptionCard extends React.Component{
   }
 
   handleClose() {
-    this.setState({ reminderText: '', notesText: '', open: false });
+    this.setState({ notesText: '', open: false });
+  }
+
+  handleChange(date) {
+    this.setState({
+      date: date
+    })
+  }
+
+  sendReminder() {
+    if (!this.props.email) {
+      axios.post('/calendar', {
+        date: `${this.state.date._d.getFullYear()}-${this.state.date._d.getMonth()+1}-${this.state.date._d.getDate()}`,
+        description: this.state.reminderText,
+        company: this.props.app.company,
+        job_title: this.props.app.job_title
+      })
+      .then(() => console.log('successfully posted to google calendar'))
+      .catch((err) => console.error(err))
+    }
+    axios.post('/reminders', {
+      date: this.state.date,
+      description: this.state.reminderText,
+      email: this.props.email,
+      company: this.props.app.company,
+      job_title: this.props.app.job_title,
+      userId: this.props.userId,
+      appId: this.props.app.id
+    })
+    .then((response) => {
+      console.log('received response and ran second function')
+      let app = this.props.app
+      app.reminder_id = response.data
+      axios.post('/details', app)
+      .then((response) => {
+        this.props.handleClick()
+      })
+      .catch((err) => console.error(err))
+    })
+    .catch((err) => console.error(err))
+  }
+
+  addContact() {
+    if (!this.props.email) {
+      axios.post('/people', {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        contactPhone: this.state.contactPhone,
+        contactEmail: this.state.contactEmail,
+        company: this.props.app.company,
+        title: this.state.title,
+        department: this.state.department
+      })
+      .catch((err) => console.error(err))
+    }
+    axios.post('/contacts', {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      contactPhone: this.state.contactPhone,
+      contactEmail: this.state.contactEmail,
+      company: this.props.app.company,
+      title: this.state.title,
+      department: this.state.department
+    })
+    .then((response) => {
+      let app = this.props.app
+      app.point_of_contact = response.data
+      axios.post('/details', app)
+      .then((response) => {
+        this.props.handleClick()
+      })
+      .catch((err) => console.error(err))
+    })
+    .catch((err) => console.error(err))
   }
 
   deleteApplication() {
