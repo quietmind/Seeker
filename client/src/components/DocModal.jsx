@@ -67,10 +67,3 @@ class DocModal extends React.Component {
 }
 
 export default DocModal;
-//
-
-
-//
-// </Modal.Content>
-// <Modal.Content>
-// <DocList files={this.props.files}/>
