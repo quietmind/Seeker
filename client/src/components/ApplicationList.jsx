@@ -96,6 +96,8 @@ export default class ApplicationList extends React.Component{
 	}
 
 	render() {
+		console.log(this.props.notes);
+
 		return(
 			<div>
 				<Menu secondary attached="top">

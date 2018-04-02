@@ -211,7 +211,7 @@ class DescriptionCard extends React.Component{
 
 
   render() {
-
+    console.log(this.props.notes);
     return (
       <Modal
       trigger={
