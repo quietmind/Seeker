@@ -47,15 +47,15 @@ class AppModal extends React.Component {
   }
 
   render() {
-    var resumeOptions = [{text: 'N/A', value: null, key: null}];
-    resumeOptions = resumeOptions.concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
+    var resumeOptions = [{text: 'N/A', value: null, key: null}].concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
     var coverLetterOptions = [{text: 'N/A', value: null, key: null}].concat(this.props.files.map(function(ele, i) { return {text: ele.file_name, value: ele.id, key: i}}));
+
     return (
       <Modal
         trigger={
-          <Menu.Item onClick={this.handleOpen}>
-            <Icon name='wordpress forms' />New App
-          </Menu.Item>
+        <Menu.Item onClick={this.handleOpen}>
+          <Icon name='wordpress forms' />New App
+        </Menu.Item>
         }
         open={this.state.modalOpen}
         onClose={this.handleClose}
