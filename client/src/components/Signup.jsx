@@ -24,7 +24,8 @@ export default class Signup extends React.Component{
 					</Form.Field>
 					<Form.Field>
 						<Input 
-							icon='lock' 
+							icon='lock'
+							type='password'
 							iconPosition='left' 
 						  placeholder='Password' 
 						  value={this.state.password} 

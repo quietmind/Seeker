@@ -16,7 +16,7 @@ export default class Login extends React.Component{
 				<Form>
 					<Form.Field>
 						<Input 
-						  placeholder='Email' 
+						  placeholder='Email'
 						  icon='user' 
 						  iconPosition='left' 
 						  value={this.state.userEmail} 
@@ -24,7 +24,8 @@ export default class Login extends React.Component{
 					</Form.Field>
 					<Form.Field>
 						<Input 
-						  icon='lock' 
+							icon='lock' 
+							type='password'
 						  iconPosition='left' 
 						  placeholder='Password' 
 						  value={this.state.password} 
