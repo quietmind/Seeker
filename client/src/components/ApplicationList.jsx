@@ -99,11 +99,11 @@ export default class ApplicationList extends React.Component{
 		return(
 			<div>
 				<Menu secondary attached="top">
-					<Menu.Item position="left">
+					<Menu.Item className="applist-search" position="center">
 						<Input value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
 						<Form.Select options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
-						<Button onClick={this.searchList}>Search</Button>
-						<Button onClick={this.viewAll}>View All</Button>
+						<Button className="applist-button search" onClick={this.searchList}>Search</Button>
+						<Button className="applist-button viewall" onClick={this.viewAll}>View All</Button>
 					</Menu.Item>
 				</Menu>
         <Table className="applicationListTable">

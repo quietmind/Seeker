@@ -38,7 +38,6 @@ export default class PhaseSettingsModal extends Component {
     phases.splice(value, 0, selectPhase)
     phases.splice(phaseToMoveIndex + 1, 1)
     this.props.updatePhaseOrder(phases)
-
     this.handleClose() // close the modal 
   }
 
