@@ -183,6 +183,7 @@ app.post('/users', function(req, res) {
             if (err) console.error(err)
             db.addDefaultPhases(results.insertId, function(err) {
               if (err) console.error(err)
+              req.session.userId = results.insertId
               res.status(201).send(`${results.insertId}`)
             })
           })
@@ -201,9 +202,7 @@ app.get('/users', function(req, res) {
       bcrypt.compare(req.query.password, results[0].password, function(err, match) {
         if (match) {
           req.session.userId = results[0].id
-          var sendingData = [];
-          sendingData.push(results[0].id, results[0].user_email);
-          res.status(200).send(sendingData)
+          res.status(200).send(results[0].id)
         } else {
           res.status(403).send()
         }

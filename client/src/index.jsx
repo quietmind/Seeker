@@ -77,7 +77,7 @@ class App extends React.Component {
     event.preventDefault()
     axios.get('/users', {params: {userEmail: userEmail, password: password}})
     .then((response) => {
-      this.setState({userId: response.data[0], userEmail: response.data[1]})
+      this.setState({userId: response.data, userEmail: userEmail})
       this.getUserData()
     })
     .catch((err) => alert("Invalid email or password"))
