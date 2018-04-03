@@ -158,5 +158,4 @@ class Reminder extends React.Component {
     )
   }
 }
-
 export default Reminder

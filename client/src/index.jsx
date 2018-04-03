@@ -166,6 +166,9 @@ class App extends React.Component {
 
   decorateProgressBoard() {
     return <ProgressBoard
+      handleClick={this.getUserData}
+      email={this.state.userEmail}
+      notes={this.state.notes}
       phases={this.state.phases}
       apps={this.state.applications}
       reminders={this.state.reminders}
