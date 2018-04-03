@@ -6,6 +6,7 @@ class Contact extends React.Component {
     super(props)
 
     this.state = {
+      saving: false,
       firstName: this.props.contact ? this.props.contact.first_name : '',
       lastName: this.props.contact ? this.props.contact.last_name : '',
       contactPhone: this.props.contact ? this.props.contact.contact_phone : '',
@@ -15,6 +16,12 @@ class Contact extends React.Component {
     }
 
     this.addContact = this.addContact.bind(this);
+  }
+
+  handleSubmit() {
+    this.setState({saving: true})
+    setTimeout(() => this.setState({saving: false}), 1000)
+    this.props.getUserData()
   }
 
   addContact() {
@@ -47,7 +54,7 @@ class Contact extends React.Component {
         contact: response.data
       })
       .then((response) => {
-        this.props.getUserData()
+        this.handleSubmit()
       })
       .catch((err) => console.error(err))
     })
@@ -65,6 +72,7 @@ class Contact extends React.Component {
         <input type="text" value={this.state.title} placeholder="Title" onChange={(event) => this.setState({title: event.target.value})}></input>
         <input type="text" value={this.state.department} placeholder="Department" onChange={(event) => this.setState({department: event.target.value})}></input>
         <button onClick={this.addContact}>Submit</button>
+        {this.state.saving ? <div>Saving...</div> : <div></div>}
       </div>
     )
   }

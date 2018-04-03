@@ -31,6 +31,12 @@ class Reminder extends React.Component {
     })
   }
 
+  handleSubmit() {
+    this.setState({saving: true})
+    setTimeout(() => this.setState({saving: false}), 1000)
+    this.props.getUserData()
+  }
+
   urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -135,7 +141,7 @@ class Reminder extends React.Component {
         reminderId: response.data
       })
       .then((response) => {
-        this.props.getUserData()
+        this.handleSubmit()
       })
       .catch((err) => console.error(err))
     })
@@ -154,6 +160,7 @@ class Reminder extends React.Component {
         />
         <input type="text" value={this.state.reminderText} placeholder="Reminder Text" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
         <button onClick={this.sendReminder}>Submit</button>
+        {this.state.saving ? <div>Saving...</div> : <div></div>}
       </div>
     )
   }
