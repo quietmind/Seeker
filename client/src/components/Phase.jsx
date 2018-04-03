@@ -62,8 +62,8 @@ export default class Phase extends Component {
 										reminder={this.props.reminders.filter((reminder) => reminder.id === app.reminder_id)[0]}
 										email={this.props.email}
 										notes={this.props.notes.filter((note)=> note.app_id === app.id)}
-										resume={this.props.files.filter((file)=> file.id === app.resume_id)}
-										coverletter={this.props.files.filter((file)=> file.id === app.cover_letter_id)}
+										resume={this.props.files.filter((file)=> file.id === app.resume_id)[0]}
+										coverletter={this.props.files.filter((file)=> file.id === app.cover_letter_id)[0]}
 										description={app.job_title}
 									/>
 								}
