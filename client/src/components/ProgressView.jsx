@@ -1,6 +1,6 @@
-import React from 'react'
-import {Grid, Header, Button} from 'semantic-ui-react'
-import C3Chart from 'react-c3js'
+import React from 'react';
+import {Grid, Header, Button} from 'semantic-ui-react';
+import C3Chart from 'react-c3js';
 
 const ProgressView = (props) => (
   <Grid.Row columns={2}>
@@ -44,4 +44,4 @@ const ProgressView = (props) => (
   </Grid.Row>
 )
 
-export default ProgressView
+export default ProgressView;

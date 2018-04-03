@@ -32,8 +32,7 @@ export default class Metrics extends React.Component{
 				columns: [
 					['dates', ...this.getDateRange().map((date) => new Date(date))],
 					['New Applications', ...this.getQuantityPerDate()]
-				],
-				type: 'spline'
+				]
 			},
 			axis2: {
 				x: {
@@ -130,7 +129,7 @@ export default class Metrics extends React.Component{
 		const defaultView = this.state.defaultView;
 		return(
 			<Grid>
-				{this.state.defaultView ?
+				{this.state.defaultView ? 
 					<ProgressView
 						data={this.state.data1}
 						axis={this.state.axis1}
@@ -141,7 +140,7 @@ export default class Metrics extends React.Component{
 						sortPhases={this.sortPhases}
 						getCumulativeQuantities={this.getCumulativeQuantities}
 					/>
-				:
+				: 
 					<StatusView
 						data={this.state.data3}
 						apps={this.props.apps}

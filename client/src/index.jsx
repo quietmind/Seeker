@@ -168,8 +168,7 @@ class App extends React.Component {
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
       deletePhase={this.deletePhase}
-      updatePhaseOrder={this.updatePhaseOrder}
-    />
+      updatePhaseOrder={this.updatePhaseOrder}/>
   }
 
   decorateDataVis() {
@@ -242,15 +241,8 @@ class App extends React.Component {
                       <Icon name='book' />
                     My Apps
                   </Menu.Item>
-                  <DocModal
-                    toggle={this.toggleMenu}
-                    getUserData={this.getUserData}
-                    files= {this.state.files}/>
-                  <AppModal
-                    toggle={this.toggleMenu}
-                    getUserData={this.getUserData}
-                    phases={this.state.phases}
-                    files={this.state.files}/>
+                  <DocModal toggle={this.toggleMenu} getUserData={this.getUserData} files= {this.state.files}/>
+                  <AppModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>
@@ -270,5 +262,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))
-
-//is valid token? function?
