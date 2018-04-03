@@ -33,7 +33,14 @@ export default class Welcome extends React.Component{
           <Button style={{ maxWidth: 350, margin:10 }} onClick={this.renderLogin}>Login</Button>
         </Button.Group>
         {this.state.newUser ? <Signup handleClick={this.props.signup}/> : <Login handleClick={this.props.login}/>}
-        <a href='oauth'>Sign in with Google</a>
+        <a href='oauth'>
+          <div id="gSignInWrapper">
+            <div id="customBtn" class="customGPlusSignIn">
+              <span className="buttonText">Log in with:</span>
+              <span className="icon"></span>
+            </div>
+          </div>
+        </a>
       </div>
     )
   }
