@@ -186,7 +186,7 @@ module.exports.updatePhaseOrder = function(phases, callback) {
 
 module.exports.updateReminder = function(data, callback) {
   connection.query(
-    `UPDATE applications 
+    `UPDATE applications
     SET reminder_id = ${data.reminderId}
     WHERE id = ${data.id}`,
     function(err) {
@@ -256,7 +256,7 @@ module.exports.deleteReminders = function(appId, callback) {
   )
 }
 
-module.exports.deleteContacts = function(appId, calback) {
+module.exports.deleteContacts = function(appId, callback) {
   connection.query(
     `DELETE FROM contacts WHERE app_id = ${appId}`,
     function(err) {

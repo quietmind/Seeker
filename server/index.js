@@ -368,7 +368,7 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.delete('/applications', checkSession, function(req, res) {
-  db.deleteNotes(req.body.appId, function(err) {
+  db.deleteNote(req.body.appId, function(err) {
     if (err) console.error(err)
     db.deleteReminders(req.body.appId, function(err) {
       if (err) console.error(err)
