@@ -18,7 +18,7 @@ export default class PhaseSettingsModal extends Component {
   }
 
   handleView(){
-    this.setState( { reorderview : !this.state.reorderview } ) 
+    this.setState( { reorderview : !this.state.reorderview } )
   }
 
   handleClose(){
@@ -38,42 +38,42 @@ export default class PhaseSettingsModal extends Component {
     phases.splice(value, 0, selectPhase)
     phases.splice(phaseToMoveIndex + 1, 1)
     this.props.updatePhaseOrder(phases)
-    this.handleClose() // close the modal 
+    this.handleClose() // close the modal
   }
 
   render() {
     return (
       <div>
-        <Modal 
-          size="mini" 
-          open={this.props.show} 
-          closeIcon={true} 
-          onClose={this.handleClose} 
+        <Modal
+          size="mini"
+          open={this.props.show}
+          closeIcon={true}
+          onClose={this.handleClose}
           closeOnDimmerClick={this.handleCloseOnDimmer}>
             <Modal.Header>
               <Icon textAlign="center" name="settings"/>
             </Modal.Header>
             {
-            this.state.reorderview 
+            this.state.reorderview
             ?
               <Modal.Content textAlign="center">
-                <Dropdown 
-                  fluid 
-                  selection 
-                  placeholder='Rerrange Phases' 
-                  onChange={this.reorder} 
+                <Dropdown
+                  fluid
+                  selection
+                  placeholder='Rerrange Phases'
+                  onChange={this.reorder}
                   options={this.props.phases.map(phase => ({ text: `${phase.phase_label}`,  value: phase.phase_order }))} />
               </Modal.Content>
             :
               <Modal.Content textAlign="center">
                   <Button.Group fluid size='large'>
-                      <Button 
-                        negative 
+                      <Button
+                        negative
                         onClick={() => this.handleClick()}>
                           <Icon name="trash"/>
                       </Button>
                       <Button.Or />
-                      <Button 
+                      <Button
                       positive
                       onClick={this.handleView}>
                         <Icon name="ordered list"/>

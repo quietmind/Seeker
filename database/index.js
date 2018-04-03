@@ -222,9 +222,9 @@ module.exports.deleteApp = function(appId, callback) {
   )
 }
 
-module.exports.deleteNotes = function(appId, callback) {
+module.exports.deleteNote = function(id, callback) {
   connection.query(
-    `DELETE FROM notes WHERE app_id = ${appId}`,
+    `DELETE FROM notes WHERE id = ${id}`,
     function(err) {
       callback(err)
     }

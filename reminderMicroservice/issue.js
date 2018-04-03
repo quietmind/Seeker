@@ -23,6 +23,3 @@ const sendReminder = (packet) =>{
 }
 
 module.exports = sendReminder
-
-
-
