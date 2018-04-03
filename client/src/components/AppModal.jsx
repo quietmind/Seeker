@@ -38,7 +38,6 @@ class AppModal extends React.Component {
       coverLetterId: this.state.coverLetter,
       jobTitle: this.state.jobTitle,
       company: this.state.companyName,
-      contact: this.state.contact,
       date: new Date()})
     .then((response) => {
       this.handleClose()
@@ -71,7 +70,6 @@ class AppModal extends React.Component {
               <Form.Select fluid label='Phase' options={this.props.phases.map(function(ele) { return {text: ele.phase_label, value: ele.id}})} placeholder='Status' value= {this.state.phase} onChange={(e, { value })=>this.setState({phase: value})}/>
             </Form.Group>
             <Form.Group widths='equal'>
-              <Form.Input fluid label='Point of Contact' placeholder='Contact Email' value={this.state.contact} onChange={(event) => this.setState({contact: event.target.value})}/>
               <Form.Select fluid label='Resume Used' options={resumeOptions} placeholder='Resume' value= {this.state.resume} onChange={(e, { value })=>this.setState({resume: value})}/>
               <Form.Select fluid label='Cover Letter Used' options={coverLetterOptions} placeholder='Cover Letter' value={this.state.coverletter} onChange={(e, { value })=>this.setState({coverLetter: value})}/>
             </Form.Group>

@@ -29,12 +29,14 @@ CREATE TABLE phases (
 CREATE TABLE contacts (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
+  app_id INT NOT NULL,
   contact_email VARCHAR(100),
   contact_phone VARCHAR(50),
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   company VARCHAR(100),
   job_title VARCHAR(100),
+  department VARCHAR(100),
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -42,16 +44,14 @@ CREATE TABLE contacts (
 CREATE TABLE reminders (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
-  user_email VARCHAR(100) NOT NULL,
+  app_id INT NOT NULL,
+  user_email VARCHAR(100),
   job_title VARCHAR(100) NOT NULL,
   company VARCHAR(100) NOT NULL,
-  point_of_contact INT,
   due_date DATE NOT NULL,
   text_desc VARCHAR(1000) NOT NULL,
-  app_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (point_of_contact) REFERENCES contacts(id)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE files (

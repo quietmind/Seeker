@@ -363,11 +363,13 @@ app.post('/phases', checkSession, function(req, res) {
 app.delete('/applications', checkSession, function(req, res) {
   db.deleteNotes(req.body.appId, function(err) {
     if (err) console.error(err)
-    else db.deleteReminders(req.body.appId, function(err) {
+    db.deleteReminders(req.body.appId, function(err) {
       if (err) console.error(err)
-      else db.deleteApp(req.body.appId, function(err) {
+      db.deleteContacts(req.body.appId, function(err) {
         if (err) console.error(err)
-        res.status(201).send()
+        db.deleteApp(req.body.appId, function(err) {
+          res.status(201).send()
+        })
       })
     })
   })

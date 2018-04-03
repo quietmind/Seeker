@@ -15,7 +15,7 @@ class DescriptionCard extends React.Component{
       activeItem: 'Recap',
       reminderSet: this.props.reminder,
       contactSet: this.props.contact,
-      date: this.props.reminder ? this.props.reminder.due_date : moment(),
+      date: moment(), //this.props.reminder ? this.props.reminder.due_date : moment(),
       reminderText: this.props.reminder ? this.props.reminder.text_desc : '',
       open: false,
       notesText: '',
@@ -101,9 +101,11 @@ class DescriptionCard extends React.Component{
         title: this.state.title,
         department: this.state.department
       })
+      .then(() => console.log('successfully posted to google contacts'))
       .catch((err) => console.error(err))
     }
     axios.post('/contacts', {
+      appId: this.props.app.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       contactPhone: this.state.contactPhone,
@@ -248,18 +250,46 @@ class DescriptionCard extends React.Component{
       >
       <Header icon='building' content={this.props.app.job_title + " at " + this.props.app.company} />
       <Modal.Content>
-        <Menu tabular>
-          <Menu.Item name='Recap' active={activeItem === 'Recap'}
-            onClick={this.handleItemClick} />
-          <Menu.Item name='Notes' active={activeItem === 'Notes'}
-            onClick={this.handleItemClick} />
-          <Menu.Item name='Reminder' active={activeItem === 'Reminder'}
-            onClick={this.handleItemClick} />
-          <Menu.Item name='Contact' active={activeItem === 'Contact'}
-            onClick={this.handleItemClick} />
-        </Menu>
-        {cardContent}
-        <button style={{clear:'both'}} onClick={this.deleteApplication}>Delete this Application</button>
+        <h1>{this.props.app.job_title}</h1>
+        <p>Resume Provided:</p>
+        <a href={this.props.resume ? this.props.resume.s3_url :  ''}>{this.props.resume ? this.props.resume.file_name : ''}</a>
+        <p>Cover Letter Provided:</p>
+        <a href={this.props.coverletter ? this.props.coverletter.s3_url :  ''}>{this.props.coverletter ? this.props.coverletter.file_name : ''}</a>
+        <p>Last Activity:<br></br>
+        {this.props.app.last_update}</p>
+        <div className="field">
+          <div className="reminder">
+            <p>Add a Reminder</p>
+            <DatePicker
+              selected={this.state.date}
+              onChange={this.handleChange}
+              placeholderText="Choose a date"
+              dateFormat="LLL"
+            />
+            <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
+            <button onClick={this.sendReminder}>Submit</button>
+          </div>
+          <div className="contact">
+            <p>Add a Point of Contact</p>
+            <input type="text" value={this.state.firstName} placeholder="First Name" onChange={(event) => this.setState({firstName: event.target.value})}></input>
+            <input type="text" value={this.state.lastName} placeholder="Last Name" onChange={(event) => this.setState({lastName: event.target.value})}></input>
+            <input type="text" value={this.state.contactPhone} placeholder="Phone #" onChange={(event) => this.setState({contactPhone: event.target.value})}></input>
+            <input type="text" value={this.state.contactEmail} placeholder="Email" onChange={(event) => this.setState({contactEmail: event.target.value})}></input>
+            <input type="text" value={this.state.title} placeholder="Title" onChange={(event) => this.setState({title: event.target.value})}></input>
+            <input type="text" value={this.state.department} placeholder="Department" onChange={(event) => this.setState({department: event.target.value})}></input>
+            <button onClick={this.addContact}>Submit</button>
+          </div>
+          <div>
+            <p>Add a note to this entry</p>
+            <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(event) => this.setState({notesText: event.target.value})}></input>
+            <button onClick={this.addNote}>Submit</button>
+          </div>
+          <h1>Notes:</h1>
+          {this.props.notes.map((note, i) => (
+            <p key={i}>{note.note_text}</p>
+          ))}
+          <button onClick={this.deleteApplication}>Delete this Application</button>
+        </div>
       </Modal.Content>
     </Modal>
     )

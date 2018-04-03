@@ -72,8 +72,8 @@ module.exports.addFile = function(userId, s3url, filename, callback) {
 
 module.exports.addContact = function(userId, data, callback) {
   connection.query(
-    `INSERT INTO contacts (id, user_id, contact_email, contact_phone, first_name, last_name, company, job_title, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [null, userId, data.contactEmail, data.contactPhone, data.firstName, data.lastName, data.company, data.title, data.department],
+    `INSERT INTO contacts (id, user_id, app_id, contact_email, contact_phone, first_name, last_name, company, job_title, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, userId, data.appId, data.contactEmail, data.contactPhone, data.firstName, data.lastName, data.company, data.title, data.department],
     function(err, response) {
       callback(err, response)
     }
@@ -243,11 +243,20 @@ module.exports.deleteReminders = function(appId, callback) {
   )
 }
 
-module.exports.addReminder = function(body, callback) {
-  console.log('db helper ran', body)
+module.exports.deleteContacts = function(appId, calback) {
   connection.query(
-    `INSERT INTO reminders (id, user_id, user_email, job_title, company, point_of_contact, due_date, text_desc, app_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [null, body.userId, body.email, body.job_title, body.company, body.point_of_contact, body.date, body.description, body.appId],
+    `DELETE FROM contacts WHERE app_id = ${appId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.addReminder = function(data, callback) {
+  console.log('db helper ran', data)
+  connection.query(
+    `INSERT INTO reminders (id, user_id, app_id, user_email, job_title, company, due_date, text_desc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [null, data.userId, data.appId, data.email, data.job_title, data.company, data.date, data.description],
     function(err, response) {
       console.log('response', response)
       callback(err, response)
@@ -255,22 +264,22 @@ module.exports.addReminder = function(body, callback) {
   )
 }
 
-module.exports.addNotes = function(body, callback) {
+module.exports.addNotes = function(data, callback) {
   connection.query(
     `INSERT INTO notes (id, app_id, note_text, user_id) VALUES (?, ?, ?, ?)`,
-    [null, body.appId, body.text, body.userId],
+    [null, data.appId, data.text, data.userId],
     function(err) {
       callback(err)
     }
   )
 }
 
-module.exports.saveNotificationData = function(body, callback){
-  body = JSON.parse(body)
+module.exports.saveNotificationData = function(data, callback){
+  data = JSON.parse(data)
   connection.query(`UPDATE users
-    SET notif_endpoint="${body.endpoint}",
-    notif_key="${body.keys.p256dh}",
-    notif_auth="${body.keys.auth}"
-    WHERE id=${body.id}
+    SET notif_endpoint="${data.endpoint}",
+    notif_key="${data.keys.p256dh}",
+    notif_auth="${data.keys.auth}"
+    WHERE id=${data.id}
   `)
 }
