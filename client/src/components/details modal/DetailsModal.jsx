@@ -167,8 +167,8 @@ class DescriptionCard extends React.Component{
       <Modal.Content>
         <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} />
         <div className="field">
-          <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} />
-          <Contact contact={this.props.contact} app={this.props.app} />
+          <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} handleClick={this.props.handleClick}/>
+          <Contact contact={this.props.contact} app={this.props.app} handleClick={this.props.handleClick}/>
           <Notes notes={this.props.notes} app={this.props.app} handleClick={this.props.handleClick}/>
           <button onClick={this.deleteApplication}>Delete this Application</button>
         </div>
