@@ -95,7 +95,6 @@
 
 .welcome {
 	margin: 10% auto;
-	border: gray solid;
 	border-radius: 10px;
 	max-width: 600px;
   text-align:center;
@@ -103,13 +102,11 @@
 
 .login {
 	margin: auto;
-	background-color: gray;
 	padding: 20px 0;
 }
 
 .signup {
 	margin:auto;
-	background-color: gray;
 	padding: 20px 0;
 }
 
