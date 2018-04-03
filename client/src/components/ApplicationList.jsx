@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Table, Input, Button, Form, Dropdown } from 'semantic-ui-react';
-import DescriptionCard from './DescriptionCardModal.jsx';
+import DescriptionCard from './details modal/DetailsModal.jsx';
 import axios from 'axios';
 
 export default class ApplicationList extends React.Component{
