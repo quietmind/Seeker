@@ -39,6 +39,9 @@
 .headericon{
 	float:right;
 }
+.headericon:hover{
+  transform: scale(1.1);
+}
 
 .AppItem {
 	float:left;
@@ -143,6 +146,12 @@
   }
   100% {
     transform: translateY(0px);
+  }
+}
+
+@keyframes grow {
+  to{
+    transform: scale(1.3)
   }
 }
 
