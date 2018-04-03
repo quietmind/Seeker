@@ -135,13 +135,13 @@ class DescriptionCard extends React.Component{
     var cardContent;
 
     if (activeItem === 'Recap') {
-      cardContent = <Recap resume={this.props.resume} coverletter={this.props.coverletter} app={this.props.app} />;
+      cardContent = <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} />;
     } else if (activeItem === 'Notes') {
       cardContent = <Notes notes={this.props.notes} app={this.props.app} handleClick={this.props.handleClick} />;
     } else if (activeItem === 'Reminder') {
-      cardContent = <Reminder email={this.props.email} app={this.props.app} />;
+      cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} handleClick={this.props.handleClick} />;
     } else if (activeItem === 'Contact') {
-      cardContent = <Contact app={this.props.app} />;
+      cardContent = <Contact contact={this.props.contact} app={this.props.app} handleClick={this.props.handleClick} />;
     }
 
     return (
@@ -165,13 +165,14 @@ class DescriptionCard extends React.Component{
       >
       <Header icon='building' content={this.props.app.job_title + " at " + this.props.app.company} />
       <Modal.Content>
-        <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} />
-        <div className="field">
-          <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} handleClick={this.props.handleClick}/>
-          <Contact contact={this.props.contact} app={this.props.app} handleClick={this.props.handleClick}/>
-          <Notes notes={this.props.notes} app={this.props.app} handleClick={this.props.handleClick}/>
-          <button onClick={this.deleteApplication}>Delete this Application</button>
-        </div>
+        <Menu tabular>
+          <Menu.Item name='Recap' active={activeItem === 'Recap'} onClick={this.handleItemClick} />
+          <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} />
+          <Menu.Item name='Reminder' active={activeItem === 'Reminder'} onClick={this.handleItemClick} />
+          <Menu.Item name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick} />
+        </Menu>
+        {cardContent}
+        <button style={{clear:'both'}} onClick={this.deleteApplication}>Delete this Application</button>
       </Modal.Content>
     </Modal>
     )
