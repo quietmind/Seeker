@@ -49,11 +49,11 @@ class DescriptionCard extends React.Component{
     if (activeItem === 'Recap') {
       cardContent = <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} />;
     } else if (activeItem === 'Notes') {
-      cardContent = <Notes notes={this.props.notes} app={this.props.app} handleClick={this.props.handleClick} />;
+      cardContent = <Notes notes={this.props.notes} app={this.props.app} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Reminder') {
-      cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} handleClick={this.props.handleClick} />;
+      cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Contact') {
-      cardContent = <Contact contact={this.props.contact} app={this.props.app} handleClick={this.props.handleClick} />;
+      cardContent = <Contact contact={this.props.contact} app={this.props.app} getUserData={this.props.getUserData} />;
     }
 
     return (

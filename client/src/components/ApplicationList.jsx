@@ -134,7 +134,7 @@ export default class ApplicationList extends React.Component{
                 coverletter={this.props.files.filter((file) => file.id === app.cover_letter_id)[0]}
 								email={this.props.email}
 								notes={this.props.notes.filter((note) => note.app_id === app.id)}
-								handleClick={this.props.handleClick}
+								getUserData={this.props.getUserData}
 								files={this.props.files}
 							/>
 						))}

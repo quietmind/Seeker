@@ -15,7 +15,7 @@ class Notes extends React.Component {
 
   addNote() {
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.app.user_id})
-    .then(() => this.props.handleClick())
+    .then(() => this.props.getUserData())
     .then(() => this.setState({notesText: ''}))
     .catch((err) => console.error(err))
   }

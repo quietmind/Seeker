@@ -196,7 +196,7 @@ class App extends React.Component {
       email={this.state.userEmail}
       userId={this.state.userId}
       notes={this.state.notes}
-      handleClick={this.getUserData}
+      getUserData={this.getUserData}
     />
   }
 

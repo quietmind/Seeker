@@ -135,7 +135,7 @@ class Reminder extends React.Component {
         reminderId: response.data
       })
       .then((response) => {
-        this.props.handleClick()
+        this.props.getUserData()
       })
       .catch((err) => console.error(err))
     })

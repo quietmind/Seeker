@@ -47,7 +47,7 @@ class Contact extends React.Component {
         contact: response.data
       })
       .then((response) => {
-        this.props.handleClick()
+        this.props.getUserData()
       })
       .catch((err) => console.error(err))
     })
