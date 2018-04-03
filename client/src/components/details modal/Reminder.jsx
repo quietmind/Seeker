@@ -10,7 +10,8 @@ class Reminder extends React.Component {
     super(props)
 
     this.state = {
-      date: moment(), //this.props.reminder ? this.props.reminder.due_date : moment(),
+      saving: false,
+      date: this.props.reminder ? moment(this.props.reminder.due_date) : moment(),
       reminderText: this.props.reminder ? this.props.reminder.text_desc : ''
     }
     this.handleChange = this.handleChange.bind(this);
