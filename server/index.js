@@ -163,7 +163,7 @@ app.post('/people', checkSession, setOAuthCreds, function(req, res) {
         { value: req.body.contactPhone }
       ],
       organizations: [
-        { name: req.body.company, title: req.body.title, department: req.body.department } 
+        { name: req.body.company, title: req.body.title, department: req.body.department }
       ]
     }
   }, (err, response) => {
@@ -306,6 +306,14 @@ app.post('/reminders', checkSession, function(req, res) {
 
 app.get('/notes', checkSession, function(req, res) {
   db.getNotes(req.session.userId, function(err, results) {
+    if (err) console.error(err)
+    res.status(200).send(results)
+  })
+})
+
+app.delete('/notes', checkSession, function(req, res) {
+  console.log(req.body);
+  db.deleteNote(req.body.id, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
   })

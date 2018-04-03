@@ -168,6 +168,7 @@ class DescriptionCard extends React.Component{
       onClose={this.handleClose}
       closeIcon={true}
       size='small'
+      closeOnDimmerClick={false}
       >
       <Header icon='building' content={this.props.app.job_title + " at " + this.props.app.company} />
       <Modal.Content>
@@ -182,7 +183,7 @@ class DescriptionCard extends React.Component{
             as={Link} to='/list/contact' onClick={this.handleItemClick} />
         </Menu>
         {cardContent}
-        <button onClick={this.deleteApplication}>Delete this Application</button>
+        <button style={{clear:'both'}} onClick={this.deleteApplication}>Delete this Application</button>
       </Modal.Content>
     </Modal>
     )
@@ -207,9 +208,11 @@ class Notes extends React.Component {
     super(props)
 
     this.state = {
-        notesText: ''
+        notesText: '',
+        notes: [...props.notes]
     }
     this.addNote = this.addNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   addNote() {
@@ -219,6 +222,11 @@ class Notes extends React.Component {
     .catch((err) => console.error(err))
   }
 
+  deleteNote(noteId) {
+    axios.delete('/notes', {data: {id: noteId}})
+    .then((response) => this.setState({notes: this.state.notes.filter((note)=> note.id !== noteId)}))
+  }
+
   render() {
     return (
       <div>
@@ -226,8 +234,11 @@ class Notes extends React.Component {
         <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e) => this.setState({notesText: e.target.value})}></input>
         <button onClick={this.addNote}>Submit</button>
       <h1>Notes:</h1>
-      {this.props.notes.map((note, i) => (
-        <p key={i}>{note.note_text}</p>
+      {this.state.notes.map((note, i) => (
+        <li>
+          <p key={i} >{note.note_text}</p>
+          <button type="close" onClick={()=>this.deleteNote(note.id)}>X</button>
+        </li>
       ))}
       </div>
     )

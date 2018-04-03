@@ -19,12 +19,12 @@ export default class ApplicationList extends React.Component{
       this.arrangeByCompany = this.arrangeByCompany.bind(this);
       this.arrangeByStatus = this.arrangeByStatus.bind(this);
       this.arrangeByResume = this.arrangeByResume.bind(this);
-	  this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
+	  	this.arrangeByCoverLetter = this.arrangeByCoverLetter.bind(this);
       this.arrangeByDateCreated = this.arrangeByDateCreated.bind(this);
       this.arrangeByLastUpdate = this.arrangeByLastUpdate.bind(this);
-	  this.searchList = this.searchList.bind(this);
+	  	this.searchList = this.searchList.bind(this);
       this.render = this.render.bind(this);
-	  this.viewAll = this.viewAll.bind(this);
+	  	this.viewAll = this.viewAll.bind(this);
       this.keepSwitchOff = this.keepSwitchOff.bind(this);
   }
 
