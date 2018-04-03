@@ -32,7 +32,11 @@ export default class Phase extends Component {
 				  textAlign="right"
 				  onClick={this.clickHandler}/>
 				  <Header.Subheader>
-				  	{this.props.applications.length} Jobs
+				  	{
+				  		this.props.applications.length === 1
+				  		? `1  Job`
+				  		: `${this.props.applications.length} Jobs`
+				  	} 
 				  </Header.Subheader>
 				  </Header>
 			</div>
