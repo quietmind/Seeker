@@ -42,9 +42,10 @@ class Contact extends React.Component {
       department: this.state.department
     })
     .then((response) => {
-      let app = this.props.app
-      app.point_of_contact = response.data
-      axios.post('/details', app)
+      axios.post('/appinfo/contact', {
+        id: this.props.app.id,
+        contact: response.data
+      })
       .then((response) => {
         this.props.handleClick()
       })

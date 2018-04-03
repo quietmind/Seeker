@@ -3,6 +3,8 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+let pubKey = 'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY';
+
 class Reminder extends React.Component {
   constructor(props){
     super(props)
@@ -123,15 +125,15 @@ class Reminder extends React.Component {
       description: this.state.reminderText,
       email: this.props.email,
       company: this.props.app.company,
-      job_title: this.props.app.job_title,
+      jobTitle: this.props.app.job_title,
       userId: this.props.userId,
       appId: this.props.app.id
     })
     .then((response) => {
-      console.log('received response and ran second function')
-      let app = this.props.app
-      app.reminder_id = response.data
-      axios.post('/details', app)
+      axios.post('/appinfo/reminder', {
+        id: this.props.app.id,
+        reminderId: response.data
+      })
       .then((response) => {
         this.props.handleClick()
       })
@@ -150,7 +152,7 @@ class Reminder extends React.Component {
           placeholderText="Choose a date"
           dateFormat="LLL"
         />
-        <input type="text" value={this.state.reminderText} placeholder="Reminder Description" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
+        <input type="text" value={this.state.reminderText} placeholder="Reminder Text" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
         <button onClick={this.sendReminder}>Submit</button>
       </div>
     )

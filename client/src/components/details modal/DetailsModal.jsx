@@ -7,8 +7,6 @@ import Reminder from './Reminder.jsx'
 import Contact from './Contact.jsx'
 import Notes from './Notes.jsx'
 
-let pubKey = 'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY';
-
 class DescriptionCard extends React.Component{
   constructor(props) {
     super(props)

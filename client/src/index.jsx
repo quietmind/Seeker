@@ -247,8 +247,18 @@ class App extends React.Component {
                       <Icon name='book' />
                     My Apps
                   </Menu.Item>
-                  <DocModal toggle={this.toggleMenu} getUserData={this.getUserData} files= {this.state.files}/>
-                  <AppModal toggle={this.toggleMenu} getUserData={this.getUserData} phases={this.state.phases} files={this.state.files}/>
+                  <DocModal 
+                    toggle={this.toggleMenu} 
+                    files= {this.state.files}
+                  />
+                  <AppModal 
+                    userId={this.state.userId}
+                    email={this.state.userEmail}
+                    phases={this.state.phases}
+                    files={this.state.files}
+                    toggle={this.toggleMenu} 
+                    getUserData={this.getUserData}
+                  />
               </Sidebar>
               <Sidebar.Pusher>
                 <Switch>

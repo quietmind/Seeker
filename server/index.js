@@ -118,7 +118,6 @@ app.get('/session', function(req, res) {
 })
 
 app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
-  console.log('request sent to google API', req.body)
   calendar.events.insert({
     auth: oauth2Client,
     calendarId: 'primary',
@@ -171,6 +170,7 @@ app.post('/people', checkSession, setOAuthCreds, function(req, res) {
 })
 
 app.post('/contacts', checkSession, function(req, res) {
+  console.log('server received contact post request', req.body)
   db.addContact(req.session.userId, req.body, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(`${results.insertId}`)
@@ -228,9 +228,10 @@ app.post('/phase', checkSession, function(req, res) {
 })
 
 app.post('/applications', checkSession, function(req, res) {
-  db.createApp(req.session.userId, req.body, function(err) {
+  console.log('server received request', req.body)
+  db.createApp(req.session.userId, req.body, function(err, results) {
     if (err) console.error(err)
-    res.status(201).send()
+    res.status(201).send(`${results.insertId}`)
   })
 })
 
@@ -304,7 +305,7 @@ app.get('/contacts', checkSession, function(req, res) {
 })
 
 app.post('/reminders', checkSession, function(req, res) {
-  console.log('server received request', req.body)
+  console.log('server received reminder post request', req.body)
   db.addReminder(req.body, function(err, results) {
     res.status(200).send(`${results.insertId}`)
   })
@@ -318,7 +319,6 @@ app.get('/notes', checkSession, function(req, res) {
 })
 
 app.delete('/notes', checkSession, function(req, res) {
-  console.log(req.body);
   db.deleteNote(req.body.id, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(results)
@@ -339,8 +339,15 @@ app.post('/order', checkSession, function(req, res) {
   })
 })
 
-app.post('/details', checkSession, function(req, res) {
-  db.updateApp(req.body, function(err) {
+app.post('/appinfo/reminder', checkSession, function(req, res) {
+  db.updateReminder(req.body, function(err) {
+    if (err) console.error(err)
+    res.status(201).send()
+  })
+})
+
+app.post('/appinfo/contact', checkSession, function(req, res) {
+  db.updateContact(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
   })
