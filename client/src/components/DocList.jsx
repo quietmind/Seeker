@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page } from 'react-pdf';
+import { Document, Page } from 'react-pdf/dist/entry.webpack';
 
 class DocList extends React.Component {
   constructor(props){
