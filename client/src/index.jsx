@@ -66,22 +66,28 @@ class App extends React.Component {
 
   signup(userEmail, password) {
     event.preventDefault()
-    axios.post('/users', {userEmail: userEmail, password: password})
-    .then((response) => {
-      this.setState({userId: response.data, userEmail: userEmail})
-      this.getUserData()
-    })
-    .catch((err)=> alert("Invalid email or password"))
+    if(userEmail !== ''  && password !== ''){
+      axios.post('/users', {userEmail: userEmail, password: password})
+      .then((response) => {
+        this.setState({userId: response.data, userEmail: userEmail})
+        this.getUserData()
+      })
+      .catch((err)=> alert("Invalid email or password"))
+      }
   }
 
   login(userEmail, password) {
     event.preventDefault()
+    if(userEmail !== '' && password !== ''){
     axios.get('/users', {params: {userEmail: userEmail, password: password}})
     .then((response) => {
       this.setState({userId: response.data, userEmail: userEmail})
       this.getUserData()
     })
     .catch((err) => alert("Invalid email or password"))
+
+    }
+
   }
 
   logout() {
