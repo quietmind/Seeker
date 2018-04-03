@@ -204,7 +204,6 @@ class AppModal extends React.Component {
                 selected={this.state.date}
                 onChange={this.handleChange}
                 placeholderText="Choose a date"
-                dateFormat="LLL"
               />
               <Form.Input fluid label='Reminder Text' placeholder='Reminder Text' value={this.state.reminderText} onChange={(event) => this.setState({reminderText: event.target.value})}/>
             </Form.Group>

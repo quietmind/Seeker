@@ -157,7 +157,6 @@ class Reminder extends React.Component {
           selected={this.state.date}
           onChange={this.handleChange}
           placeholderText="Choose a date"
-          dateFormat="LLL"
         />
         <input type="text" value={this.state.reminderText} placeholder="Reminder Text" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
         <button onClick={this.sendReminder}>Submit</button>
