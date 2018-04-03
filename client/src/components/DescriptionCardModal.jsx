@@ -174,13 +174,13 @@ class DescriptionCard extends React.Component{
       <Modal.Content>
         <Menu tabular>
           <Menu.Item name='Recap' active={activeItem === 'Recap'}
-            as={Link} to='/list/recap' onClick={this.handleItemClick} />
+            onClick={this.handleItemClick} />
           <Menu.Item name='Notes' active={activeItem === 'Notes'}
-            as={Link} to='/list/notes' onClick={this.handleItemClick} />
+            onClick={this.handleItemClick} />
           <Menu.Item name='Reminder' active={activeItem === 'Reminder'}
-            as={Link} to='/list/reminder' onClick={this.handleItemClick} />
+            onClick={this.handleItemClick} />
           <Menu.Item name='Contact' active={activeItem === 'Contact'}
-            as={Link} to='/list/contact' onClick={this.handleItemClick} />
+            onClick={this.handleItemClick} />
         </Menu>
         {cardContent}
         <button style={{clear:'both'}} onClick={this.deleteApplication}>Delete this Application</button>
