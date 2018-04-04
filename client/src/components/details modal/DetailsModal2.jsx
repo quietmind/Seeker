@@ -63,7 +63,7 @@ class DescriptionCard2 extends React.Component{
     return (
       <Modal
       trigger={
-        <h3 onClick={this.handleOpen}>{this.props.app.company}</h3>
+        <h3 className="card-title" onClick={this.handleOpen}>{this.props.app.company}</h3>
       }
       open={this.state.open}
       onClose={this.handleClose}
