@@ -36,6 +36,17 @@
 .PhaseTitle{
 	padding-bottom:5px;
 }
+
+.card-title{
+  cursor:grab;
+  cursor:-webkit-grab;
+  cursor:-moz-grab;
+  cursor:grab;
+}
+
+.card-title:hover{
+  color: rgb(158, 152, 152);
+}
 .headericon{
 	float:right;
 }
