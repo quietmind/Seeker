@@ -29,7 +29,6 @@ class DocList extends React.Component {
   }
 
   render() {
-    console.log(this.prepareFilesForGrid());
     const { pageNumber, numPages, scale } = this.state;
     if (this.props.fileList.length > 0) {
       return (
@@ -65,10 +64,10 @@ class DocList extends React.Component {
                 return (<Grid.Row key={i}>
                   <Grid.Column>
                     <Segment>
-                      <h2>{duo[0].file_name}</h2>
+                      <h2 style={{display: 'flex', justifyContent: 'center'}}>{duo[0].file_name}</h2>
                         <Document file={duo[0].s3_url}>
                           <a href={duo[0].s3_url}>
-                            <Page pageNumber={pageNumber} scale = {scale} />
+                            <Page style={{display: 'flex', justifyContent: 'center'}} pageNumber={pageNumber} scale = {scale} />
                           </a>
                         </Document>
                     </Segment>
