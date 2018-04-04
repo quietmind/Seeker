@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
+import { Button, Menu, Header, Image, Icon, Modal, Form, Segment } from 'semantic-ui-react';
 import DocList from './DocList.jsx';
 import axios from 'axios';
 
@@ -65,12 +65,18 @@ class DocModal extends React.Component {
       >
         <Header icon='wordpress forms' content='View and Update Your Documents' />
         <Modal.Content >
-          <h1>Add a New Document (please use PDFs)</h1>
-          <Form.Input fluid label="Document Name" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></Form.Input>
-          <Form.Input as={'input'} name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></Form.Input>
-          <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
+          <Segment>
+            <h1>Add a New Document (please use PDFs)</h1>
+            <Form>
+              <Form.Input fluid label="Document Name" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></Form.Input>
+              <Form.Input fluid label="File" as={'input'} name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></Form.Input>
+              <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
+            </Form>
+          </Segment>
+          <Segment>
             {this.state.isHidden && <Warning />}
             <DocList fileList={this.props.files}/>
+          </Segment>
         </Modal.Content>
       </Modal>
     )
