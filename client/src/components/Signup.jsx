@@ -15,26 +15,25 @@ export default class Signup extends React.Component{
 			<div className="signup">
 				<Form>
 					<Form.Field>
-						<Input 
-						  placeholder='Email' 
-						  icon='user' 
-						  iconPosition='left' 
-						  value={this.state.userEmail} 
+						<Input
+						  placeholder='Email'
+						  icon='user'
+						  iconPosition='left'
+						  value={this.state.userEmail}
 						  onChange={(e)=>this.setState({userEmail: e.target.value})}/>
 					</Form.Field>
 					<Form.Field>
-						<Input 
+						<Input
 							icon='lock'
 							type='password'
-							iconPosition='left' 
-						  placeholder='Password' 
-						  value={this.state.password} 
+							iconPosition='left'
+						  placeholder='Password'
+						  value={this.state.password}
 						  onChange={(e)=>this.setState({password: e.target.value})}/>
 					</Form.Field>
 					<Button className="signin-bttn" type="submit" onClick={() => {
 							this.props.handleClick(this.state.userEmail, this.state.password);
 							this.setState({userEmail: '', password: ''})
-
 						}}>Sign Up
 					</Button>
 				</Form>

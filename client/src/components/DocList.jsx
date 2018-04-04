@@ -34,7 +34,7 @@ class DocList extends React.Component {
       return (
         <div className="docDisplay">
           <h1>Your Documents</h1>
-          <Grid columns='equal' divided>
+          <Grid divided='vertically' columns='equal'>
             {this.prepareFilesForGrid().map(function(duo, i) {
               if (duo.length === 2) {
                 return (<Grid.Row>
@@ -60,7 +60,7 @@ class DocList extends React.Component {
                   </Grid.Column>
                 </Grid.Row>)
               }
-              else {
+              else if (duo.length === 1) {
                 return (<Grid.Row>
                   <Grid.Column>
                     <Segment>

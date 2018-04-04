@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import $ from 'jquery'
 import { BrowserRouter as Router, Route, Link, Switch, withRouter } from 'react-router-dom'
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header} from 'semantic-ui-react'
+import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Modal, Loader } from 'semantic-ui-react'
 import ProgressBoard from './components/ProgressBoard.jsx'
 import Metrics from './components/Metrics.jsx'
 import ApplicationList from './components/ApplicationList.jsx'
@@ -24,7 +24,8 @@ class App extends React.Component {
       contacts: [],
       files: [],
       notes: [],
-      userEmail: null
+      userEmail: null,
+      test: false
   	}
 
   	this.toggleMenu = this.toggleMenu.bind(this);
@@ -40,6 +41,7 @@ class App extends React.Component {
     this.deletePhase = this.deletePhase.bind(this);
     this.registerServiceWorker = this.registerServiceWorker.bind(this)
     this.updatePhaseOrder = this.updatePhaseOrder.bind(this)
+    this.modalClose = this.modalClose.bind(this)
   }
 
   registerServiceWorker() {
@@ -206,11 +208,17 @@ class App extends React.Component {
     />
   }
 
+  modalClose() {
+    this.setState({ loading: false })
+  }
+
   render () {
     if (this.state.userId) {
       return(
         <Router history={history}>
+
           <div className="app-container">
+
             <Menu secondary attached="top">
               <Menu.Item onClick={this.toggleMenu}>
               <Icon name="sidebar" /> Seeker
@@ -267,11 +275,23 @@ class App extends React.Component {
                   />
               </Sidebar>
               <Sidebar.Pusher>
+                <Modal
+                  basic
+                  closeOnDimmerClick
+                  open={this.state.loading}
+                  onClose={this.modalClose}
+                  >
+                  <Modal.Content image>
+                    <Modal.Description>
+                      <Loader size='massive'>Loading...</Loader>
+                    </Modal.Description>
+                  </Modal.Content>
+                </Modal>
                 <Switch>
                   <Route  exact path='/' render={this.decorateProgressBoard}/>
                   <Route  path='/metrics' render={this.decorateDataVis}/>
                   <Route  path='/list' render={this.decorateAppList}/>
-                </Switch>
+                 </Switch>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </div>

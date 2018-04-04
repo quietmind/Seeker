@@ -30,7 +30,7 @@ class DescriptionCard extends React.Component{
   handleClose() {
     this.setState({ notesText: '', open: false });
   }
-  
+
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
   }
