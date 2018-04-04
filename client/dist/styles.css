@@ -273,6 +273,12 @@ span.buttonText {
   background-color: rgba(235, 242, 245, 0.41);
 }
 
+.upload-input{
+  padding: 0px !important;
+  padding-bottom: 5px !important;
+  border: none !important;
+}
+
 @keyframes pop{
    0% {
     transform: translateY(0px);
