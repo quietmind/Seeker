@@ -37,7 +37,7 @@ class Notes extends React.Component {
         <h2>Notes:</h2>
         {(() => {
           if (this.state.notes.length > 0) {
-            this.state.notes.map((note, i) => (
+            return this.state.notes.map((note, i) => (
               <li className="note">
                 <p key={i} >{note.note_text}</p>
                 <Button type="close" onClick={()=>this.deleteNote(note.id)}>X</Button>
