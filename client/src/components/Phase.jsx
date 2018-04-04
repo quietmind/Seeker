@@ -53,7 +53,7 @@ export default class Phase extends Component {
 			      	  className="AppItem"
 			      	  header={
 									<DescriptionCard2
-										handleClick={this.props.handleClick}
+										getUserData={this.props.handleClick}
 										key={i}
 										keepSwitch={this.keepSwitchOff}
 										app={app}
