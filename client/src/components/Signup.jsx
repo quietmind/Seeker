@@ -31,7 +31,7 @@ export default class Signup extends React.Component{
 						  value={this.state.password} 
 						  onChange={(e)=>this.setState({password: e.target.value})}/>
 					</Form.Field>
-					<Button type="submit" onClick={() => {
+					<Button className="signin-bttn" type="submit" onClick={() => {
 							this.props.handleClick(this.state.userEmail, this.state.password);
 							this.setState({userEmail: '', password: ''})
 
