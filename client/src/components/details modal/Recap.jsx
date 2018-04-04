@@ -13,7 +13,7 @@ const Recap = (props) => (
         <Grid.Column style={{display: 'flex', justifyContent: 'center'}}>
           <b>Cover Letter Provided:</b>
           <br></br>
-          <a href={props.coverletter ? props.coverletter.s3_url :  null}>{props.coverletter ? props.coverletter.file_name : '(None Provided)'}</a>
+          <a href={props.coverletter ? props.coverletter.s3_url :  null}>{props.coverletter ? props.coverletter.file_name : '(None)'}</a>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
