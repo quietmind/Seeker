@@ -18,12 +18,7 @@ const ProgressView = (props) => (
             } else {
               return (
                 <Grid.Column key={i}>
-<<<<<<< HEAD
                    <Statistic size="small" label="applications tracked" value={props.apps.length}/>
-=======
-                  <Header size="large">{props.apps.length}</Header>
-                  <div className="statshot">applications tracked.</div>
->>>>>>> Style multiple elements
                 </Grid.Column>
               )
             }
