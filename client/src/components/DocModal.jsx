@@ -70,7 +70,7 @@ class DocModal extends React.Component {
             <h1>Add a New Document (please use PDFs)</h1>
             <Form>
               <Form.Input fluid label="Document Name" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></Form.Input>
-              <Form.Input fluid label="File" as={'input'} name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></Form.Input>
+              <Form.Input className="upload-input" fluid label="File" as={'input'} name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></Form.Input>
               <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
             </Form>
           </Segment>
