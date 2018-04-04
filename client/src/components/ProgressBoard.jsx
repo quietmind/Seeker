@@ -67,7 +67,7 @@ export default class ProgressBoard extends React.Component{
          phases={this.props.phases}
          deletePhase={this.props.deletePhase}
          selectedPhase={this.state.selectedPhase}
-         updatePhaseOrder={this.props.updatePhaseOrder}/>
+         updatePhaseOrder={this.props.updatePhaseOrder} />
          {
            this.props.phases.map((phase,i) => {
              return <Phase

@@ -37,7 +37,7 @@ class AppModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ 
+    this.setState({
       jobTitle: '',
       companyName: '',
       phase: '',
