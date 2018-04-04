@@ -24,7 +24,7 @@ class DocList extends React.Component {
       arrayForGrid.push(nestedArr);
       nestedArr = [];
     }})
-
+    if (nestedArr.length===1) arrayForGrid.push(nestedArr);
     return arrayForGrid;
   }
 
@@ -37,7 +37,7 @@ class DocList extends React.Component {
           <Grid divided='vertically' columns='equal'>
             {this.prepareFilesForGrid().map(function(duo, i) {
               if (duo.length === 2) {
-                return (<Grid.Row>
+                return (<Grid.Row key={i}>
                   <Grid.Column>
                     <Segment>
                       <h2>{duo[0].file_name}</h2>
@@ -61,13 +61,13 @@ class DocList extends React.Component {
                 </Grid.Row>)
               }
               else if (duo.length === 1) {
-                return (<Grid.Row>
+                return (<Grid.Row key={i}>
                   <Grid.Column>
                     <Segment>
-                      <h2>{duo[0].file_name}</h2>
+                      <h2 style={{display: 'flex', justifyContent: 'center'}}>{duo[0].file_name}</h2>
                         <Document file={duo[0].s3_url}>
                           <a href={duo[0].s3_url}>
-                            <Page pageNumber={pageNumber} scale = {scale} />
+                            <Page style={{display: 'flex', justifyContent: 'center'}} pageNumber={pageNumber} scale = {scale} />
                           </a>
                         </Document>
                     </Segment>
