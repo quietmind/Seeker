@@ -33,10 +33,10 @@ class Notes extends React.Component {
         <button onClick={this.addNote}>Submit</button>
       <h1>Notes:</h1>
       {this.state.notes.map((note, i) => (
-        <li>
-          <p key={i} >{note.note_text}</p>
-          <button type="close" onClick={()=>this.deleteNote(note.id)}>X</button>
-        </li>
+        <div>
+          <p key={i} style={{float: 'left'}}>{note.note_text}</p>
+          <button type="close" style={{float: 'right'}} onClick={()=>this.deleteNote(note.id)}>X</button>
+        </div>
       ))}
       </div>
     )
