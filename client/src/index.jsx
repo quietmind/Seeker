@@ -135,7 +135,7 @@ class App extends React.Component {
   }
 
   createPhase(){
-    let phaseName = prompt('Enter a phase Name')
+    let phaseName = prompt('Enter a name for your new phase')
     axios.post('/phases',
       {userId: this.state.userId,
        phaseLabel: phaseName,
@@ -160,6 +160,7 @@ class App extends React.Component {
       .then((response) => {
         this.updatePhaseOrder(phases)
       })
+      .catch((err) => console.error(err))
     }
   }
 

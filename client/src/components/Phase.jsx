@@ -13,7 +13,6 @@ export default class Phase extends Component {
 	}
 
 	clickHandler(){
-		// let phasePacket = { phaseId: this.props.phase.id, phaseOrder: this.props.phase.phase_order }
 		this.props.selectPhase(this.props.phase)
 		this.props.toggle()
 	}
@@ -76,19 +75,3 @@ export default class Phase extends Component {
         )
 	}
 }
-
-
-// <DescriptionCard2
-// 	handleClick={this.props.handleClick}
-// 	key={i}
-// 	keepSwitch={this.keepSwitchOff}
-// 	app={app}
-// 	phase={this.props.phase}
-// 	contact={this.props.contacts.filter((contact) => contact.id === app.point_of_contact)[0]}
-// 	reminder={this.props.reminders.filter((reminder) => reminder.id === app.reminder_id)[0]}
-// 	email={this.props.email}
-// 	notes={this.props.notes.filter((note)=> note.app_id === app.id)}
-// 	resume={this.props.files.filter((file)=> file.id === app.resume_id)}
-// 	coverletter={this.props.files.filter((file)=> file.id === app.cover_letter_id)}
-// 	description={app.job_title}
-// />
