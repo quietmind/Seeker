@@ -265,7 +265,12 @@ span.buttonText {
 }
 
 .view-all-btn{
+  margin-left: 0px !important;
   width: 200px !important;
+}
+
+.odd{
+  background-color: rgba(128, 128, 128, 0.15);
 }
 
 @keyframes pop{
