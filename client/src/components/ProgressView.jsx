@@ -12,7 +12,7 @@ const ProgressView = (props) => (
             if (phase.phase_order !== 0) {
               return (
                 <Grid.Column key={i}>
-                  <Statistic size="small" label={` are currently in the ${phase.phase_label} phase`} value={props.getCumulativeQuantities()[i]}/>
+                  <Statistic size="small" label={`have progressed to the ${phase.phase_label} phase`} value={props.getCumulativeQuantities()[i]}/>
                 </Grid.Column>
               )
             } else {

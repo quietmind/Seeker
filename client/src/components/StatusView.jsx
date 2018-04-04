@@ -12,7 +12,7 @@ const StatusView = (props) => (
             if (phase.phase_order !== 0) {
               return (
                 <Grid.Column key={i}>
-                   <Statistic size="small" label={` are currently in the ${phase.phase_label} phase`} value={props.getQuantities()[i]}/>
+                   <Statistic size="small" label={`currently in the ${phase.phase_label} phase`} value={props.getQuantities()[i]}/>
                 </Grid.Column>
               )
             } else {
