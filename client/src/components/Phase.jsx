@@ -42,7 +42,7 @@ export default class Phase extends Component {
 				  		this.props.applications.length === 1
 				  		? `1  Job`
 				  		: `${this.props.applications.length} Jobs`
-				  	} 
+				  	}
 				  </Header.Subheader>
 				  </Header>
 			</div>
