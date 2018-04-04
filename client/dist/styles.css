@@ -260,6 +260,14 @@ span.buttonText {
   left: 25%;
 }
 
+.applist-button{
+  margin: 10px !important;
+}
+
+.view-all-btn{
+  width: 200px !important;
+}
+
 @keyframes pop{
    0% {
     transform: translateY(0px);
