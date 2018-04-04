@@ -59,7 +59,7 @@ class DescriptionCard extends React.Component{
     return (
       <Modal
       trigger={
-        <Table.Row className="appListItem" onClick={this.handleOpen}>
+        <Table.Row className={this.props.index % 2 !== 0 ? 'appListItem odd' : 'appListItem'} onClick={this.handleOpen}>
           <Table.Cell>{this.props.app.job_title}</Table.Cell>
           <Table.Cell>{this.props.app.company}</Table.Cell>
           <Table.Cell>{new Date(this.props.app.date_created).toDateString().substring(4)}</Table.Cell>

@@ -102,8 +102,8 @@ export default class ApplicationList extends React.Component{
 			<div>
 				<Menu secondary attached="top">
 					<Menu.Item className="applist-search" position="center">
-						<Input value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
-						<Form.Select options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
+						<Input placeholder="Search..." value={this.state.searchTerm} onChange={(event) => this.setState({searchTerm: event.target.value})}/>
+						<Form.Select placeholder="Select" options={searchOptions} onChange={(e, { value })=>this.setState({searchField: value})}/>
 						<Button className="applist-button" onClick={this.searchList}>Search</Button>
 						<Button className="applist-button view-all-btn" onClick={this.viewAll}>View All</Button>
 					</Menu.Item>
@@ -125,6 +125,7 @@ export default class ApplicationList extends React.Component{
               <DescriptionCard
 								keepSwitch={this.keepSwitchOff}
                 key={i}
+                index={i}
                 app={app}
 								userId={this.props.userId}
                 phase={this.props.phases.filter((phase) => phase.id === app.phase_id)[0]}
