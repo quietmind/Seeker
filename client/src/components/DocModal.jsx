@@ -10,11 +10,16 @@ class DocModal extends React.Component {
     this.state = {
       fileToSend: '',
       docName: '',
-      modalOpen: false
+      modalOpen: false,
+      isHidden: false
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  toggleHidden() {
+    this.setState({isHidden: true})
   }
 
   handleOpen() {
@@ -22,11 +27,16 @@ class DocModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ fileToSend: '', docName: '', modalOpen: false });
+    this.setState({ fileToSend: '', docName: '', modalOpen: false, isHidden: false });
     this.props.getUserData()
   }
 
   handleSubmit(e) {
+    if (this.state.docName === '') {
+      this.toggleHidden();
+      return;
+    }
+
     e.preventDefault();
     const formData = new FormData();
     formData.append('payload', this.state.fileToSend);
@@ -37,7 +47,7 @@ class DocModal extends React.Component {
     }
 
     axios.post('/files', formData, config)
-    .then(()=>this.handleClose())
+      .then(()=>this.handleClose())
   }
 
   render() {
@@ -59,6 +69,7 @@ class DocModal extends React.Component {
           <input type="text" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></input>
           <input name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></input>
           <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
+            {this.state.isHidden && <Warning />}
             <DocList fileList={this.props.files}/>
         </Modal.Content>
       </Modal>
@@ -67,3 +78,7 @@ class DocModal extends React.Component {
 }
 
 export default DocModal;
+
+const Warning = (props) => (
+  <p>Please Add a Document Name</p>
+)
