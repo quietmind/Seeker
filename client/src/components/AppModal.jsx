@@ -193,8 +193,12 @@ class AppModal extends React.Component {
             <Form.Group widths='equal'>
               <Form.Input fluid label='First Name' placeholder='First Name' value={this.state.firstName} onChange={(event) => this.setState({firstName: event.target.value})}/>
               <Form.Input fluid label='Last Name' placeholder='Last Name' value={this.state.lastName} onChange={(event) => this.setState({lastName: event.target.value})}/>
+            </Form.Group>
+            <Form.Group widths='equal'>
               <Form.Input fluid label='Phone #' placeholder='Phone #' value={this.state.contactPhone} onChange={(event) => this.setState({contactPhone: event.target.value})}/>
               <Form.Input fluid label='Email' placeholder='Email' value={this.state.contactEmail} onChange={(event) => this.setState({contactEmail: event.target.value})}/>
+            </Form.Group>
+            <Form.Group widths='equal'>
               <Form.Input fluid label='Title' placeholder='Title' value={this.state.title} onChange={(event) => this.setState({title: event.target.value})}/>
               <Form.Input fluid label='Department' placeholder='Department' value={this.state.department} onChange={(event) => this.setState({department: event.target.value})}/>
             </Form.Group>
@@ -205,6 +209,8 @@ class AppModal extends React.Component {
                 onChange={this.handleChange}
                 placeholderText="Choose a date"
               />
+            </Form.Group>
+            <Form.Group widths='equal'>
               <Form.Input fluid label='Reminder Text' placeholder='Reminder Text' value={this.state.reminderText} onChange={(event) => this.setState({reminderText: event.target.value})}/>
             </Form.Group>
           <Button onClick={() => {this.handleSubmit()}}>Submit</Button>

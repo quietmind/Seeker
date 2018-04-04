@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header} from 'semantic-ui-react';
+import {Grid, Header, Segment} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
 import ProgressView from './ProgressView.jsx';
 import StatusView from './StatusView.jsx';
@@ -153,15 +153,19 @@ export default class Metrics extends React.Component{
 				}
 				<Grid.Row columns={2}>
 					<Grid.Column>
-						<Header size="huge" textAlign="center">Conclusions</Header>
-						<div className="conclusions">
-							It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.
-							We suggest practicing the skills involved in successfully completing this step in the application process.
-						</div>
+						<Segment>
+							<Header size="huge" textAlign="center">Conclusions</Header>
+							<div className="conclusions">
+								It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.
+								We suggest practicing the skills involved in successfully completing this step in the application process.
+							</div>
+						</Segment>
 					</Grid.Column>
 					<Grid.Column>
-						<Header size="huge" textAlign="center">Activity Over Time</Header>
-						<C3Chart data={this.state.data2} axis={this.state.axis2}/>
+						<Segment>
+							<Header size="huge" textAlign="center">Activity Over Time</Header>
+							<C3Chart data={this.state.data2} axis={this.state.axis2}/>
+						</Segment>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
