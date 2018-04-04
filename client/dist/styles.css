@@ -15,7 +15,7 @@
 	height:90vh;
 	margin:8px;
 	padding: 5px;
-	background-color:rgba(128, 128, 128, 0.15);;
+	background-color:rgba(128, 128, 128, 0.15);
 	border-radius:3px;
 	box-shadow:1px 1px 1px rgba(0,0,0,.2);
 }
@@ -176,15 +176,74 @@ span.buttonText {
 	padding: 20px 0;
 }
 
+.metrics-container{
+  background-color:rgba(128, 128, 128, 0.15);
+  height: 100vh;
+}
+
 .statshot {
 	font-size: 115%;
 	font-weight: bold;
 }
 
+.activity-graph-container{
+  margin: 10px !important;
+  margin-top: 5px !important;
+  margin-right: 5px !important;
+  background-color: #f9feff !important;
+  box-shadow: 1px 1px 1px grey !important;
+}
+
+.conclusion-container{
+  margin-top: 5px !important;
+  margin-left: 5px !important;
+  margin-right: 20px !important;
+  margin-bottom: 10px !important;
+  height: 95%;
+  background-color: #f9feff !important;
+  box-shadow: 1px 1px 1px grey !important;
+}
+
+.statshot-container{
+  margin: 10px !important;
+  margin-bottom: 5px !important;
+  margin-right: 5px !important;
+  background-color: #f9feff !important;
+  box-shadow: 1px 1px 1px grey !important;
+}
+
+.bar-graph-container{
+  margin: 10px !important;
+  margin-right: 25px !important;
+  margin-bottom: 5px !important;
+  margin-left: 5px !important;
+  background-color: #f9feff !important;
+  box-shadow: 1px 1px 1px grey !important;
+}
+
+.progress-statshot-container{
+  margin: 10px !important;
+  margin-bottom: 5px !important;
+  margin-right: 5px !important;
+  background-color: #f9feff !important;
+  box-shadow: 1px 1px 1px grey !important;
+}
+
+.pie-graph-container{
+  margin: 10px !important;
+  margin-right: 25px !important;
+  margin-bottom: 5px !important;
+  margin-left: 5px !important;
+  background-color: #f9feff !important;
+  box-shadow: 1px 1px 1px grey !important;
+}
+
 .conclusions {
+  position: relative;
 	font-size: 115%;
 	font-weight: bold;
 	text-align: center;
+  top: 25%; 
 }
 
 .appListItem {

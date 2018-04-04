@@ -128,6 +128,7 @@ export default class Metrics extends React.Component{
 	render(){
 		const defaultView = this.state.defaultView;
 		return(
+		<div className="metrics-container">
 			<Grid>
 				{this.state.defaultView ? 
 					<ProgressView
@@ -153,13 +154,13 @@ export default class Metrics extends React.Component{
 				}
 				<Grid.Row columns={2}>
 					<Grid.Column>
-						<Segment>
+						<Segment className="activity-graph-container">
 							<Header size="huge" textAlign="center">Activity Over Time</Header>
 							<C3Chart data={this.state.data2} axis={this.state.axis2}/>
 						</Segment>
 					</Grid.Column>
 					<Grid.Column>
-						<Segment>
+						<Segment className="conclusion-container">
 							<Header size="huge" textAlign="center">Conclusions</Header>
 							<div className="conclusions">
 								It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.
@@ -169,6 +170,7 @@ export default class Metrics extends React.Component{
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
+    </div>
 		)
 	}
 }

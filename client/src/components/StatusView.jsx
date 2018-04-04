@@ -5,7 +5,7 @@ import C3Chart from 'react-c3js'
 const StatusView = (props) => (
   <Grid.Row columns={2}>
     <Grid.Column textAlign="center">
-      <Segment>
+      <Segment className="progress-statshot-container">
         <Header size="huge">Stats at a Glance</Header>
         <Grid columns={2}>
           {props.sortPhases().map((phase, i) => {
@@ -40,7 +40,7 @@ const StatusView = (props) => (
       </Segment>
     </Grid.Column>
     <Grid.Column>
-      <Segment>
+      <Segment className="pie-graph-container">
         <Header size="huge" textAlign="center">Application Status</Header>
         <C3Chart data={props.data} />
       </Segment>
