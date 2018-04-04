@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header, Button, Segment} from 'semantic-ui-react';
+import {Grid, Header, Button, Segment, Statistic} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
 
 const ProgressView = (props) => (
@@ -12,26 +12,22 @@ const ProgressView = (props) => (
             if (phase.phase_order !== 0) {
               return (
                 <Grid.Column key={i}>
-                  <Header size="large">{props.getCumulativeQuantities()[i]}</Header>
-                  <div className="statshot">have reached the {phase.phase_label} phase.</div>
+                  <Statistic size="small" label={` are currently in the ${phase.phase_label} phase`} value={props.getCumulativeQuantities()[i]}/>
                 </Grid.Column>
               )
             } else {
               return (
                 <Grid.Column key={i}>
-                  <Header size="large">{props.apps.length}</Header>
-                  <div className="statshot">applications created.</div>
+                   <Statistic size="small" label="applications" value={props.apps.length}/>
                 </Grid.Column>
               )
             }
           })}
           <Grid.Column>
-            <Header size="large">{props.files.length}</Header>
-            <div className="statshot">documents uploaded.</div>
+            <Statistic size="small" label="documents uploaded" value={props.files.length}/>
           </Grid.Column>
           <Grid.Column>
-            <Header size="large">{props.reminders.length}</Header>
-            <div className="statshot">reminders pending.</div>
+            <Statistic size="small" label="reminders pending" value={props.reminders.length}/>
           </Grid.Column>
           <Grid.Column>
             <Button onClick={props.toggleView}>Toggle View</Button>
