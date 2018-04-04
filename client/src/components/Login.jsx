@@ -15,20 +15,20 @@ export default class Login extends React.Component{
 			<div className="login">
 				<Form>
 					<Form.Field>
-						<Input 
+						<Input
 						  placeholder='Email'
-						  icon='user' 
-						  iconPosition='left' 
-						  value={this.state.userEmail} 
+						  icon='user'
+						  iconPosition='left'
+						  value={this.state.userEmail}
 						  onChange={(e)=>this.setState({userEmail: e.target.value})}/>
 					</Form.Field>
 					<Form.Field>
-						<Input 
-							icon='lock' 
+						<Input
+							icon='lock'
 							type='password'
-						  iconPosition='left' 
-						  placeholder='Password' 
-						  value={this.state.password} 
+						  iconPosition='left'
+						  placeholder='Password'
+						  value={this.state.password}
 						  onChange={(e)=>this.setState({password: e.target.value})}/>
 					</Form.Field>
 					<Button className="login-bttn" type="submit" onClick={() => {
