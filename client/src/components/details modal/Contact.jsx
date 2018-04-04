@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Button, Form } from 'semantic-ui-react';
 
 class Contact extends React.Component {
   constructor(props){
@@ -63,17 +64,17 @@ class Contact extends React.Component {
 
   render() {
     return (
-      <div className="contact">
-        <p>Add a Point of Contact</p>
-        <input type="text" value={this.state.firstName} placeholder="First Name" onChange={(event) => this.setState({firstName: event.target.value})}></input>
-        <input type="text" value={this.state.lastName} placeholder="Last Name" onChange={(event) => this.setState({lastName: event.target.value})}></input>
-        <input type="text" value={this.state.contactPhone} placeholder="Phone #" onChange={(event) => this.setState({contactPhone: event.target.value})}></input>
-        <input type="text" value={this.state.contactEmail} placeholder="Email" onChange={(event) => this.setState({contactEmail: event.target.value})}></input>
-        <input type="text" value={this.state.title} placeholder="Title" onChange={(event) => this.setState({title: event.target.value})}></input>
-        <input type="text" value={this.state.department} placeholder="Department" onChange={(event) => this.setState({department: event.target.value})}></input>
-        <button onClick={this.addContact}>Submit</button>
+      <Form>
+        <h2>Add a Point of Contact</h2>
+        <Form.Input fluid label="First Name" placeholder="First Name" value={this.state.firstName} onChange={(event) => this.setState({firstName: event.target.value})}></Form.Input>
+        <Form.Input fluid label="Last Name" placeholder="Last Name" value={this.state.lastName} onChange={(event) => this.setState({lastName: event.target.value})}></Form.Input>
+        <Form.Input fluid label="Phone #" placeholder="Phone #" value={this.state.contactPhone} onChange={(event) => this.setState({contactPhone: event.target.value})}></Form.Input>
+        <Form.Input fluid label="Email" placeholder="Email" value={this.state.contactEmail} onChange={(event) => this.setState({contactEmail: event.target.value})}></Form.Input>
+        <Form.Input fluid label="Title" placeholder="Title" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})}></Form.Input>
+        <Form.Input fluid label="Department" placeholder="Department" value={this.state.department} onChange={(event) => this.setState({department: event.target.value})}></Form.Input>
+        <Button onClick={this.addContact}>Submit</Button>
         {this.state.saving ? <div>Saving...</div> : <div></div>}
-      </div>
+      </Form>
     )
   }
 }

@@ -15,6 +15,7 @@ class App extends React.Component {
   constructor(props) {
   	super(props)
   	this.state = {
+      loading: false,
   		menuVisible: false,
       userId: null,
       phases: [],
@@ -98,28 +99,29 @@ class App extends React.Component {
   }
 
   getUserData() {
-    console.log('fetched user data')
-    Promise.all([
-      axios.get('/phases'),
-      axios.get('/applications'),
-      axios.get('/reminders'),
-      axios.get('/contacts'),
-      axios.get('/files'),
-      axios.get('/notes')
-    ])
-    .then((response) => {
-    console.log('HELLO');
-      console.log(response);
-      this.setState({
-        phases: response[0].data,
-        applications: response[1].data,
-        reminders: response[2].data,
-        contacts: response[3].data,
-        files: response[4].data,
-        notes: response[5].data
+    this.setState({loading: true}, () => {
+      Promise.all([
+        axios.get('/phases'),
+        axios.get('/applications'),
+        axios.get('/reminders'),
+        axios.get('/contacts'),
+        axios.get('/files'),
+        axios.get('/notes')
+      ])
+      .then((response) => {
+        console.log('fetched user data')
+        this.setState({
+          phases: response[0].data,
+          applications: response[1].data,
+          reminders: response[2].data,
+          contacts: response[3].data,
+          files: response[4].data,
+          notes: response[5].data,
+          loading: false
+        })
       })
+      .catch((err) => console.error(err))
     })
-    .catch((err) => console.error(err))
   }
 
   updateStatus(status) {
@@ -166,7 +168,6 @@ class App extends React.Component {
 
   decorateProgressBoard() {
     return <ProgressBoard
-      handleClick={this.getUserData}
       email={this.state.userEmail}
       notes={this.state.notes}
       phases={this.state.phases}
@@ -174,10 +175,12 @@ class App extends React.Component {
       reminders={this.state.reminders}
       contacts={this.state.contacts}
       files={this.state.files}
+      getUserData={this.getUserData}
       updateStatus={this.updateStatus}
       createPhase={this.createPhase}
       deletePhase={this.deletePhase}
-      updatePhaseOrder={this.updatePhaseOrder}/>
+      updatePhaseOrder={this.updatePhaseOrder}
+    />
   }
 
   decorateDataVis() {
@@ -204,7 +207,6 @@ class App extends React.Component {
   }
 
   render () {
-    console.log(this.state.notes)
     if (this.state.userId) {
       return(
         <Router history={history}>

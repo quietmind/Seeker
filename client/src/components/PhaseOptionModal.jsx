@@ -6,10 +6,9 @@ export default class PhaseSettingsModal extends Component {
   constructor(props){
     super(props)
     this.state = { reorderview : false }
-    this.handleView          = this.handleView.bind(this)
-    this.handleClose         = this.handleClose.bind(this)
-    this.handleCloseOnDimmer = this.handleCloseOnDimmer.bind(this)
-    this.reorder             = this.reorder.bind(this)
+    this.handleView = this.handleView.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.reorder = this.reorder.bind(this)
 }
 
   handleClick(){
@@ -24,11 +23,6 @@ export default class PhaseSettingsModal extends Component {
   handleClose(){
     this.props.toggle()
     this.handleView()
-  }
-
-  handleCloseOnDimmer(){
-    this.handleView()
-    return true
   }
 
   reorder(e, { name, value } ) {
@@ -49,7 +43,7 @@ export default class PhaseSettingsModal extends Component {
           open={this.props.show}
           closeIcon={true}
           onClose={this.handleClose}
-          closeOnDimmerClick={this.handleCloseOnDimmer}>
+          closeOnDimmerClick={false}>
             <Modal.Header>
               <Icon textAlign="center" name="settings"/>
             </Modal.Header>

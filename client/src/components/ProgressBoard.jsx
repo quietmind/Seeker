@@ -11,7 +11,7 @@ export default class ProgressBoard extends React.Component{
 		super(props)
     this.state = { show: false, selectedPhase: null }
 
-    this.toggle        = this.toggle.bind(this)
+    this.toggle = this.toggle.bind(this)
     this.selectedPhase = this.selectedPhase.bind(this)
 	}
 
@@ -71,7 +71,7 @@ export default class ProgressBoard extends React.Component{
          {
            this.props.phases.map((phase,i) => {
              return <Phase
-										handleClick={this.props.handleClick}
+										getUserData={this.props.getUserData}
                     key={i}
                     phase={phase}
                     toggle={this.toggle}

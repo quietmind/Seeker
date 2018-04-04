@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import { Button, Form } from 'semantic-ui-react';
 
 let pubKey = 'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY';
 
@@ -151,17 +152,17 @@ class Reminder extends React.Component {
 
   render() {
     return (
-      <div className="reminder">
-        <p>Add a Reminder</p>
+      <Form>
+        <h2>Add a Reminder</h2>
         <DatePicker
           selected={this.state.date}
           onChange={this.handleChange}
           placeholderText="Choose a date"
         />
-        <input type="text" value={this.state.reminderText} placeholder="Reminder Text" onChange={(event) => this.setState({reminderText: event.target.value})}></input>
-        <button onClick={this.sendReminder}>Submit</button>
+        <Form.Input fluid label="Reminder Text" placeholder="Reminder Text" value={this.state.reminderText} onChange={(event) => this.setState({reminderText: event.target.value})}></Form.Input>
+        <Button onClick={this.sendReminder}>Submit</Button>
         {this.state.saving ? <div>Saving...</div> : <div></div>}
-      </div>
+      </Form>
     )
   }
 }

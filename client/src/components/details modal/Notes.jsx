@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Button, Form } from 'semantic-ui-react';
 
 class Notes extends React.Component {
   constructor(props) {
@@ -28,16 +29,24 @@ class Notes extends React.Component {
   render() {
     return (
       <div>
-        <p>Add a note to this entry</p>
-        <input type="text" value={this.state.notesText} placeholder="Notes Description" onChange={(e) => this.setState({notesText: e.target.value})}></input>
-        <button onClick={this.addNote}>Submit</button>
-      <h1>Notes:</h1>
-      {this.state.notes.map((note, i) => (
-        <div>
-          <p key={i} style={{float: 'left'}}>{note.note_text}</p>
-          <button type="close" style={{float: 'right'}} onClick={()=>this.deleteNote(note.id)}>X</button>
-        </div>
-      ))}
+        <h2>Add a note to this entry</h2>
+        <Form>
+          <Form.Input fluid label="Notes Description" placeholder="Notes Description" value={this.state.notesText} onChange={(e) => this.setState({notesText: e.target.value})}></Form.Input>
+          <Button onClick={this.addNote}>Submit</Button>
+        </Form>
+        <h2>Notes:</h2>
+        {(() => {
+          if (this.state.notes.length > 0) {
+            this.state.notes.map((note, i) => (
+              <li className="note">
+                <p key={i} >{note.note_text}</p>
+                <Button type="close" onClick={()=>this.deleteNote(note.id)}>X</Button>
+              </li>
+            ))
+          } else {
+            return <div>You have not added any notes to this job application yet.</div>
+          }
+        })()}
       </div>
     )
   }

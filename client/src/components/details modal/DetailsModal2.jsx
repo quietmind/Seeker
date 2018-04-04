@@ -6,8 +6,12 @@ import Recap from './Recap.jsx'
 import Reminder from './Reminder.jsx'
 import Contact from './Contact.jsx'
 import Notes from './Notes.jsx'
+import { Card } from 'semantic-ui-react'
+import moment from 'moment'
 
-class DescriptionCard extends React.Component{
+let pubKey = 'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY';
+
+class DescriptionCard2 extends React.Component{
   constructor(props) {
     super(props)
 
@@ -30,14 +34,14 @@ class DescriptionCard extends React.Component{
   handleClose() {
     this.setState({ notesText: '', open: false });
   }
-  
+
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
   }
 
   deleteApplication() {
     axios.delete('/applications', {data: {appId: this.props.app.id}})
-    .then((response) => this.props.handleClick())
+    .then((response) => this.props.getUserData())
     .then((response) => this.handleClose())
     .catch((err) => console.error(err))
   }
@@ -48,10 +52,10 @@ class DescriptionCard extends React.Component{
 
     if (activeItem === 'Recap') {
       cardContent = <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} />;
-    } else if (activeItem === 'Notes') {
+     } else if (activeItem === 'Notes') {
       cardContent = <Notes notes={this.props.notes} app={this.props.app} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Reminder') {
-      cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} getUserData={this.props.getUserData} />;
+      cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.app.user_id} reminder={this.props.reminder} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Contact') {
       cardContent = <Contact contact={this.props.contact} app={this.props.app} getUserData={this.props.getUserData} />;
     }
@@ -59,15 +63,7 @@ class DescriptionCard extends React.Component{
     return (
       <Modal
       trigger={
-        <Table.Row className="appListItem" onClick={this.handleOpen}>
-          <Table.Cell>{this.props.app.job_title}</Table.Cell>
-          <Table.Cell>{this.props.app.company}</Table.Cell>
-          <Table.Cell>{new Date(this.props.app.date_created).toDateString().substring(4)}</Table.Cell>
-          <Table.Cell>{new Date(this.props.app.last_update).toDateString().substring(4)}</Table.Cell>
-          <Table.Cell>{this.props.phase.phase_label}</Table.Cell>
-          <Table.Cell>{this.props.resume ? this.props.resume.file_name :  ''}</Table.Cell>
-          <Table.Cell>{this.props.coverletter ? this.props.coverletter.file_name : ''}</Table.Cell>
-        </Table.Row>
+        <h3 onClick={this.handleOpen}>{this.props.app.company}</h3>
       }
       open={this.state.open}
       onClose={this.handleClose}
@@ -91,4 +87,4 @@ class DescriptionCard extends React.Component{
   }
 }
 
-export default DescriptionCard;
+export default DescriptionCard2;

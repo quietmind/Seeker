@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Header, Card, Icon} from 'semantic-ui-react'
-import DescriptionCard2 from './details modal/DetailModal2.jsx'
+import DescriptionCard2 from './details modal/DetailsModal2.jsx'
 import moment from 'moment'
 
 
