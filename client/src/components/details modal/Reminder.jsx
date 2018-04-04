@@ -161,7 +161,7 @@ class Reminder extends React.Component {
         />
         <Form.Input fluid label="Reminder Text" placeholder="Reminder Text" value={this.state.reminderText} onChange={(event) => this.setState({reminderText: event.target.value})}></Form.Input>
         <Button onClick={this.sendReminder}>Submit</Button>
-        {this.state.saving ? <div>Saving...</div> : <div></div>}
+        {this.state.saving ? <div style={{display:"inline"}}>Saving...</div> : <div></div>}
       </Form>
     )
   }

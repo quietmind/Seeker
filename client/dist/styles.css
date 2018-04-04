@@ -38,10 +38,9 @@
 }
 
 .card-title{
-  cursor:grab;
-  cursor:-webkit-grab;
-  cursor:-moz-grab;
-  cursor:grab;
+  cursor:help;
+  cursor:-webkit-help;
+  cursor:-moz-help;
 }
 
 .card-title:hover{
@@ -247,7 +246,9 @@ span.buttonText {
 }
 
 .appListItem {
-	cursor: help;
+	cursor:help;
+  cursor:-webkit-help;
+  cursor:-moz-help;
 }
 
 .appListItem:hover {

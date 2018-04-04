@@ -79,7 +79,7 @@ class Contact extends React.Component {
           <Form.Input fluid label="Department" placeholder="Department" value={this.state.department} onChange={(event) => this.setState({department: event.target.value})}></Form.Input>
         </Form.Group>
         <Button onClick={this.addContact}>Submit</Button>
-        {this.state.saving ? <div>Saving...</div> : <div></div>}
+        {this.state.saving ? <div style={{display:"inline"}}>Saving...</div> : <div></div>}
       </Form>
     )
   }

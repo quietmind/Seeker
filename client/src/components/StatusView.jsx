@@ -18,7 +18,7 @@ const StatusView = (props) => (
             } else {
               return (
                 <Grid.Column key={i}>
-                  <Statistic size="small" label="applications" value={props.apps.length}/>
+                  <Statistic size="small" label="applications tracked" value={props.apps.length}/>
                 </Grid.Column>
               )
             }

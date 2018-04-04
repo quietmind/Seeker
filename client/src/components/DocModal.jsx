@@ -61,6 +61,7 @@ class DocModal extends React.Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         closeIcon={true}
+        closeOnDimmerClick={false}
         size='small'
       >
         <Header icon='wordpress forms' content='View and Update Your Documents' />

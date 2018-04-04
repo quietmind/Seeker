@@ -36,7 +36,7 @@ export default class Welcome extends React.Component{
         <a href='oauth'>
           <div id="gSignInWrapper">
             <div id="customBtn" class="customGPlusSignIn">
-              <span className="buttonText">Log in with:</span>
+              <span className="buttonText">Sign in with</span>
               <span className="icon"></span>
             </div>
           </div>

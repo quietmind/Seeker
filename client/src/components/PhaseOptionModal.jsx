@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, Icon, Dropdown } from 'semantic-ui-react'
+import { Button, Modal, Icon, Dropdown, Header } from 'semantic-ui-react'
 
 
 export default class PhaseSettingsModal extends Component {
@@ -44,36 +44,37 @@ export default class PhaseSettingsModal extends Component {
           closeIcon={true}
           onClose={this.handleClose}
           closeOnDimmerClick={false}>
-            <Modal.Header>
-              <Icon textAlign="center" name="settings"/>
-            </Modal.Header>
-            {
-            this.state.reorderview
-            ?
-              <Modal.Content textAlign="center">
-                <Dropdown
-                  fluid
-                  selection
-                  placeholder='Rerrange Phases'
-                  onChange={this.reorder}
-                  options={this.props.phases.map(phase => ({ text: `${phase.phase_label}`,  value: phase.phase_order }))} />
-              </Modal.Content>
-            :
-              <Modal.Content textAlign="center">
-                  <Button.Group fluid size='large'>
-                      <Button
-                        negative
-                        onClick={() => this.handleClick()}>
-                          <Icon name="trash"/>
-                      </Button>
-                      <Button.Or />
-                      <Button
-                      positive
-                      onClick={this.handleView}>
-                        <Icon name="ordered list"/>
-                      </Button>
-                  </Button.Group>
-              </Modal.Content>
+          <Modal.Header>
+            <Icon textAlign="center" name="settings"/>
+            <h3 style={{display:"inline"}}>Options</h3>
+          </Modal.Header>
+          {this.state.reorderview ?
+            <Modal.Content textAlign="center">
+              <Dropdown
+                fluid
+                selection
+                placeholder='Reorder Phase'
+                onChange={this.reorder}
+                options={this.props.phases.map(phase => ({ text: `${phase.phase_label}`,  value: phase.phase_order }))} />
+            </Modal.Content>
+          :
+            <Modal.Content textAlign="center">
+              <Header size="small" floated="left">Delete</Header>
+              <Header size="small" floated="right">Reorder</Header>
+              <Button.Group fluid size='large'>
+                <Button
+                  negative
+                  onClick={() => this.handleClick()}>
+                  <Icon name="trash"/>
+                </Button>
+                <Button.Or />
+                <Button
+                  positive
+                  onClick={this.handleView}>
+                  <Icon name="ordered list"/>
+                </Button>
+              </Button.Group>
+            </Modal.Content>
           }
         </Modal>
       </div>
