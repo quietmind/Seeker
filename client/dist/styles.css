@@ -149,6 +149,28 @@ span.buttonText {
 	padding: 20px 0;
 }
 
+.login-bttn{
+  display: inline-block;
+  width:175px;
+  background: white !important;
+  color: #444 !important;
+  border-radius: 5px !important;
+  border: thin solid #888 !important;
+  box-shadow: 1px 1px 1px grey !important;
+  white-space: nowrap;
+}
+
+.signin-bttn{
+  display: inline-block;
+  width:175px;
+  background: white !important;
+  color: #444 !important;
+  border-radius: 5px !important;
+  border: thin solid #888 !important;
+  box-shadow: 1px 1px 1px grey !important;
+  white-space: nowrap;
+}
+
 .signup {
 	margin:auto;
 	padding: 20px 0;
