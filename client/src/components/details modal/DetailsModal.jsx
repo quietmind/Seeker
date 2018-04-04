@@ -47,7 +47,7 @@ class DescriptionCard extends React.Component{
     var cardContent;
 
     if (activeItem === 'Recap') {
-      cardContent = <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} />;
+      cardContent = <Recap resume={this.props.resume} coverLetter={this.props.coverletter} app={this.props.app} phase={this.props.phase} />;
     } else if (activeItem === 'Notes') {
       cardContent = <Notes notes={this.props.notes} app={this.props.app} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Reminder') {
