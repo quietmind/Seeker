@@ -66,7 +66,7 @@ class DocModal extends React.Component {
         <Header icon='wordpress forms' content='View and Update Your Documents' />
         <Modal.Content >
           <h1>Add a New Document (please use PDFs)</h1>
-          <input type="text" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></input>
+          <Form.Input fluid label="Document Name" placeholder="Document Name" value={this.state.docName} onChange={(event) => this.setState({docName: event.target.value})}></Form.Input>
           <input name="myFile" type="file" accept="application/pdf" onChange="handleFiles(this.myFile)" onChange={(e)=>this.setState({fileToSend: e.target.files[0]})}></input>
           <Button onClick={(e)=>this.handleSubmit(e)}>Submit</Button>
             {this.state.isHidden && <Warning />}
