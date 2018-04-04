@@ -12,21 +12,21 @@ export default class ProgressBoard extends React.Component{
     this.state = { show: false, selectedPhase: null }
 
     this.toggle = this.toggle.bind(this)
-    this.selectedPhase = this.selectedPhase.bind(this)
+    this.selectPhase = this.selectPhase.bind(this)
 	}
 
   toggle(e){
     this.setState( { show: !this.state.show } )
   }
 
-  selectedPhase(phasepacket){
-    this.setState( { selectedPhase: phasepacket } )
+  selectPhase(phase){
+    this.setState( { selectedPhase: phase } )
   }
 
   componentDidMount(){
     drgl(Array.from(document.getElementsByClassName('phase')),{
       moves: (el, target, source, sibling) => {
-        return el.id === 'title'? false : true
+        return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
       let updateStatus = {appId: el.id, newStatusId: target.id}
@@ -62,29 +62,27 @@ export default class ProgressBoard extends React.Component{
 		return(
 			<div className="progressboard-container">
       <PhaseOptionModal
-         toggle={this.toggle}
-         show={this.state.show}
-         phases={this.props.phases}
-         deletePhase={this.props.deletePhase}
-         selectedPhase={this.state.selectedPhase}
-         updatePhaseOrder={this.props.updatePhaseOrder} />
-         {
-           this.props.phases.map((phase,i) => {
-             return <Phase
-										getUserData={this.props.getUserData}
-                    key={i}
-                    phase={phase}
-                    toggle={this.toggle}
-                    selectedPhase={this.selectedPhase}
-										files={this.props.files}
-										notes={this.props.notes}
-                    applications={this.props.apps.filter(app => app.phase_id === phase.id)}
-										email={this.props.email}
-										contacts={this.props.contacts}
-										reminders={this.props.reminders}
-									/>
-            })
-        }
+        toggle={this.toggle}
+        show={this.state.show}
+        phases={this.props.phases}
+        deletePhase={this.props.deletePhase}
+        selectedPhase={this.state.selectedPhase}
+        updatePhaseOrder={this.props.updatePhaseOrder} />
+        {this.props.phases.map((phase,i) => {
+          return <Phase
+            getUserData={this.props.getUserData}
+            key={i}
+            phase={phase}
+            toggle={this.toggle}
+            selectPhase={this.selectPhase}
+            files={this.props.files}
+            notes={this.props.notes}
+            applications={this.props.apps.filter(app => app.phase_id === phase.id)}
+            email={this.props.email}
+            contacts={this.props.contacts}
+            reminders={this.props.reminders}
+          />
+        })}
       <NewPhase createPhase={this.props.createPhase}/>
       </div>
 

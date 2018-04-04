@@ -12,7 +12,7 @@ export default class PhaseSettingsModal extends Component {
 }
 
   handleClick(){
-    this.props.deletePhase(this.props.selectedPhase.phaseId)
+    this.props.deletePhase(this.props.selectedPhase.id, this.props.phases.indexOf(this.props.selectedPhase))
     this.props.toggle()
   }
 
@@ -26,13 +26,11 @@ export default class PhaseSettingsModal extends Component {
   }
 
   reorder(e, { name, value } ) {
-    let phases = this.props.phases //all phases
-    let phaseToMoveIndex = this.props.selectedPhase.phaseOrder -1  // index of phase we are acting on
-    let selectPhase = phases[phaseToMoveIndex] // set phase to be reordered
-    phases.splice(value, 0, selectPhase)
-    phases.splice(phaseToMoveIndex + 1, 1)
+    let phases = this.props.phases
+    phases.splice(this.props.phases.indexOf(this.props.selectedPhase), 1)
+    phases.splice(value, 0, this.props.selectedPhase)
     this.props.updatePhaseOrder(phases)
-    this.handleClose() // close the modal
+    this.handleClose()
   }
 
   render() {
@@ -53,9 +51,9 @@ export default class PhaseSettingsModal extends Component {
               <Dropdown
                 fluid
                 selection
-                placeholder='Reorder Phase'
+                placeholder='Select a place in the order'
                 onChange={this.reorder}
-                options={this.props.phases.map(phase => ({ text: `${phase.phase_label}`,  value: phase.phase_order }))} />
+                options={this.props.phases.map((phase, i) => ({ text: `${i + 1}`,  value: i }))} />
             </Modal.Content>
           :
             <Modal.Content textAlign="center">

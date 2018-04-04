@@ -136,7 +136,7 @@ class App extends React.Component {
 
   createPhase(){
     let phaseName = prompt('Enter a phase Name')
-    axios.post('/phase',
+    axios.post('/phases',
       {userId: this.state.userId,
        phaseLabel: phaseName,
        phaseOrder: this.state.phases.length + 1
@@ -146,26 +146,27 @@ class App extends React.Component {
       })
   }
 
-  deletePhase(phaseId){
-    if(confirm('Are you sure you want to delete this Phase ?')){
-      var firstPhaseId = this.state.phases[0].id
-      axios.post('/phases', {phaseId: phaseId, firstPhase: firstPhaseId})
-           .then((done) => {
-            axios.get('/phases')
-                 .then((phases) => {
-                  console.log(phases)
-                  this.updatePhaseOrder(phases.data)
-               })
-                 .catch((err) => console.error(err))
-           })
-           .catch((err) => console.error(err))
+  deletePhase(phaseId, phaseIndex) {
+    if (this.state.applications.filter((app) => app.phase_id === phaseId).length > 0) {
+      alert('You must move all applications out of this phase before deleting it.')
+    } else if (confirm('Are you sure you want to delete this phase?')) {
+      let phases = this.state.phases
+      phases.splice(phaseIndex, 1)
+      axios.delete('/phases', {
+        params: {
+          phaseId: phaseId
+        }
+      })
+      .then((response) => {
+        this.updatePhaseOrder(phases)
+      })
     }
   }
 
   updatePhaseOrder(newPhaseOrder){
     axios.post('/order', { phases: newPhaseOrder })
-         .then((done) => this.getUserData())
-         .catch((err) => console.error(err))
+    .then((done) => this.getUserData())
+    .catch((err) => console.error(err))
   }
 
   decorateProgressBoard() {

@@ -13,8 +13,8 @@ export default class Phase extends Component {
 	}
 
 	clickHandler(){
-		let phasePacket = { phaseId: this.props.phase.id, phaseOrder: this.props.phase.phase_order }
-		this.props.selectedPhase(phasePacket)
+		// let phasePacket = { phaseId: this.props.phase.id, phaseOrder: this.props.phase.phase_order }
+		this.props.selectPhase(this.props.phase)
 		this.props.toggle()
 	}
 

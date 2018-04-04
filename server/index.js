@@ -220,7 +220,7 @@ app.get('/users', function(req, res) {
   })
 })
 
-app.post('/phase', checkSession, function(req, res) {
+app.post('/phases', checkSession, function(req, res) {
   db.createPhase(req.body, function(err) {
     if (err) console.error(err)
     res.status(201).send()
@@ -360,8 +360,8 @@ app.post('/updateStatus', checkSession, function(req, res){
   })
 })
 
-app.post('/phases', checkSession, function(req, res) {
-  db.deletePhase(req.body, function(err) {
+app.delete('/phases', checkSession, function(req, res) {
+  db.deletePhase(req.query.phaseId, function(err) {
     if (err) console.error(err)
     res.status(202).send()
   })
