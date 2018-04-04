@@ -29,6 +29,7 @@ class DocList extends React.Component {
   }
 
   render() {
+    console.log(this.prepareFilesForGrid());
     const { pageNumber, numPages, scale } = this.state;
     if (this.props.fileList.length > 0) {
       return (
