@@ -14,6 +14,10 @@ class Notes extends React.Component {
     this.deleteNote = this.deleteNote.bind(this);
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({notes: newProps.notes})
+  }
+
   addNote() {
     axios.post('/notes', {appId: this.props.app.id, text: this.state.notesText, userId: this.props.app.user_id})
     .then(() => this.props.getUserData())
@@ -23,10 +27,12 @@ class Notes extends React.Component {
 
   deleteNote(noteId) {
     axios.delete('/note', {params: {id: noteId}})
-    .then((response) => this.setState({notes: this.state.notes.filter((note)=> note.id !== noteId)}))
+    .then(() => this.props.getUserData())
   }
 
   render() {
+    console.log("THE NOTE PROPS: ", this.props.notes);
+    console.log("THE NOTE STATE: " , this.state.notes);
     return (
       <div>
         <h2>Add a note to this entry</h2>
