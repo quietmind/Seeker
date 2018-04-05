@@ -56,7 +56,6 @@ export default class ProgressBoard extends React.Component{
   }
 
 
-
 	render(){
 
 		return(
@@ -85,7 +84,6 @@ export default class ProgressBoard extends React.Component{
         })}
       <NewPhase createPhase={this.props.createPhase}/>
       </div>
-
 		)
 	}
 }
