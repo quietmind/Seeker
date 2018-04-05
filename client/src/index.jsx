@@ -98,6 +98,7 @@ class App extends React.Component {
     .then(() => {
     this.setState({userId: null})
     })
+    .catch((err) => console.error(err))
   }
 
   getUserData() {
@@ -111,7 +112,6 @@ class App extends React.Component {
         axios.get('/notes')
       ])
       .then((response) => {
-        console.log('fetched user data')
         this.setState({
           phases: response[0].data,
           applications: response[1].data,
@@ -223,7 +223,7 @@ class App extends React.Component {
               <Menu.Item onClick={this.toggleMenu}>
               <Icon name="sidebar" /> Seeker
               </Menu.Item>
-              <Menu.Item position="right" onClick={this.logout}>
+              <Menu.Item as={Link} to={'/'} position="right" onClick={this.logout}>
               Log Out
               </Menu.Item>
             </Menu>

@@ -157,7 +157,7 @@ export default class Metrics extends React.Component{
 					<Grid.Column>
 						<Segment className="activity-graph-container">
 							<Header size="huge" textAlign="center">Activity Over Time</Header>
-							<C3Chart data={this.state.data2} load={{duration:5000}} axis={this.state.axis2}/>
+							<C3Chart data={this.state.data2} axis={this.state.axis2}/>
 						</Segment>
 					</Grid.Column>
 					<Grid.Column>

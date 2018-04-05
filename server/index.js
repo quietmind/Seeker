@@ -404,9 +404,9 @@ app.delete('/reminders', checkSession, function(req, res) {
   })
 })
 
-app.post('/logout', function(req,res) {
+app.post('/logout', function(req, res) {
   req.session.destroy()
-  res.status(200).redirect('/')
+  res.status(200).send()
 })
 
 app.post('/notes', checkSession, function(req, res) {
