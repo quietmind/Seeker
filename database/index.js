@@ -1,10 +1,11 @@
 const mysql = require('mysql')
+const config  = require('../configurations.js')
 
 const connection = mysql.createConnection({
-  host: process.env.DB_URL || 'seeker.c7l7qn51j1yo.us-east-2.rds.amazonaws.com',
-  user: 'HouseLannister',
-  password: 'hearmeroar',
-  database: 'seeker'
+  host: config.databse.host,
+  user: config.databse.user,
+  password: config.databse.password,
+  database: config.databse.database
 })
 
 connection.connect((err) => {
