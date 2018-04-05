@@ -65,7 +65,7 @@ module.exports.addDefaultPhases = function(userId, callback) {
 module.exports.addFile = function(userId, s3url, filename, callback) {
   connection.query(
     `INSERT INTO files (id, user_id, s3_url, file_name)
-    VALUES (null, ${userId}, '${s3url}', '${filename}')`,
+    VALUES (null, ${userId}, '${s3url}', "${filename}")`,
     function(err) {
       callback(err)
     }
