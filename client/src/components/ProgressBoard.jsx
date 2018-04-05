@@ -29,7 +29,6 @@ export default class ProgressBoard extends React.Component{
         return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
-      console.log(el)
       drgl().cancel(true)
       let updateStatus = {appId: el.id, newStatusId: target.id}
       if(target.id !== source.id) this.props.updateStatus(updateStatus)
@@ -41,7 +40,6 @@ export default class ProgressBoard extends React.Component{
         return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
-      console.log(el)
       drgl().cancel(true)
       let updateStatus = {appId: el.id, newStatusId: target.id}
       if(target.id !== source.id) this.props.updateStatus(updateStatus)
@@ -54,7 +52,6 @@ export default class ProgressBoard extends React.Component{
         return el.id === 'title' ? false : true
       }
     }).on('drop', (el, target, source, sibling) => {
-      console.log(el)
       let updateStatus = { appId: el.id, newStatusId: target.id }
       drgl().cancel(true)
       if(target.id !== source.id) this.props.updateStatus(updateStatus)

@@ -62,7 +62,6 @@ class Reminder extends React.Component {
     subscribeParams.applicationServerKey = applicationServerKey;
     reg.pushManager.subscribe(subscribeParams)
         .then((subscription) => {
-          console.log(JSON.stringify(subscription))
             // Update status to subscribe current user on server, and to let
             // other users know this user has subscribed
             let endpoint = subscription.endpoint;
@@ -83,19 +82,16 @@ class Reminder extends React.Component {
         })
         .catch((err) => {
           // A problem occurred with the subscription.
-          console.log('Unable to subscribe to push.', err);
+          console.error(err)
         });
     });
 
   }
 
   sendSubscriptionToServer(subscription) {
-    console.log('sending subscription')
-
     axios.post('/saveSubscription', {
       data: JSON.stringify(subscription)
     })
-    .then((res) => console.log(JSON.stringify(res)))
     .catch((err) => console.error(err))
   }
 
@@ -125,7 +121,6 @@ class Reminder extends React.Component {
         company: this.props.app.company,
         job_title: this.props.app.job_title
       })
-      .then(() => console.log('successfully posted to google calendar'))
       .catch((err) => console.error(err))
     }
     axios.delete('/reminders', {

@@ -37,12 +37,10 @@ module.exports.createPhase = function(data, callback) {
 }
 
 module.exports.createApp = function(userId, data, callback) {
-  console.log('app db helper ran', data)
   connection.query(
     `INSERT INTO applications (id, user_id, phase_id, job_title, company, date_created, last_update, reminder_id, resume_id, cover_letter_id, point_of_contact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, userId, data.phaseId, data.jobTitle, data.company, data.date, data.date, data.reminderId, data.resumeId, data.coverLetterId, data.contact],
     function(err, response) {
-      console.log('response', response)
       if (err) console.error(err);
       callback(err, response)
     }
@@ -74,7 +72,6 @@ module.exports.addFile = function(userId, s3url, filename, callback) {
 }
 
 module.exports.addContact = function(userId, data, callback) {
-  console.log('contact db helper ran', data)
   connection.query(
     `INSERT INTO contacts (id, user_id, app_id, contact_email, contact_phone, first_name, last_name, company, job_title, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, userId, data.appId, data.contactEmail, data.contactPhone, data.firstName, data.lastName, data.company, data.title, data.department],
@@ -293,7 +290,6 @@ module.exports.deleteContacts = function(appId, callback) {
 }
 
 module.exports.addReminder = function(data, callback) {
-  console.log('reminder db helper ran', data)
   connection.query(
     `INSERT INTO reminders (id, user_id, app_id, user_email, job_title, company, due_date, text_desc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [null, data.userId, data.appId, data.email, data.jobTitle, data.company, data.date, data.description],

@@ -36,7 +36,6 @@ class Contact extends React.Component {
         title: this.state.title,
         department: this.state.department
       })
-      .then(() => console.log('successfully posted to google contacts'))
       .catch((err) => console.error(err))
     }
     axios.delete('/contacts', {

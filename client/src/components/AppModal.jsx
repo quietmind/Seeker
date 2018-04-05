@@ -88,7 +88,6 @@ class AppModal extends React.Component {
   }
 
   postReminder(appId) {
-    console.log('post reminder function ran with state:', this.state)
     if (!this.props.email) {
       axios.post('/calendar', {
         date: `${this.state.date._d.getFullYear()}-${this.state.date._d.getMonth()+1}-${this.state.date._d.getDate()}`,
@@ -96,7 +95,6 @@ class AppModal extends React.Component {
         company: this.state.companyName,
         job_title: this.state.jobTitle
       })
-      .then(() => console.log('successfully posted to google calendar'))
       .catch((err) => console.error(err))
     }
     axios.post('/reminders', {
@@ -122,7 +120,6 @@ class AppModal extends React.Component {
   }
 
   postContact(appId) {
-    console.log('post contact function ran with state:', this.state)
     if (!this.props.email) {
       axios.post('/people', {
         firstName: this.state.firstName,
@@ -133,7 +130,6 @@ class AppModal extends React.Component {
         title: this.state.title,
         department: this.state.department
       })
-      .then(() => console.log('successfully posted to google contacts'))
       .catch((err) => console.error(err))
     }
     axios.post('/contacts', {

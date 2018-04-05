@@ -177,7 +177,6 @@ app.post('/people', checkSession, setOAuthCreds, function(req, res) {
 })
 
 app.post('/contacts', checkSession, function(req, res) {
-  console.log('server received contact post request', req.body)
   db.addContact(req.session.userId, req.body, function(err, results) {
     if (err) console.error(err)
     res.status(200).send(`${results.insertId}`)
@@ -235,7 +234,6 @@ app.post('/phases', checkSession, function(req, res) {
 })
 
 app.post('/applications', checkSession, function(req, res) {
-  console.log('server received request', req.body)
   db.createApp(req.session.userId, req.body, function(err, results) {
     if (err) console.error(err)
     res.status(201).send(`${results.insertId}`)
@@ -278,8 +276,7 @@ app.post('/triggerPushNotifications', function(req, res) {
     }
   }
   webpush.sendNotification(subscripObject, JSON.stringify(note))
-         .then((done) => console.log('finished'))
-         .catch((err) => console.error(err))
+  .catch((err) => console.error(err))
   res.end()
 })
 
@@ -312,7 +309,6 @@ app.get('/contacts', checkSession, function(req, res) {
 })
 
 app.post('/reminders', checkSession, function(req, res) {
-  console.log('server received reminder post request', req.body)
   db.addReminder(req.body, function(err, results) {
     res.status(200).send(`${results.insertId}`)
   })

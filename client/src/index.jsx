@@ -127,7 +127,6 @@ class App extends React.Component {
   }
 
   fetchData() {
-    console.log('fetched user data')
     Promise.all([
       axios.get('/phases'),
       axios.get('/applications'),
@@ -137,8 +136,6 @@ class App extends React.Component {
       axios.get('/notes')
     ])
     .then((response) => {
-    console.log('HELLO');
-      console.log(response);
       this.setState({
         phases: response[0].data,
         applications: response[1].data,
@@ -154,7 +151,7 @@ class App extends React.Component {
   updateStatus(status) {
     axios.post('/updateStatus', status)
     .then((response) => {
-      setTimeout(this.fetchData(), 2000);
+      this.fetchData();
     })
     .catch((err) => console.error(err))
   }
@@ -174,6 +171,8 @@ class App extends React.Component {
   deletePhase(phaseId, phaseIndex) {
     if (this.state.applications.filter((app) => app.phase_id === phaseId).length > 0) {
       alert('You must move all applications out of this phase before deleting it.')
+    } else if (this.state.phases.length === 1) {
+      alert('You must have at least one phase')
     } else if (confirm('Are you sure you want to delete this phase?')) {
       let phases = this.state.phases
       phases.splice(phaseIndex, 1)

@@ -31,8 +31,6 @@ class Notes extends React.Component {
   }
 
   render() {
-    console.log("THE NOTE PROPS: ", this.props.notes);
-    console.log("THE NOTE STATE: " , this.state.notes);
     return (
       <div>
         <h2>Add a note to this entry</h2>

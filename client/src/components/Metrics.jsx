@@ -101,8 +101,6 @@ export default class Metrics extends React.Component{
 
 	render(){
 		const defaultView = this.state.defaultView;
-		console.log('metrics props', this.props)
-		console.log('metrics state', this.state)
 		let data1 = {
 			columns: [
 				['Applications', ...this.getCumulativeQuantities()]
