@@ -1,15 +1,12 @@
 import React from 'react';
-import { Button, Header, Icon, Modal, Table, Menu, Segment } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Table, Menu, Segment, Card } from 'semantic-ui-react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Switch, withRouter } from 'react-router-dom';
 import Recap from './Recap.jsx'
 import Reminder from './Reminder.jsx'
 import Contact from './Contact.jsx'
+import Documents from './Documents.jsx'
 import Notes from './Notes.jsx'
-import { Card } from 'semantic-ui-react'
-import moment from 'moment'
-
-let pubKey = 'BKn9Z71eyV2fgYztoT3XDC31ANF3HLmKuXKmkQR9OoMw-9trIi4JguYx-Y5kJ0xLddXlJTrPWmpnWcA5ebFHRfY';
 
 class DescriptionCard2 extends React.Component{
   constructor(props) {
@@ -58,6 +55,8 @@ class DescriptionCard2 extends React.Component{
       cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.app.user_id} reminder={this.props.reminder} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Contact') {
       cardContent = <Contact contact={this.props.contact} app={this.props.app} getUserData={this.props.getUserData} />;
+    } else if (activeItem === 'Documents') {
+      cardContent = <Documents resume={this.props.resume} coverletter={this.props.coverletter} app={this.props.app} files={this.props.files} getUserData={this.props.getUserData} />;
     }
 
     return (
@@ -75,9 +74,10 @@ class DescriptionCard2 extends React.Component{
       <Modal.Content>
         <Menu tabular>
           <Menu.Item name='Recap' active={activeItem === 'Recap'} onClick={this.handleItemClick} />
-          <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} />
           <Menu.Item name='Reminder' active={activeItem === 'Reminder'} onClick={this.handleItemClick} />
           <Menu.Item name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick} />
+          <Menu.Item name="Documents" active={activeItem === 'Documents'} onClick={this.handleItemClick} />
+          <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} />
         </Menu>
         <Segment>{cardContent}</Segment>
         <Button style={{clear:'both'}} onClick={this.deleteApplication}>Delete this Application</Button>

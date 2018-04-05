@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch, withRouter } from 'react-
 import Recap from './Recap.jsx'
 import Reminder from './Reminder.jsx'
 import Contact from './Contact.jsx'
+import Documents from './Documents.jsx'
 import Notes from './Notes.jsx'
 
 class DescriptionCard extends React.Component{
@@ -54,34 +55,37 @@ class DescriptionCard extends React.Component{
       cardContent = <Reminder app={this.props.app} email={this.props.email} userId={this.props.userId} reminder={this.props.reminder} getUserData={this.props.getUserData} />;
     } else if (activeItem === 'Contact') {
       cardContent = <Contact contact={this.props.contact} app={this.props.app} getUserData={this.props.getUserData} />;
+    } else if (activeItem === 'Documents') {
+      cardContent = <Documents resume={this.props.resume} coverletter={this.props.coverletter} app={this.props.app} files={this.props.files} getUserData={this.props.getUserData} />;
     }
 
     return (
       <Modal
-      trigger={
-        <Table.Row className={this.props.index % 2 !== 0 ? 'appListItem odd' : 'appListItem'} onClick={this.handleOpen}>
-          <Table.Cell>{this.props.app.job_title}</Table.Cell>
-          <Table.Cell>{this.props.app.company}</Table.Cell>
-          <Table.Cell>{new Date(this.props.app.date_created).toDateString().substring(4)}</Table.Cell>
-          <Table.Cell>{new Date(this.props.app.last_update).toDateString().substring(4)}</Table.Cell>
-          <Table.Cell>{this.props.phase.phase_label}</Table.Cell>
-          <Table.Cell>{this.props.resume ? this.props.resume.file_name :  ''}</Table.Cell>
-          <Table.Cell>{this.props.coverletter ? this.props.coverletter.file_name : ''}</Table.Cell>
-        </Table.Row>
-      }
-      open={this.state.open}
-      onClose={this.handleClose}
-      closeIcon={true}
-      size='small'
-      closeOnDimmerClick={false}
+        trigger={
+          <Table.Row className={this.props.index % 2 !== 0 ? 'appListItem odd' : 'appListItem'} onClick={this.handleOpen}>
+            <Table.Cell>{this.props.app.job_title}</Table.Cell>
+            <Table.Cell>{this.props.app.company}</Table.Cell>
+            <Table.Cell>{new Date(this.props.app.date_created).toDateString().substring(4)}</Table.Cell>
+            <Table.Cell>{new Date(this.props.app.last_update).toDateString().substring(4)}</Table.Cell>
+            <Table.Cell>{this.props.phase.phase_label}</Table.Cell>
+            <Table.Cell>{this.props.resume ? this.props.resume.file_name :  ''}</Table.Cell>
+            <Table.Cell>{this.props.coverletter ? this.props.coverletter.file_name : ''}</Table.Cell>
+          </Table.Row>
+        }
+        open={this.state.open}
+        onClose={this.handleClose}
+        closeIcon={true}
+        size='small'
+        closeOnDimmerClick={false}
       >
       <Header icon='building' content={this.props.app.job_title + " at " + this.props.app.company} />
       <Modal.Content>
         <Menu tabular>
           <Menu.Item name='Recap' active={activeItem === 'Recap'} onClick={this.handleItemClick} />
-          <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} />
           <Menu.Item name='Reminder' active={activeItem === 'Reminder'} onClick={this.handleItemClick} />
           <Menu.Item name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick} />
+          <Menu.Item name="Documents" active={activeItem === 'Documents'} onClick={this.handleItemClick} />
+          <Menu.Item name='Notes' active={activeItem === 'Notes'} onClick={this.handleItemClick} />
         </Menu>
         <Segment>{cardContent}</Segment>
         <Button style={{clear:'both'}} onClick={this.deleteApplication}>Delete this Application</Button>

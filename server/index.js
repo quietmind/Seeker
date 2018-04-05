@@ -360,6 +360,20 @@ app.post('/appinfo/contact', checkSession, function(req, res) {
   })
 })
 
+app.post('/appinfo/resume', checkSession, function(req, res) {
+  db.updateResume(req.body, function(err) {
+    if (err) console.error(err)
+    res.status(201).send()
+  })
+})
+
+app.post('/appinfo/coverletter', checkSession, function(req, res) {
+  db.updateCoverLetter(req.body, function(err) {
+    if (err) console.error(err)
+    res.status(201).send()
+  })
+})
+
 app.post('/updateStatus', checkSession, function(req, res){
   db.updateStatus(req.body, function(err){
     if(err) console.error(err)

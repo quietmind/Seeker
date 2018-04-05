@@ -207,6 +207,28 @@ module.exports.updateContact = function(data, callback) {
   )
 }
 
+module.exports.updateResume = function(data, callback) {
+  connection.query(
+    `UPDATE applications
+    SET resume_id = ${data.resume}
+    WHERE id = ${data.app}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
+module.exports.updateCoverLetter = function(data, callback) {
+  connection.query(
+    `UPDATE applications
+    SET cover_letter_id = ${data.coverletter}
+    WHERE id = ${data.app}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.updateStatus = function(data, callback){
   connection.query(
     `UPDATE applications

@@ -302,7 +302,7 @@ class App extends React.Component {
               <Sidebar.Pusher>
                 <Modal
                   basic
-                  closeOnDimmerClick
+                  closeOnDimmerClick={false}
                   open={this.state.loading}
                   onClose={this.modalClose}
                   >

@@ -64,6 +64,7 @@ export default class Phase extends Component {
 										resume={this.props.files.filter((file)=> file.id === app.resume_id)[0]}
 										coverletter={this.props.files.filter((file)=> file.id === app.cover_letter_id)[0]}
 										description={app.job_title}
+										files={this.props.files}
 									/>
 								}
 			      	  description={app.job_title}
