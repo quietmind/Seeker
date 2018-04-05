@@ -1,5 +1,17 @@
 #app{
- 
+
+}
+
+@font-face {
+  font-family: 'Kavivanar', cursive;
+  src: url('https://fonts.googleapis.com/css?family=Bad+Script');
+}
+
+.title {
+  font-family: 'Kavivanar', cursive;
+  font-size: 4em;
+  padding-top: 20px;
+  padding-bottom: 0px;  
 }
 
 .app-container{
@@ -127,7 +139,7 @@
 }
 
 #gSignInWrapper{
-  display: inline; 
+  display: inline;
 }
 
 #customBtn {

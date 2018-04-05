@@ -26,8 +26,10 @@ export default class Welcome extends React.Component{
     return (
     <div className="welcome-container">
       <div className = "welcome">
-        <Header as='h1'>
-          Seeker
+        <Header>
+          <h1 className='title'>
+            Seeker
+          </h1>
         </Header>
         <Button.Group color = 'gray' textAlign='center'>
           <Button style={{ maxWidth: 350, margin:10 }} onClick={this.renderSignup}>Signup</Button>
