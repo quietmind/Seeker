@@ -183,7 +183,6 @@ span.buttonText {
   background: white !important;
   color: #444 !important;
   border-radius: 5px !important;
-  border: thin solid #888 !important;
   box-shadow: 1px 1px 1px grey !important;
   white-space: nowrap;
 }
