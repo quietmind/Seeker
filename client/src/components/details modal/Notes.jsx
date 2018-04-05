@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Label, Icon } from 'semantic-ui-react';
 
 class Notes extends React.Component {
   constructor(props) {
@@ -38,10 +38,10 @@ class Notes extends React.Component {
         {(() => {
           if (this.state.notes.length > 0) {
             return this.state.notes.map((note, i) => (
-              <li className="note">
-                <p key={i} >{note.note_text}</p>
-                <Button type="close" onClick={()=>this.deleteNote(note.id)}>X</Button>
-              </li>
+              <Label key={i}>
+                {note.note_text}
+                <Icon name="delete" onClick={()=>this.deleteNote(note.id)} />
+              </Label>
             ))
           } else {
             return <div>You have not added any notes to this job application yet.</div>

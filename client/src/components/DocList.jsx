@@ -66,8 +66,8 @@ class DocList extends React.Component {
                     <Segment>
                       <h2 style={{display: 'flex', justifyContent: 'center'}}>{duo[0].file_name}</h2>
                         <Document file={duo[0].s3_url}>
-                          <a href={duo[0].s3_url}>
-                            <Page style={{display: 'flex', justifyContent: 'center'}} pageNumber={pageNumber} scale = {scale} />
+                          <a href={duo[0].s3_url} style={{display: 'flex', justifyContent: 'center'}}>
+                            <Page pageNumber={pageNumber} scale = {scale} />
                           </a>
                         </Document>
                     </Segment>
@@ -90,20 +90,3 @@ class DocList extends React.Component {
 }
 
 export default DocList;
-
-
-// {this.prepareFilesForGrid().map(function(duo, i) {
-//   console.log(duo);
-//
-// <h2>{duo[1].file_name}</h2>
-
-// {this.props.fileList.map((file, i) => (
-//   <div key={i}>
-//   <h2>{file.file_name}</h2>
-//   <Document file={file.s3_url}>
-//     <a href={file.s3_url}>
-//       <Page pageNumber={pageNumber} scale = {scale} />
-//     </a>
-//   </Document>
-//   </div>
-// ))}

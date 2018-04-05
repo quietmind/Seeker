@@ -6,14 +6,14 @@ const Recap = (props) => (
     <Grid columns='equal'>
       <Grid.Row>
         <Grid.Column style={{display: 'flex', justifyContent: 'center'}}>
-          <b>Resume Provided:</b>
+          <b>Resume Provided:&nbsp;</b>
           <br></br>
-          <a href={props.resume ? props.resume.s3_url :  null}>{props.resume ? props.resume.file_name : '(None)'}</a>
+          <a href={props.resume ? props.resume.s3_url :  null}>{props.resume ? props.resume.file_name : ' (None)'}</a>
         </Grid.Column>
         <Grid.Column style={{display: 'flex', justifyContent: 'center'}}>
-          <b>Cover Letter Provided:</b>
+          <b>Cover Letter Provided:&nbsp;</b>
           <br></br>
-          <a href={props.coverletter ? props.coverletter.s3_url :  null}>{props.coverletter ? props.coverletter.file_name : '(None)'}</a>
+          <a href={props.coverletter ? props.coverletter.s3_url :  null}>{props.coverletter ? props.coverletter.file_name : ' (None)'}</a>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
