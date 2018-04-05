@@ -38,7 +38,7 @@ const ProgressView = (props) => (
     <Grid.Column>
       <Segment className="bar-graph-container">
         <Header size="huge" textAlign="center">Application Progress</Header>
-        <C3Chart data={props.data} axis={props.axis}/>
+        <C3Chart data={props.data} load={{duration:5000}} axis={props.axis}/>
       </Segment>
     </Grid.Column>
   </Grid.Row>

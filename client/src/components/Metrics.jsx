@@ -32,7 +32,8 @@ export default class Metrics extends React.Component{
 				columns: [
 					['dates', ...this.getDateRange().map((date) => new Date(date))],
 					['New Applications', ...this.getQuantityPerDate()]
-				]
+				],
+				type: 'spline'
 			},
 			axis2: {
 				x: {
@@ -130,7 +131,7 @@ export default class Metrics extends React.Component{
 		return(
 		<div className="metrics-container">
 			<Grid>
-				{this.state.defaultView ? 
+				{this.state.defaultView ?
 					<ProgressView
 						data={this.state.data1}
 						axis={this.state.axis1}
@@ -141,7 +142,7 @@ export default class Metrics extends React.Component{
 						sortPhases={this.sortPhases}
 						getCumulativeQuantities={this.getCumulativeQuantities}
 					/>
-				: 
+				:
 					<StatusView
 						data={this.state.data3}
 						apps={this.props.apps}
@@ -156,7 +157,7 @@ export default class Metrics extends React.Component{
 					<Grid.Column>
 						<Segment className="activity-graph-container">
 							<Header size="huge" textAlign="center">Activity Over Time</Header>
-							<C3Chart data={this.state.data2} axis={this.state.axis2}/>
+							<C3Chart data={this.state.data2} load={{duration:5000}} axis={this.state.axis2}/>
 						</Segment>
 					</Grid.Column>
 					<Grid.Column>

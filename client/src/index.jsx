@@ -218,9 +218,7 @@ class App extends React.Component {
     if (this.state.userId) {
       return(
         <Router history={history}>
-
           <div className="app-container">
-
             <Menu secondary attached="top">
               <Menu.Item onClick={this.toggleMenu}>
               <Icon name="sidebar" /> Seeker
