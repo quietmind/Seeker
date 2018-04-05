@@ -94,11 +94,10 @@ class App extends React.Component {
   }
 
   logout() {
-    axios.post('/logout')
-    .then(() => {
-    this.setState({userId: null})
+    this.setState({userId: null}, () => {
+      axios.post('/logout')
+      .catch((err) => console.error(err))
     })
-    .catch((err) => console.error(err))
   }
 
   getUserData() {
