@@ -208,6 +208,8 @@ span.buttonText {
   margin-right: 5px !important;
   background-color: #f9feff !important;
   box-shadow: 1px 1px 1px grey !important;
+  width: 100%;
+  height: 100%;
 }
 
 .conclusion-container{
@@ -215,9 +217,10 @@ span.buttonText {
   margin-left: 5px !important;
   margin-right: 20px !important;
   margin-bottom: 10px !important;
-  height: 100%;
   background-color: #f9feff !important;
   box-shadow: 1px 1px 1px grey !important;
+  width: 100%;
+  height: 100%;
 }
 
 .statshot-container{
@@ -226,6 +229,8 @@ span.buttonText {
   margin-right: 5px !important;
   background-color: #f9feff !important;
   box-shadow: 1px 1px 1px grey !important;
+  width: 100%;
+  height: 100%;
 }
 
 .bar-graph-container{
@@ -235,6 +240,8 @@ span.buttonText {
   margin-left: 5px !important;
   background-color: #f9feff !important;
   box-shadow: 1px 1px 1px grey !important;
+  width: 100%;
+  height: 100%;
 }
 
 .progress-statshot-container{
@@ -243,6 +250,8 @@ span.buttonText {
   margin-right: 5px !important;
   background-color: #f9feff !important;
   box-shadow: 1px 1px 1px grey !important;
+  width: 100%;
+  height: 100%;
 }
 
 .pie-graph-container{
@@ -252,6 +261,8 @@ span.buttonText {
   margin-left: 5px !important;
   background-color: #f9feff !important;
   box-shadow: 1px 1px 1px grey !important;
+  width: 100%;
+  height: 100%;
 }
 
 .conclusions {
