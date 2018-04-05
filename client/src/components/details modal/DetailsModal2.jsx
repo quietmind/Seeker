@@ -40,7 +40,7 @@ class DescriptionCard2 extends React.Component{
   }
 
   deleteApplication() {
-    axios.delete('/applications', {data: {appId: this.props.app.id}})
+    axios.delete('/applications', {params: {appId: this.props.app.id}})
     .then((response) => this.props.getUserData())
     .then((response) => this.handleClose())
     .catch((err) => console.error(err))

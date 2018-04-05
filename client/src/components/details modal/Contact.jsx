@@ -21,7 +21,7 @@ class Contact extends React.Component {
 
   handleSubmit() {
     this.setState({saving: true})
-    setTimeout(() => this.setState({saving: false}), 1000)
+    setTimeout(() => this.setState({saving: false}), 2000)
     this.props.getUserData()
   }
 
@@ -39,23 +39,31 @@ class Contact extends React.Component {
       .then(() => console.log('successfully posted to google contacts'))
       .catch((err) => console.error(err))
     }
-    axios.post('/contacts', {
-      appId: this.props.app.id,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      contactPhone: this.state.contactPhone,
-      contactEmail: this.state.contactEmail,
-      company: this.props.app.company,
-      title: this.state.title,
-      department: this.state.department
+    axios.delete('/contacts', {
+      params: {
+        appId: this.props.app.id
+      }
     })
     .then((response) => {
-      axios.post('/appinfo/contact', {
-        id: this.props.app.id,
-        contact: response.data
+      axios.post('/contacts', {
+        appId: this.props.app.id,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        contactPhone: this.state.contactPhone,
+        contactEmail: this.state.contactEmail,
+        company: this.props.app.company,
+        title: this.state.title,
+        department: this.state.department
       })
       .then((response) => {
-        this.handleSubmit()
+        axios.post('/appinfo/contact', {
+          id: this.props.app.id,
+          contact: response.data
+        })
+        .then((response) => {
+          this.handleSubmit()
+        })
+        .catch((err) => console.error(err))
       })
       .catch((err) => console.error(err))
     })

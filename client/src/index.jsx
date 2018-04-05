@@ -134,16 +134,16 @@ class App extends React.Component {
     .catch((err) => console.error(err))
   }
 
-  createPhase(){
+  createPhase() {
     let phaseName = prompt('Enter a name for your new phase')
-    axios.post('/phases',
-      {userId: this.state.userId,
-       phaseLabel: phaseName,
-       phaseOrder: this.state.phases.length + 1
-      })
-      .then((done) => {
-        this.getUserData()
-      })
+    axios.post('/phases', {
+      userId: this.state.userId,
+      phaseLabel: phaseName,
+      phaseOrder: this.state.phases.length + 1
+    })
+    .then((done) => {
+      this.getUserData()
+    })
   }
 
   deletePhase(phaseId, phaseIndex) {

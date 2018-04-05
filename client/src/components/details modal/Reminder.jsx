@@ -35,7 +35,7 @@ class Reminder extends React.Component {
 
   handleSubmit() {
     this.setState({saving: true})
-    setTimeout(() => this.setState({saving: false}), 1000)
+    setTimeout(() => this.setState({saving: false}), 2000)
     this.props.getUserData()
   }
 
@@ -128,22 +128,30 @@ class Reminder extends React.Component {
       .then(() => console.log('successfully posted to google calendar'))
       .catch((err) => console.error(err))
     }
-    axios.post('/reminders', {
-      date: this.state.date,
-      description: this.state.reminderText,
-      email: this.props.email,
-      company: this.props.app.company,
-      jobTitle: this.props.app.job_title,
-      userId: this.props.userId,
-      appId: this.props.app.id
+    axios.delete('/reminders', {
+      params: {
+        appId: this.props.app.id
+      }
     })
     .then((response) => {
-      axios.post('/appinfo/reminder', {
-        id: this.props.app.id,
-        reminderId: response.data
+      axios.post('/reminders', {
+        date: this.state.date,
+        description: this.state.reminderText,
+        email: this.props.email,
+        company: this.props.app.company,
+        jobTitle: this.props.app.job_title,
+        userId: this.props.userId,
+        appId: this.props.app.id
       })
       .then((response) => {
-        this.handleSubmit()
+        axios.post('/appinfo/reminder', {
+          id: this.props.app.id,
+          reminderId: response.data
+        })
+        .then((response) => {
+          this.handleSubmit()
+        })
+        .catch((err) => console.error(err))
       })
       .catch((err) => console.error(err))
     })

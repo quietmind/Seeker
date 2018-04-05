@@ -114,7 +114,7 @@ app.get('/session', function(req, res) {
   if (req.session.userId) {
     res.status(200).send(`${req.session.userId}`)
   } else
-    res.status(403).send()
+    res.status(401).send()
 })
 
 app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
@@ -139,9 +139,13 @@ app.post('/calendar', checkSession, setOAuthCreds, function(req, res) {
         ]
       }
     }
-  }, function(err, response) {
-    if (err) console.error(err)
-    res.status(201).send()
+  }, function(err) {
+    if (err) {
+      console.error(err)
+      res.status(401).send()
+    } else {
+      res.status(201).send()
+    }
   })
 })
 
@@ -163,9 +167,13 @@ app.post('/people', checkSession, setOAuthCreds, function(req, res) {
         { name: req.body.company, title: req.body.title, department: req.body.department }
       ]
     }
-  }, (err, response) => {
-    if (err) console.error(err)
-    res.status(201).send(response.resourceName)
+  }, (err) => {
+    if (err) {
+      console.error(err)
+      res.status(401).send()
+    } else {
+      res.status(201).send()
+    }
   })
 })
 
@@ -318,10 +326,10 @@ app.get('/notes', checkSession, function(req, res) {
   })
 })
 
-app.delete('/notes', checkSession, function(req, res) {
-  db.deleteNote(req.body.id, function(err, results) {
+app.delete('/note', checkSession, function(req, res) {
+  db.deleteNote(req.query.id, function(err, results) {
     if (err) console.error(err)
-    res.status(200).send(results)
+    res.status(204).send(results)
   })
 })
 
@@ -363,22 +371,36 @@ app.post('/updateStatus', checkSession, function(req, res){
 app.delete('/phases', checkSession, function(req, res) {
   db.deletePhase(req.query.phaseId, function(err) {
     if (err) console.error(err)
-    res.status(202).send()
+    res.status(204).send()
   })
 })
 
 app.delete('/applications', checkSession, function(req, res) {
-  db.deleteNote(req.body.appId, function(err) {
+  db.deleteNotes(req.query.appId, function(err) {
     if (err) console.error(err)
-    db.deleteReminders(req.body.appId, function(err) {
+    db.deleteReminders(req.query.appId, function(err) {
       if (err) console.error(err)
-      db.deleteContacts(req.body.appId, function(err) {
+      db.deleteContacts(req.query.appId, function(err) {
         if (err) console.error(err)
-        db.deleteApp(req.body.appId, function(err) {
-          res.status(201).send()
+        db.deleteApp(req.query.appId, function(err) {
+          res.status(204).send()
         })
       })
     })
+  })
+})
+
+app.delete('/contacts', checkSession, function(req, res) {
+  db.deleteContacts(req.query.appId, function(err) {
+    if (err) console.error(err)
+    res.status(204).send()
+  })
+})
+
+app.delete('/reminders', checkSession, function(req, res) {
+  db.deleteReminders(req.query.appId, function(err) {
+    if (err) console.error(err)
+    res.status(204).send()
   })
 })
 

@@ -22,7 +22,7 @@ class Notes extends React.Component {
   }
 
   deleteNote(noteId) {
-    axios.delete('/notes', {data: {id: noteId}})
+    axios.delete('/note', {params: {id: noteId}})
     .then((response) => this.setState({notes: this.state.notes.filter((note)=> note.id !== noteId)}))
   }
 
@@ -37,7 +37,7 @@ class Notes extends React.Component {
         <h2>Notes:</h2>
         {(() => {
           if (this.state.notes.length > 0) {
-            this.state.notes.map((note, i) => (
+            return this.state.notes.map((note, i) => (
               <li className="note">
                 <p key={i} >{note.note_text}</p>
                 <Button type="close" onClick={()=>this.deleteNote(note.id)}>X</Button>

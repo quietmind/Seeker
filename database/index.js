@@ -242,6 +242,15 @@ module.exports.deleteNote = function(id, callback) {
   )
 }
 
+module.exports.deleteNotes = function(appId, callback) {
+  connection.query(
+    `DELETE FROM notes WHERE app_id = ${appId}`,
+    function(err) {
+      callback(err)
+    }
+  )
+}
+
 module.exports.deleteReminders = function(appId, callback) {
   connection.query(
     `DELETE FROM reminders WHERE app_id = ${appId}`,
