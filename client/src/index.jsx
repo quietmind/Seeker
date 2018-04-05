@@ -42,6 +42,7 @@ class App extends React.Component {
     this.registerServiceWorker = this.registerServiceWorker.bind(this)
     this.updatePhaseOrder = this.updatePhaseOrder.bind(this)
     this.modalClose = this.modalClose.bind(this)
+    this.fetchData = this.fetchData.bind(this)
   }
 
   registerServiceWorker() {
@@ -126,10 +127,35 @@ class App extends React.Component {
     })
   }
 
+  fetchData() {
+    console.log('fetched user data')
+    Promise.all([
+      axios.get('/phases'),
+      axios.get('/applications'),
+      axios.get('/reminders'),
+      axios.get('/contacts'),
+      axios.get('/files'),
+      axios.get('/notes')
+    ])
+    .then((response) => {
+    console.log('HELLO');
+      console.log(response);
+      this.setState({
+        phases: response[0].data,
+        applications: response[1].data,
+        reminders: response[2].data,
+        contacts: response[3].data,
+        files: response[4].data,
+        notes: response[5].data
+      })
+    })
+    .catch((err) => console.error(err))
+  }
+
   updateStatus(status) {
     axios.post('/updateStatus', status)
     .then((response) => {
-      this.getUserData()
+      setTimeout(this.fetchData(), 2000);
     })
     .catch((err) => console.error(err))
   }
