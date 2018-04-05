@@ -64,27 +64,31 @@ class AppModal extends React.Component {
   }
 
   handleSubmit() {
-    axios.post('/applications', {
-      phaseId: this.state.phase,
-      reminderId: null,
-      resumeId: this.state.resume,
-      coverLetterId: this.state.coverLetter,
-      jobTitle: this.state.jobTitle,
-      company: this.state.companyName,
-      date: new Date()})
-    .then((response) => {
-      if ((this.state.date && this.state.reminderText) && (this.state.firstName || this.state.lastName || this.state.contactEmail || this.state.contactPhone || this.state.contactJobTitle || this.state.department)) {
-        this.postReminder(response.data)
-        this.postContact(response.data)
-      } else if (this.state.date && this.state.reminderText) {
-        this.postReminder(response.data)
-      } else if (this.state.firstName || this.state.lastName || this.state.contactEmail || this.state.contactPhone || this.state.contactJobTitle || this.state.department) {
-        this.postContact(response.data)
-      } else {
-        this.handleClose()
-      }
-    })
-    .catch((err) => console.error(err));
+    if (this.state.jobTitle && this.state.companyName && this.state.phase) {
+      axios.post('/applications', {
+        phaseId: this.state.phase,
+        reminderId: null,
+        resumeId: this.state.resume,
+        coverLetterId: this.state.coverLetter,
+        jobTitle: this.state.jobTitle,
+        company: this.state.companyName,
+        date: new Date()})
+      .then((response) => {
+        if ((this.state.date && this.state.reminderText) && (this.state.firstName || this.state.lastName || this.state.contactEmail || this.state.contactPhone || this.state.contactJobTitle || this.state.department)) {
+          this.postReminder(response.data)
+          this.postContact(response.data)
+        } else if (this.state.date && this.state.reminderText) {
+          this.postReminder(response.data)
+        } else if (this.state.firstName || this.state.lastName || this.state.contactEmail || this.state.contactPhone || this.state.contactJobTitle || this.state.department) {
+          this.postContact(response.data)
+        } else {
+          this.handleClose()
+        }
+      })
+      .catch((err) => console.error(err));
+    } else {
+      alert('You must input at least a job title, company name and phase in order to submit an application.')
+    }
   }
 
   postReminder(appId) {
