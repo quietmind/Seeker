@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header, Segment} from 'semantic-ui-react';
+import {Grid, Header, Segment, Message} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
 import ProgressView from './ProgressView.jsx';
 import StatusView from './StatusView.jsx';
@@ -67,6 +67,17 @@ export default class Metrics extends React.Component{
 		})))
 	}
 
+	getAverageActivityLevel() {
+		let quantities = this.getQuantityPerDate()
+		let sum = quantities.reduce((acc, el) => acc + el)
+		return sum / quantities.length
+	}
+
+	compareActivity() {
+		let quantities = this.getQuantityPerDate()
+		return quantities[0] > this.getAverageActivityLevel()
+	}
+
 	getRatios() {
 		let quantities = this.getCumulativeQuantities()
 		return quantities.map((quantity, i) => {
@@ -79,6 +90,13 @@ export default class Metrics extends React.Component{
 			return el.ratio < acc.ratio ? el : acc
 		})
 		return this.sortPhases()[worstRatio.index].phase_label
+	}
+
+	getSmallestDropoff() {
+		let bestRatio = this.getRatios().slice(1).reduce((acc, el) => {
+			return el.ratio > acc.ratio ? el : acc
+		})
+		return this.sortPhases()[bestRatio.index].phase_label
 	}
 
 	render(){
@@ -159,16 +177,31 @@ export default class Metrics extends React.Component{
 						<Grid.Column>
 							<Segment className="activity-graph-container">
 								<Header size="huge" textAlign="center">Activity Over Time</Header>
-								<C3Chart data={data2} axis={axis2}/>
+								<C3Chart data={data2} axis={axis2} />
 							</Segment>
 						</Grid.Column>
 						<Grid.Column>
 							<Segment className="conclusion-container">
 								<Header size="huge" textAlign="center">Conclusions</Header>
-								<div className="conclusions">
-									It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.
-									We suggest practicing the skills involved in successfully completing this step in the application process.
-								</div>
+								<Message>
+									<div text className="conclusions">
+										You seem to be really excelling at reaching the "{this.getSmallestDropoff()}" phase!<br/>
+										Keep doing what you're doing in this part of the process!
+									</div>
+								</Message>
+								<Message>
+									<div className="conclusions">
+										It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.<br/>
+										We suggest you get some more practice at the skills involved in successfully completing this step in the application process.
+									</div>
+								</Message>
+								<Message>
+									{this.compareActivity() ? 
+										<div className="conclusions">Your activity on the last day you submitted new applications was above average. Keep up the great work!</div> 
+									:
+										<div className="conclusions">Your activity on the last day you submitted new applications was below average. Don't slack off now!</div>
+									}
+								</Message>
 							</Segment>
 						</Grid.Column>
 					</Grid.Row>

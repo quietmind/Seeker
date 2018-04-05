@@ -12,7 +12,7 @@ const ProgressView = (props) => (
             if (phase.phase_order !== 0) {
               return (
                 <Grid.Column key={i}>
-                  <Statistic size="small" label={`progressed to the ${phase.phase_label} phase`} value={props.getCumulativeQuantities()[i]}/>
+                  <Statistic size="small" label={`progressed to the "${phase.phase_label}" phase`} value={props.getCumulativeQuantities()[i]}/>
                 </Grid.Column>
               )
             } else {
@@ -38,7 +38,7 @@ const ProgressView = (props) => (
     <Grid.Column>
       <Segment className="bar-graph-container">
         <Header size="huge" textAlign="center">Application Progress</Header>
-        <C3Chart data={props.data} axis={props.axis}/>
+        <C3Chart data={props.data} axis={props.axis} />
       </Segment>
     </Grid.Column>
   </Grid.Row>
