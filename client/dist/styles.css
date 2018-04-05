@@ -266,10 +266,7 @@ span.buttonText {
 }
 
 .conclusions {
-  position: relative;
-	font-size: 115%;
-	font-weight: bold;
-	text-align: center;
+  padding: 20px !important;
 }
 
 .appListItem {

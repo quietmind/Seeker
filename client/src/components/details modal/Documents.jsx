@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Menu, Header, Image, Icon, Modal, Form } from 'semantic-ui-react';
+import { Form, Button, Segment } from 'semantic-ui-react';
 import axios from 'axios';
 
 class Documents extends React.Component {
@@ -43,21 +43,22 @@ class Documents extends React.Component {
     return (
       <div>
         {this.props.resume ? 
-          <div>
+          <Segment>
             <b>Resume Provided:&nbsp;</b>
             <a href={this.props.resume.s3_url}>{this.props.resume.file_name}</a>
-          </div>
+          </Segment>
         :
           <Form>
             <Form.Select fluid label='Resume Used' options={resumeOptions} placeholder='Resume' value= {this.state.resume} onChange={(e, { value })=>this.setState({resume: value})}/>
             <Button onClick={this.addResume}>Save</Button>
           </Form>
         }
+        <br/>
         {this.props.coverletter ?
-          <div>
+          <Segment>
             <b>Cover Letter Provided:&nbsp;</b>
             <a href={this.props.coverletter.s3_url}>{this.props.coverletter.file_name}</a>
-          </div>
+          </Segment>
         :
           <Form>
             <Form.Select fluid label='Cover Letter Used' options={coverLetterOptions} placeholder='Cover Letter' value={this.state.coverletter} onChange={(e, { value })=>this.setState({coverletter: value})}/>

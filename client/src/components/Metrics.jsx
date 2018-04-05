@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header, Segment, Message} from 'semantic-ui-react';
+import {Grid, Header, Segment, List} from 'semantic-ui-react';
 import C3Chart from 'react-c3js';
 import ProgressView from './ProgressView.jsx';
 import StatusView from './StatusView.jsx';
@@ -183,25 +183,29 @@ export default class Metrics extends React.Component{
 						<Grid.Column>
 							<Segment className="conclusion-container">
 								<Header size="huge" textAlign="center">Conclusions</Header>
-								<Message>
-									<div text className="conclusions">
-										You seem to be really excelling at reaching the "{this.getSmallestDropoff()}" phase!<br/>
+								<List bulleted size="huge" className="conclusions">
+									<List.Item>
+										You seem to be excelling at reaching the "{this.getSmallestDropoff()}" phase!
 										Keep doing what you're doing in this part of the process!
-									</div>
-								</Message>
-								<Message>
-									<div className="conclusions">
-										It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.<br/>
-										We suggest you get some more practice at the skills involved in successfully completing this step in the application process.
-									</div>
-								</Message>
-								<Message>
+									</List.Item>
+									<br/>
+									<List.Item>
+										It looks like you're experiencing difficulty reaching the "{this.getLargestDropoff()}" phase.
+										We suggest you practice the skills involved in this step.
+									</List.Item>
+									<br/>
 									{this.compareActivity() ? 
-										<div className="conclusions">Your activity on the last day you submitted new applications was above average. Keep up the great work!</div> 
+										<List.Item>
+											Your activity on the last day you submitted new applications was above average.
+											Keep up the great work!
+										</List.Item> 
 									:
-										<div className="conclusions">Your activity on the last day you submitted new applications was below average. Don't slack off now!</div>
+										<List.Item>
+											Your activity on the last day you submitted new applications was below average.
+											Don't slack off now!
+										</List.Item>
 									}
-								</Message>
+								</List>
 							</Segment>
 						</Grid.Column>
 					</Grid.Row>
