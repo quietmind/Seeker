@@ -122,7 +122,10 @@ class App extends React.Component {
           loading: false
         })
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error(err)
+        this.setState({loading: false})
+      })
     })
   }
 
