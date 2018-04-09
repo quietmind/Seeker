@@ -5,7 +5,7 @@ All account information is strictly confidential and secure.
 
 ## Usage
 
-  > Users signup by providing a valid email address and choosing a secure password. Upon login, users can log every job application they've submitted to present. This information is then persisted and rendered through our app features. Job applications can be easily updated or removed upon any changes.
+> Users signup by providing a valid email address and choosing a secure password. Upon login, users can log every job application they've submitted to present. This information is then persisted and rendered through our app features. Job applications can be easily updated or removed upon any changes.
 
 ## Development
 
@@ -14,8 +14,8 @@ All account information is strictly confidential and secure.
 3. for dev environment initiliaze a local mysql server with a database and schema that can be found
    in the database folder
 4. To Locally Host,
-           npm run react-dev
-           npm run server-dev
+         >  npm run react-dev
+          > npm run server-dev
 
 ## Team
 
