@@ -10,7 +10,7 @@ All account information is strictly confidential and secure.
 ## Development
 
 1. Clone down this project to your local machine
-2. npm install
+2. > npm install
 3. for dev environment initiliaze a local mysql server with a database and schema that can be found
    in the database folder
 4. To Locally Host
