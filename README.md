@@ -13,9 +13,10 @@ All account information is strictly confidential and secure.
 2. npm install
 3. for dev environment initiliaze a local mysql server with a database and schema that can be found
    in the database folder
-4. To Locally Host,
-         >  npm run react-dev
-          > npm run server-dev
+4. To Locally Host
+   >  npm run react-dev
+   
+   > npm run server-dev
 
 ## Team
 
